@@ -5,6 +5,7 @@ import { Node } from "./Node";
 import { Player } from "./Player";
 import { Database } from "./Database";
 import { PlayerOptions } from "../types/Player";
+import { NodeOptions } from "../types/Node";
 import { SearchPlatform } from "../utils/sources";
 import { PlaylistRawData, SearchResponse, SearchResult, TrackData } from "../types/Rest";
 import { TrackUtils } from "../utils/utils";
@@ -145,6 +146,11 @@ export class Sonatica extends EventEmitter {
 
 	public destroy(guild: string): void {
 		this.players.delete(guild);
+	}
+
+	public createNode(options: NodeOptions) {
+		if (this.nodes.has(options.identifier)) return this.nodes.get(options.identifier);
+		return new Node(options);
 	}
 
 	public destroyNode(identifier: string): void {
