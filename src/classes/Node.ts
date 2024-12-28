@@ -195,6 +195,9 @@ export class Node {
 					}
 				}
 				break;
+			case "event":
+				this.handleOp(payload);
+				break;
 		}
 	}
 
@@ -206,30 +209,20 @@ export class Node {
 		const track = player.queue.current;
 		switch (payload.type) {
 			case "TrackStartEvent":
-				{
-					this.trackStart(player, <Track>track, payload);
-				}
+				this.trackStart(player, <Track>track, payload);
 				break;
 			case "TrackStuckEvent":
-				{
-					this.trackStuck(player, <Track>track, payload);
-				}
+				this.trackStuck(player, <Track>track, payload);
 				break;
 			case "TrackExceptionEvent":
-				{
-					this.trackError(player, <Track>track, payload);
-				}
+				this.trackError(player, <Track>track, payload);
 				break;
 			case "WebSocketClosedEvent":
-				{
-					this.socketClosed(player, payload);
-				}
+				this.socketClosed(player, payload);
 				break;
 			case "TrackEndEvent":
-				{
-					player.save();
-					this.trackEnd(player, <Track>track, payload);
-				}
+				player.save();
+				this.trackEnd(player, <Track>track, payload);
 				break;
 		}
 	}
@@ -249,47 +242,50 @@ export class Node {
 
 		switch (reason) {
 			case "loadFailed":
-			case "cleanup": {
-				queue.previous = queue.current;
-				queue.current = queue.shift();
-				if (!queue.current) return this.queueEnd(player, track, payload);
-
-				this.sonatica.emit("trackEnd", player, track, payload);
-				if (autoPlay) player.play();
-				break;
-			}
-
-			case "replaced": {
-				this.sonatica.emit("trackEnd", player, track, payload);
-				queue.previous = queue.current;
-				break;
-			}
-
-			default: {
-				if (track && (repeatMode === RepeatMode.TRACK || repeatMode === RepeatMode.QUEUE)) {
-					if (repeatMode === RepeatMode.TRACK) {
-						queue.unshift(queue.current);
-					} else if (repeatMode === RepeatMode.QUEUE) {
-						queue.add(queue.current);
-					}
-
+			case "cleanup":
+				{
 					queue.previous = queue.current;
 					queue.current = queue.shift();
+					if (!queue.current) return this.queueEnd(player, track, payload);
 
 					this.sonatica.emit("trackEnd", player, track, payload);
-					if (reason === "stopped" && !(queue.current = queue.shift())) return this.queueEnd(player, track, payload);
-
 					if (autoPlay) player.play();
-				} else if (queue.length) {
-					queue.previous = queue.current;
-					queue.current = queue.shift();
-					this.sonatica.emit("trackEnd", player, track, payload);
-					if (autoPlay) player.play();
-				} else {
-					this.queueEnd(player, track, payload);
 				}
 				break;
-			}
+
+			case "replaced":
+				{
+					this.sonatica.emit("trackEnd", player, track, payload);
+					queue.previous = queue.current;
+				}
+				break;
+
+			default:
+				{
+					if (track && (repeatMode === RepeatMode.TRACK || repeatMode === RepeatMode.QUEUE)) {
+						if (repeatMode === RepeatMode.TRACK) {
+							queue.unshift(queue.current);
+						} else if (repeatMode === RepeatMode.QUEUE) {
+							queue.add(queue.current);
+						}
+
+						queue.previous = queue.current;
+						queue.current = queue.shift();
+
+						this.sonatica.emit("trackEnd", player, track, payload);
+						if (reason === "stopped" && !(queue.current = queue.shift())) return this.queueEnd(player, track, payload);
+
+						if (autoPlay) player.play();
+					} else if (queue.length) {
+						queue.previous = queue.current;
+						queue.current = queue.shift();
+						this.sonatica.emit("trackEnd", player, track, payload);
+						if (autoPlay) player.play();
+					} else {
+						this.queueEnd(player, track, payload);
+					}
+				}
+				break;
 		}
 	}
 
