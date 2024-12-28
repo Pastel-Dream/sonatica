@@ -108,6 +108,13 @@ export class Node {
 	protected close(code: number, reason: string) {
 		this.sonatica.emit("nodeDisconnect", this, { code, reason });
 		if (code !== 1000 || reason !== "destroy") this.reconnect();
+
+		this.sonatica.players
+			.filter((p) => p.node.options.identifier === this.options.identifier)
+			.map((p) => {
+				if (!this.sonatica.options.autoMove) return (p.playing = false);
+				p.moveNode();
+			});
 	}
 
 	protected error(error: Error): void {
