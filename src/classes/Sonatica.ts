@@ -30,6 +30,7 @@ export class Sonatica extends EventEmitter {
 			clientName: "Sonatica (https://github.com/Pastel-Dream/sonatica)",
 			autoMove: true,
 			autoResume: true,
+			defaultSearchPlatform: SearchPlatform["youtube music"],
 			shards: 0,
 			sorter: leastLoadNode,
 			...options,
@@ -44,7 +45,7 @@ export class Sonatica extends EventEmitter {
 		if (this.initiated) return;
 		if (typeof clientId !== "undefined") this.options.clientId = clientId;
 		if (typeof this.options.clientId === "undefined") throw new Error("Client ID is required.");
-		this.db = new Database(this.options.clientId, this.options.shards ?? 0);
+		if (this.options.autoResume && this.options.redisUrl) this.db = new Database(this.options.redisUrl, this.options.clientId, this.options.shards ?? 0);
 
 		for (const node of this.nodes.values()) {
 			try {

@@ -82,7 +82,7 @@ export class Node {
 		this.rest = new Rest(this);
 	}
 
-	public connect() {
+	public async connect() {
 		if (this.connected) return;
 
 		const headers = Object.assign({
@@ -91,8 +91,10 @@ export class Node {
 			"Client-Name": this.sonatica.options.clientName,
 		});
 
-		const sessionId = this.sonatica.db.get(`sessions.${this.options.identifier ?? this.options.host.replace(/\./g, "-")}`);
-		if (this.sonatica.options.autoResume && sessionId) headers["Session-Id"] = sessionId;
+		if (this.sonatica.options.autoResume && this.sonatica.options.redisUrl) {
+			const sessionId = await this.sonatica.db.get(`sessions.${this.options.identifier ?? this.options.host.replace(/\./g, "-")}`);
+			headers["Session-Id"] = sessionId;
+		}
 
 		this.ws = new WebSocket(`ws${this.options.secure ? "s" : ""}://${this.address}/v4/websocket`, { headers });
 		this.ws.on("open", this.open.bind(this));
@@ -154,16 +156,15 @@ export class Node {
 				{
 					this.sessionId = payload.sessionId;
 
-					const identifier = this.options.identifier ?? this.options.host.replace(/\./g, "-");
-					this.sonatica.db.set(`sessions.${identifier}`, this.sessionId);
-
-					if (!this.sonatica.options.autoResume) return;
+					if (!this.sonatica.options.autoResume || !this.sonatica.options.redisUrl) return;
 					await this.rest.request("PATCH", `/sessions/${this.sessionId}`, { resuming: true, timeout: 360 });
+					const identifier = this.options.identifier ?? this.options.host.replace(/\./g, "-");
+					await this.sonatica.db.set(`sessions.${identifier}`, this.sessionId);
 
 					const resumedPlayers = <RestPlayer[]>await this.rest.request("GET", `/sessions/${this.sessionId}/players`);
 					for (const resumedPlayer of resumedPlayers) {
 						if (this.sonatica.players.get(resumedPlayer.guildId)) return;
-						const previousPlayer: PreviousPlayer = this.sonatica.db.get(`players.${resumedPlayer.guildId}`) || Object.assign({});
+						const previousPlayer: PreviousPlayer = (await this.sonatica.db.get(`players.${resumedPlayer.guildId}`)) || Object.assign({});
 
 						if (!previousPlayer.guild || !previousPlayer.voiceChannel || !previousPlayer.textChannel) return this.sonatica.db.delete(`players.${resumedPlayer.guildId}`);
 						const player = this.sonatica.create({
@@ -234,16 +235,20 @@ export class Node {
 				this.trackStart(player, <Track>track, payload);
 				break;
 			case "TrackStuckEvent":
+				player.position = 0;
 				this.trackStuck(player, <Track>track, payload);
 				break;
 			case "TrackExceptionEvent":
+				player.position = 0;
 				this.trackError(player, <Track>track, payload);
 				break;
 			case "WebSocketClosedEvent":
+				player.position = 0;
 				this.socketClosed(player, payload);
 				break;
 			case "TrackEndEvent":
 				player.save();
+				player.position = 0;
 				this.trackEnd(player, <Track>track, payload);
 				break;
 		}
@@ -386,7 +391,7 @@ export class Node {
 					query: `${previousTrack.title} - ${previousTrack.author}`,
 					source: "youtube",
 				},
-				previousTrack.requester,
+				previousTrack.requester
 			);
 
 			mixUrl = getMixUrl(previousTrack.sourceName! === "youtube" ? previousTrack.identifier! : base_response.tracks[0].identifier);

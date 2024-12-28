@@ -8,6 +8,7 @@ export interface SonaticaOptions {
 	clientId?: string;
 	clientName?: string;
 	shards?: number;
+	redisUrl?: string;
 	autoPlay?: boolean;
 	trackPartial?: string[];
 	defaultSearchPlatform?: SearchPlatform;

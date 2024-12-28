@@ -247,6 +247,15 @@ export class Player {
 		this.playing = true;
 	}
 
+	public async skip() {
+		if (!this.queue.length) return this.stop()
+
+		this.queue.previous = this.queue.current;
+		this.queue.current = this.queue.shift();
+		this.position = 0;
+		return await this.play();
+	}
+
 	public async stop(amount?: number) {
 		if (typeof amount === "number" && amount > 1) {
 			if (amount > this.queue.length) throw new RangeError("Cannot skip more than the queue length.");
@@ -254,7 +263,7 @@ export class Player {
 		}
 
 		await this.node.rest.request("PATCH", `/sessions/${this.node.sessionId}/players/${this.guild}?noReplace=false`, {
-			encodedTrack: null,
+			track: { encoded: null },
 		});
 
 		return this;
@@ -287,7 +296,7 @@ export class Player {
 	}
 
 	public save() {
-		if (!this.sonatica.options.autoResume) return;
+		if (!this.sonatica.options.autoResume || !this.sonatica.options.redisUrl) return;
 
 		this.sonatica.db.set(`players.${this.guild}`, {
 			guild: this.guild,
