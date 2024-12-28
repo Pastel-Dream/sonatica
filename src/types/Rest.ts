@@ -70,6 +70,7 @@ export interface PreviousPlayer {
 	repeatMode: RepeatMode;
 	current: string;
 	queue: string[];
+	requester: unknown;
 }
 
 export interface TrackDataInfo {

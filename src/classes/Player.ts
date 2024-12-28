@@ -7,7 +7,7 @@ import { Queue } from "./Queue";
 import { TrackUtils } from "../utils/utils";
 
 export class Player {
-	public readonly queue: Queue = new Queue();
+	public readonly queue: Queue = new Queue(this);
 	public filters: Filters;
 	public repeatMode: RepeatMode = 0;
 	public position = 0;
@@ -248,7 +248,7 @@ export class Player {
 	}
 
 	public async skip() {
-		if (!this.queue.length) return this.stop()
+		if (!this.queue.length) return this.stop();
 
 		this.queue.previous = this.queue.current;
 		this.queue.current = this.queue.shift();
@@ -310,6 +310,7 @@ export class Player {
 			isAutoplay: this.isAutoplay,
 			current: this.queue.current ? this.queue.current.track : null,
 			queue: this.queue.map((track) => track.track),
+			requester: this.queue.current.requester,
 		});
 	}
 }

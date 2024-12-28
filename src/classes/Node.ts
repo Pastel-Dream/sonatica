@@ -182,8 +182,8 @@ export class Node {
 						player.state = "RESUMING";
 
 						let decoded = <TrackData[]>await this.rest.request("POST", "/decodetracks", JSON.stringify(previousPlayer.queue.map((t) => t).concat(previousPlayer.current)));
-						player.queue.add(TrackUtils.build(decoded.find((t) => t.encoded === previousPlayer.current)));
-						if (previousPlayer.queue.length > 0) player.queue.add(decoded.filter((t) => t.encoded !== previousPlayer.current).map((t) => TrackUtils.build(t)));
+						player.queue.add(TrackUtils.build(decoded.find((t) => t.encoded === previousPlayer.current, previousPlayer.requester)));
+						if (previousPlayer.queue.length > 0) player.queue.add(decoded.filter((t) => t.encoded !== previousPlayer.current).map((t) => TrackUtils.build(t, previousPlayer.requester)));
 
 						player.setRepeat(previousPlayer.repeatMode);
 						player.filters.distortion = resumedPlayer.filters.distortion;

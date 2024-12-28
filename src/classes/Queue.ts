@@ -1,8 +1,15 @@
 import { Track, UnresolvedTrack } from "../types/Player";
+import { Player } from "./Player";
 
 export class Queue extends Array<Track | UnresolvedTrack> {
+	public readonly player: Player;
 	public current: Track | UnresolvedTrack | null = null;
 	public previous: Track | UnresolvedTrack | null = null;
+
+	constructor(player: Player) {
+		super();
+		this.player = player;
+	}
 
 	public get totalSize(): number {
 		return this.length + (this.current ? 1 : 0);
@@ -48,11 +55,14 @@ export class Queue extends Array<Track | UnresolvedTrack> {
 				}
 			}
 		}
+
+		this.player.save();
 	}
 
 	public remove(position?: number): (Track | UnresolvedTrack)[];
 	public remove(start: number, end: number): (Track | UnresolvedTrack)[];
 	public remove(startOrPosition = 0, end?: number): (Track | UnresolvedTrack)[] {
+		let removedTracks: (Track | UnresolvedTrack)[];
 		if (typeof end !== "undefined") {
 			if (isNaN(Number(startOrPosition)) || isNaN(Number(end))) {
 				throw new RangeError(`Missing "start" or "end" parameter.`);
@@ -62,14 +72,18 @@ export class Queue extends Array<Track | UnresolvedTrack> {
 				throw new RangeError("Invalid start or end values.");
 			}
 
-			return this.splice(startOrPosition, end - startOrPosition);
+			removedTracks = this.splice(startOrPosition, end - startOrPosition);
+		} else {
+			removedTracks = this.splice(startOrPosition, 1);
 		}
 
-		return this.splice(startOrPosition, 1);
+		this.player.save();
+		return removedTracks;
 	}
 
 	public clear(): void {
 		this.splice(0);
+		this.player.save();
 	}
 
 	public shuffle(): void {
@@ -77,5 +91,7 @@ export class Queue extends Array<Track | UnresolvedTrack> {
 			const j = Math.floor(Math.random() * (i + 1));
 			[this[i], this[j]] = [this[j], this[i]];
 		}
+
+		this.player.save();
 	}
 }
