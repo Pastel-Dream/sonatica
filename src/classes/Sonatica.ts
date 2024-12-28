@@ -63,7 +63,8 @@ export class Sonatica extends EventEmitter {
 		let search = query.query;
 		if (!/^(https?:\/\/)?([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/.test(query.query)) search = `${source}:${query.query}`;
 
-		const node = this.options.sorter(this.nodes)
+		const node = this.options
+			.sorter(this.nodes)
 			.filter((node) => node.options.search)
 			.first();
 
@@ -99,7 +100,7 @@ export class Sonatica extends EventEmitter {
 							tracks: playlistData!.tracks.map((track) => TrackUtils.build(track, requester)),
 							duration: playlistData!.tracks.reduce((acc, cur) => acc + (cur.info.length || 0), 0),
 							url: playlistData!.pluginInfo.url,
-					  }
+						}
 					: null;
 
 			const result: SearchResult = {
@@ -115,7 +116,8 @@ export class Sonatica extends EventEmitter {
 	}
 
 	public async decodeTracks(tracks: string[]): Promise<TrackData[]> {
-		const node = this.options.sorter(this.nodes)
+		const node = this.options
+			.sorter(this.nodes)
 			.filter((node) => node.options.search)
 			.first();
 		if (!node) throw new RangeError("No nodes are available.");

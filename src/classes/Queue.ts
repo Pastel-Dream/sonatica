@@ -1,23 +1,23 @@
 import { Track, UnresolvedTrack } from "../types/Player";
 
 export class Queue extends Array<Track | UnresolvedTrack> {
-  public current: Track | UnresolvedTrack | null = null;
-  public previous: Track | UnresolvedTrack | null = null;
-  
-  public get totalSize(): number {
+	public current: Track | UnresolvedTrack | null = null;
+	public previous: Track | UnresolvedTrack | null = null;
+
+	public get totalSize(): number {
 		return this.length + (this.current ? 1 : 0);
 	}
 
-  public get size(): number {
+	public get size(): number {
 		return this.totalSize;
 	}
 
-  public get duration(): number {
+	public get duration(): number {
 		const current = this.current?.duration ?? 0;
 		return this.reduce((acc, cur) => acc + (cur.duration || 0), current);
 	}
 
-  public add(track: (Track | UnresolvedTrack) | (Track | UnresolvedTrack)[], offset?: number): void {
+	public add(track: (Track | UnresolvedTrack) | (Track | UnresolvedTrack)[], offset?: number): void {
 		if (!this.current) {
 			if (Array.isArray(track)) {
 				this.current = track.shift() || null;
@@ -50,7 +50,7 @@ export class Queue extends Array<Track | UnresolvedTrack> {
 		}
 	}
 
-  public remove(position?: number): (Track | UnresolvedTrack)[];
+	public remove(position?: number): (Track | UnresolvedTrack)[];
 	public remove(start: number, end: number): (Track | UnresolvedTrack)[];
 	public remove(startOrPosition = 0, end?: number): (Track | UnresolvedTrack)[] {
 		if (typeof end !== "undefined") {
@@ -68,11 +68,11 @@ export class Queue extends Array<Track | UnresolvedTrack> {
 		return this.splice(startOrPosition, 1);
 	}
 
-  public clear(): void {
+	public clear(): void {
 		this.splice(0);
 	}
 
-  public shuffle(): void {
+	public shuffle(): void {
 		for (let i = this.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
 			[this[i], this[j]] = [this[j], this[i]];

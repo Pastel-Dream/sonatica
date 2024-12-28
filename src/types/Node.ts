@@ -1,14 +1,14 @@
 export interface NodeOptions {
-  host: string;
-  port: number;
-  password: string;
-  secure?: boolean;
-  identifier?: string;
-  retryAmount?: number;
-  retryDelay?: number;
-  requestTimeout?: number;
-  search?: boolean;
-  playback?: boolean;
+	host: string;
+	port: number;
+	password: string;
+	secure?: boolean;
+	identifier?: string;
+	retryAmount?: number;
+	retryDelay?: number;
+	requestTimeout?: number;
+	search?: boolean;
+	playback?: boolean;
 }
 
 export interface NodeStats {

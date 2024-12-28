@@ -45,8 +45,6 @@ export class Filters {
 	}
 
 	public async updateFilters(): Promise<this> {
-		
-
 		await this.player.node.rest.request("PATCH", `/sessions/${this.player.node.sessionId}/players/${this.player.guild}?noReplace=false`, {
 			filters: this.getFilters(),
 		});

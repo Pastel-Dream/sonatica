@@ -4,17 +4,17 @@ import { NodeOptions } from "./Node";
 import { Node } from "../classes/Node";
 
 export interface SonaticaOptions {
-  nodes: NodeOptions[];
-  clientId?: string;
-  clientName?: string;
-  shards?: number;
-  autoPlay?: boolean;
-  trackPartial?: string[];
-  defaultSearchPlatform?: SearchPlatform;
-  autoMove?: boolean;
-  autoResume?: boolean;
+	nodes: NodeOptions[];
+	clientId?: string;
+	clientName?: string;
+	shards?: number;
+	autoPlay?: boolean;
+	trackPartial?: string[];
+	defaultSearchPlatform?: SearchPlatform;
+	autoMove?: boolean;
+	autoResume?: boolean;
 	sorter(nodes: Collection<string, Node>): Collection<string, Node>;
-  send(id: string, payload: Payload): void;
+	send(id: string, payload: Payload): void;
 }
 
 export interface SearchQuery {
@@ -53,6 +53,6 @@ export interface VoiceState {
 }
 
 export interface VoicePacket {
-  t?: "VOICE_SERVER_UPDATE" | "VOICE_STATE_UPDATE";
-  d: VoiceState | VoiceServer;
+	t?: "VOICE_SERVER_UPDATE" | "VOICE_STATE_UPDATE";
+	d: VoiceState | VoiceServer;
 }
