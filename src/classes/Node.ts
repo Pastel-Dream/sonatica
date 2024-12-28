@@ -7,6 +7,7 @@ import { RestPlayer, PreviousPlayer, TrackData, SearchResult } from "../types/Re
 import { buildTrack } from "./Utils";
 import { Player } from "./Player";
 import { RepeatMode, UnresolvedTrack, Track } from "../types/Player";
+import { TrackUtils } from "../utils/utils";
 
 export class Node {
 	private static _sonatica: Sonatica;
@@ -113,7 +114,10 @@ export class Node {
 			.filter((p) => p.node.options.identifier === this.options.identifier)
 			.map((p) => {
 				if (!this.sonatica.options.autoMove) return (p.playing = false);
-				p.moveNode();
+				if (this.sonatica.options.autoMove) {
+					if (this.sonatica.nodes.filter((n) => n.connected).size === 0) return (p.playing = false);
+					p.moveNode(this.options.identifier);
+				}
 			});
 	}
 
@@ -177,8 +181,8 @@ export class Node {
 						player.state = "RESUMING";
 
 						let decoded = <TrackData[]>await this.rest.request("POST", "/decodetracks", JSON.stringify(previousPlayer.queue.map((t) => t).concat(previousPlayer.current)));
-						player.queue.add(buildTrack(decoded.find((t) => t.encoded === previousPlayer.current)));
-						if (previousPlayer.queue.length > 0) player.queue.add(decoded.filter((t) => t.encoded !== previousPlayer.current).map((t) => buildTrack(t)));
+						player.queue.add(TrackUtils.build(decoded.find((t) => t.encoded === previousPlayer.current)));
+						if (previousPlayer.queue.length > 0) player.queue.add(decoded.filter((t) => t.encoded !== previousPlayer.current).map((t) => TrackUtils.build(t)));
 
 						player.setRepeat(previousPlayer.repeatMode);
 						player.filters.distortion = resumedPlayer.filters.distortion;
@@ -192,6 +196,24 @@ export class Node {
 						player.position = resumedPlayer.state.position;
 						player.connect();
 						await player.play();
+					}
+
+					if (this.reconnectAttempts !== 1) {
+						this.sonatica.players
+							.filter((p) => p.node.options.identifier === this.options.identifier)
+							.forEach(async (p) => {
+								const player = this.sonatica.players.get(p.guild);
+								if (!player) return;
+
+								await this.rest.request("PATCH", `/sessions/${this.sessionId}/players/${player.guild}?noReplace=false`, {
+									voice: {
+										token: player.voiceState.event.token,
+										endpoint: player.voiceState.event.endpoint,
+										sessionId: player!.voiceState?.sessionId!,
+									},
+								});
+								await player.play();
+							});
 					}
 				}
 				break;
@@ -331,6 +353,7 @@ export class Node {
 	}
 
 	public destroy() {
+		if (!this.connected) return;
 		const players = this.sonatica.players.filter((p) => p.node == this);
 		if (players.size) {
 			players.map((p) => {
@@ -381,7 +404,6 @@ export class Node {
 
 		const response = await findMix();
 		player.queue.add(response.playlist!.tracks.filter((t) => t.uri !== track.uri)[Math.floor(Math.random() * response.playlist!.tracks.length - 1)]);
-		// player.queue.add(response.tracks[0]);
 		player.play();
 	}
 }
