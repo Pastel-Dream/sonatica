@@ -31,6 +31,7 @@ export class Sonatica extends EventEmitter {
 			autoMove: true,
 			autoResume: true,
 			shards: 0,
+			sorter: leastLoadNode,
 			...options,
 		};
 
@@ -62,7 +63,7 @@ export class Sonatica extends EventEmitter {
 		let search = query.query;
 		if (!/^(https?:\/\/)?([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/.test(query.query)) search = `${source}:${query.query}`;
 
-		const node = leastLoadNode(this.nodes)
+		const node = this.options.sorter(this.nodes)
 			.filter((node) => node.options.search)
 			.first();
 
@@ -114,7 +115,7 @@ export class Sonatica extends EventEmitter {
 	}
 
 	public async decodeTracks(tracks: string[]): Promise<TrackData[]> {
-		const node = leastLoadNode(this.nodes)
+		const node = this.options.sorter(this.nodes)
 			.filter((node) => node.options.search)
 			.first();
 		if (!node) throw new RangeError("No nodes are available.");

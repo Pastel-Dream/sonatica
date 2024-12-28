@@ -1,5 +1,7 @@
+import { Collection } from "@discordjs/collection";
 import { SearchPlatform } from "../utils/sources";
 import { NodeOptions } from "./Node";
+import { Node } from "../classes/Node";
 
 export interface SonaticaOptions {
   nodes: NodeOptions[];
@@ -11,6 +13,7 @@ export interface SonaticaOptions {
   defaultSearchPlatform?: SearchPlatform;
   autoMove?: boolean;
   autoResume?: boolean;
+	sorter(nodes: Collection<string, Node>): Collection<string, Node>;
   send(id: string, payload: Payload): void;
 }
 

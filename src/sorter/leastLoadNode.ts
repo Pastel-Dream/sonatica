@@ -1,7 +1,6 @@
-import { Node } from "../classes/Node";
-import { Collection } from "@discordjs/collection";
+import { Sorter } from "../types/Sorter";
 
-export default (nodes: Collection<string, Node>): Collection<string, Node> => {
+const sorter: Sorter = (nodes) => {
 	return nodes
 		.filter((node) => node.connected)
 		.filter((node) => node.isEnabled)
@@ -11,3 +10,5 @@ export default (nodes: Collection<string, Node>): Collection<string, Node> => {
 			return aload - bload;
 		});
 };
+
+export default sorter;

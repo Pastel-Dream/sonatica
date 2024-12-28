@@ -1,4 +1,3 @@
-import leastLoadNode from "../sorter/leastLoadNode";
 import { SearchQuery, VoiceState } from "../types/Sonatica";
 import { PlayerOptions, RepeatMode, State, Track, UnresolvedTrack } from "../types/Player";
 import { Filters } from "./Filters";
@@ -51,7 +50,7 @@ export class Player {
 		const node = this.sonatica.nodes.get(options.node);
 		this.node =
 			node ||
-			leastLoadNode(this.sonatica.nodes)
+			this.sonatica.options.sorter(this.sonatica.nodes)
 				.filter((node) => node.options.playback)
 				.first();
 		this.sonatica.players.set(this.guild, this);
@@ -152,7 +151,7 @@ export class Player {
 
 	public async moveNode(node?: string) {
 		if (!node)
-			node = leastLoadNode(this.sonatica.nodes)
+			node = this.sonatica.options.sorter(this.sonatica.nodes)
 				.filter((node) => node.options.playback)
 				.first()?.options.identifier;
 		if (!node || !this.sonatica.nodes.get(node)) throw new RangeError("No nodes are available.");
