@@ -118,7 +118,7 @@ export class Node {
 				if (!this.sonatica.options.autoMove) return (p.playing = false);
 				if (this.sonatica.options.autoMove) {
 					if (this.sonatica.nodes.filter((n) => n.connected).size === 0) return (p.playing = false);
-					p.moveNode(this.options.identifier);
+					p.moveNode();
 				}
 			});
 	}
