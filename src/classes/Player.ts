@@ -28,6 +28,7 @@ export class Player {
 
 	public set(key: string, value: unknown): void {
 		this.data[key] = value;
+		this.save();
 	}
 
 	public get<T>(key: string): T {

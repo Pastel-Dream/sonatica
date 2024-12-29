@@ -9,6 +9,7 @@ import { NodeOptions } from "../types/Node";
 import { SearchPlatform } from "../utils/sources";
 import { PlaylistRawData, SearchResponse, SearchResult, TrackData } from "../types/Rest";
 import { TrackUtils } from "../utils/utils";
+import { decodeTrack } from "../utils/decoder";
 import leastLoadNode from "../sorter/leastLoadNode";
 
 export class Sonatica extends EventEmitter {
@@ -102,7 +103,7 @@ export class Sonatica extends EventEmitter {
 							tracks: playlistData!.tracks.map((track) => TrackUtils.build(track, requester)),
 							duration: playlistData!.tracks.reduce((acc, cur) => acc + (cur.info.length || 0), 0),
 							url: playlistData!.pluginInfo.url,
-						}
+					  }
 					: null;
 
 			const result: SearchResult = {
@@ -118,14 +119,11 @@ export class Sonatica extends EventEmitter {
 	}
 
 	public async decodeTracks(tracks: string[]): Promise<TrackData[]> {
-		const node = this.options
-			.sorter(this.nodes)
-			.filter((node) => node.options.search)
-			.first();
-		if (!node) throw new RangeError("No nodes are available.");
-
-		const res = <TrackData[]>await node.rest.request("POST", "/decodetracks", JSON.stringify(tracks));
-		if (!res) throw new Error("No data returned from query.");
+		const decodeds = await Promise.all(tracks.map((track) => decodeTrack(track)));
+		const res = decodeds.map((t) => {
+			if (t.error) throw t.error;
+			return t.track;
+		})
 
 		return res;
 	}
