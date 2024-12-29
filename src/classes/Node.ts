@@ -4,7 +4,6 @@ import { Sonatica } from "./Sonatica";
 import { Rest } from "./Rest";
 import { EventOp, Ops, TrackEndEvent, TrackExceptionEvent, TrackStartEvent, TrackStuckEvent, WebSocketClosedEvent } from "../types/Op";
 import { RestPlayer, PreviousPlayer, TrackData, SearchResult } from "../types/Rest";
-import { buildTrack } from "./Utils";
 import { Player } from "./Player";
 import { RepeatMode, UnresolvedTrack, Track } from "../types/Player";
 import { TrackUtils } from "../utils/utils";

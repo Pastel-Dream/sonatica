@@ -5,7 +5,6 @@ export * from "./classes/Database";
 export * from "./classes/Filters";
 export * from "./classes/Queue";
 export * from "./classes/Rest";
-export * from "./classes/Utils";
 export * from "./sorter/leastLoadNode";
 export * from "./sorter/leastUsedNodes";
 export * from "./types/Filters";
