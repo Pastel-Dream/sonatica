@@ -14,6 +14,7 @@ export interface SonaticaOptions {
 	defaultSearchPlatform?: SearchPlatform;
 	autoMove?: boolean;
 	autoResume?: boolean;
+	cacheTTL?: number;
 	sorter(nodes: Collection<string, Node>): Collection<string, Node>;
 	send(id: string, payload: Payload): void;
 }

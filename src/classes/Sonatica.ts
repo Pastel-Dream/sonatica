@@ -10,6 +10,7 @@ import { SearchPlatform } from "../utils/sources";
 import { PlaylistRawData, SearchResponse, SearchResult, TrackData } from "../types/Rest";
 import { TrackUtils } from "../utils/utils";
 import { decodeTrack } from "../utils/decoder";
+import { CacheManager } from "./CacheManager";
 import leastLoadNode from "../sorter/leastLoadNode";
 
 export class Sonatica extends EventEmitter {
@@ -19,6 +20,7 @@ export class Sonatica extends EventEmitter {
 	public options: SonaticaOptions;
 
 	private initiated: boolean = false;
+	private cacheManager: CacheManager;
 
 	constructor(options: SonaticaOptions) {
 		super();
@@ -26,6 +28,7 @@ export class Sonatica extends EventEmitter {
 		Player.init(this);
 		Node.init(this);
 
+		this.cacheManager = new CacheManager(options.cacheTTL);
 		this.options = {
 			nodes: [],
 			autoPlay: true,
@@ -34,6 +37,7 @@ export class Sonatica extends EventEmitter {
 			autoResume: true,
 			defaultSearchPlatform: SearchPlatform["youtube music"],
 			shards: 0,
+			cacheTTL: 30 * 60 * 1000,
 			sorter: leastLoadNode,
 			...options,
 		};
@@ -62,9 +66,25 @@ export class Sonatica extends EventEmitter {
 	}
 
 	public async search(query: SearchQuery, requester?: unknown) {
-		const source = query.source ?? SearchPlatform[this.options.defaultSearchPlatform];
+		const source: SearchPlatform | string = query.source ?? SearchPlatform[this.options.defaultSearchPlatform];
 		let search = query.query;
 		if (!/^(https?:\/\/)?([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/.test(query.query)) search = `${source}:${query.query}`;
+
+		const cacheKey = `${search}`;
+		const cached = this.cacheManager.get(cacheKey);
+		if (cached) {
+			const result = {
+				...cached,
+				tracks: cached.tracks.map((track) => ({ ...track, requester })),
+			};
+			if (result.playlist) {
+				result.playlist = {
+					...result.playlist,
+					tracks: result.playlist.tracks.map((track) => ({ ...track, requester })),
+				};
+			}
+			return result;
+		}
 
 		const node = this.options
 			.sorter(this.nodes)
@@ -123,7 +143,7 @@ export class Sonatica extends EventEmitter {
 		const res = decodeds.map((t) => {
 			if (t.error) throw t.error;
 			return t.track;
-		})
+		});
 
 		return res;
 	}
