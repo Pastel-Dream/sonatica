@@ -9,8 +9,8 @@ import { NodeOptions } from "../types/Node";
 import { SearchPlatform } from "../utils/sources";
 import { PlaylistRawData, SearchResponse, SearchResult, TrackData } from "../types/Rest";
 import { TrackUtils } from "../utils/utils";
-import { decodeTrack } from "../utils/decoder";
 import { CacheManager } from "./CacheManager";
+import { TrackDecoder } from "./TrackDecoder";
 import leastLoadNode from "../sorter/leastLoadNode";
 
 export class Sonatica extends EventEmitter {
@@ -123,7 +123,7 @@ export class Sonatica extends EventEmitter {
 							tracks: playlistData!.tracks.map((track) => TrackUtils.build(track, requester)),
 							duration: playlistData!.tracks.reduce((acc, cur) => acc + (cur.info.length || 0), 0),
 							url: playlistData!.pluginInfo.url,
-						}
+					  }
 					: null;
 
 			const result: SearchResult = {
@@ -139,7 +139,13 @@ export class Sonatica extends EventEmitter {
 	}
 
 	public async decodeTracks(tracks: string[]): Promise<TrackData[]> {
-		const decodeds = await Promise.all(tracks.map((track) => decodeTrack(track)));
+		const decodeds = await Promise.all(
+			tracks.map(async (track) => {
+				const decoder = new TrackDecoder(track);
+				return await decoder.decode();
+			})
+		);
+
 		const res = decodeds.map((t) => {
 			if (t.error) throw t.error;
 			return t.track;
