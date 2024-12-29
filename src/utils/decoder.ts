@@ -73,8 +73,8 @@ export const decodeTrack = async (encoded: string): Promise<{ track: TrackData |
 				track.info.isrc = null;
 				track.info.sourceName = readString(view, state, buffer);
 				track.info.position = readInt64(view, state);
-      case 3:
-        track.info.title = readString(view, state, buffer);
+			case 3:
+				track.info.title = readString(view, state, buffer);
 				track.info.author = readString(view, state, buffer);
 				track.info.length = readInt64(view, state);
 				track.info.identifier = readString(view, state, buffer);

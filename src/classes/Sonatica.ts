@@ -123,7 +123,7 @@ export class Sonatica extends EventEmitter {
 							tracks: playlistData!.tracks.map((track) => TrackUtils.build(track, requester)),
 							duration: playlistData!.tracks.reduce((acc, cur) => acc + (cur.info.length || 0), 0),
 							url: playlistData!.pluginInfo.url,
-					  }
+						}
 					: null;
 
 			const result: SearchResult = {
