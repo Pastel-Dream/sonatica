@@ -311,7 +311,7 @@ export class Player {
 			isAutoplay: this.isAutoplay,
 			current: this.queue.current ? this.queue.current.track : null,
 			queue: this.queue.map((track) => track.track),
-			requester: this.queue.current.requester,
+			requester: this.queue.current.requester ?? undefined,
 		});
 	}
 }
