@@ -112,8 +112,8 @@ export class Node {
 		if (code !== 1000 || reason !== "destroy") this.reconnect();
 
 		this.sonatica.players
-			.filter((p) => p.node.options.identifier === this.options.identifier)
-			.map((p) => {
+			.filter((p) => p?.options && this?.options && p.node.options.identifier === this.options.identifier)
+			.forEach((p) => {
 				if (!this.sonatica.options.autoMove) return (p.playing = false);
 				if (this.sonatica.options.autoMove) {
 					if (this.sonatica.nodes.filter((n) => n.connected).size === 0) return (p.playing = false);
@@ -200,7 +200,7 @@ export class Node {
 
 					if (this.reconnectAttempts !== 1) {
 						this.sonatica.players
-							.filter((p) => p.node.options.identifier === this.options.identifier)
+							.filter((p) => p?.options && this?.options && p.node.options.identifier === this.options.identifier)
 							.forEach(async (p) => {
 								const player = this.sonatica.players.get(p.guild);
 								if (!player) return;
@@ -390,7 +390,7 @@ export class Node {
 					query: `${previousTrack.title} - ${previousTrack.author}`,
 					source: "youtube",
 				},
-				previousTrack.requester,
+				previousTrack.requester
 			);
 
 			mixUrl = getMixUrl(previousTrack.sourceName! === "youtube" ? previousTrack.identifier! : base_response.tracks[0].identifier);
