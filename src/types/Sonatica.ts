@@ -15,7 +15,7 @@ export interface SonaticaOptions {
 	autoMove?: boolean;
 	autoResume?: boolean;
 	cacheTTL?: number;
-	sorter(nodes: Collection<string, Node>): Collection<string, Node>;
+	sorter?: (nodes: Collection<string, Node>) => Collection<string, Node>;
 	send(id: string, payload: Payload): void;
 }
 
