@@ -7,6 +7,7 @@ import { RestPlayer, PreviousPlayer, TrackData, SearchResult } from "../types/Re
 import { Player } from "./Player";
 import { RepeatMode, UnresolvedTrack, Track } from "../types/Player";
 import { TrackUtils } from "../utils/utils";
+import { SearchPlatform } from "../utils/sources";
 
 export class Node {
 	private static _sonatica: Sonatica;
@@ -388,7 +389,7 @@ export class Node {
 			base_response = await player.search(
 				{
 					query: `${previousTrack.title} - ${previousTrack.author}`,
-					source: "youtube",
+					source: SearchPlatform["youtube"],
 				},
 				previousTrack.requester
 			);
