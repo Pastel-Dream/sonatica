@@ -79,6 +79,7 @@ export class TrackDecoder {
 	}
 
 	private readInt32(): number {
+		this.validateBuffer(4);
 		const value = this.view.getInt32(this.state.offset, false);
 		this.state.offset += 4;
 		return value;
@@ -113,5 +114,9 @@ export class TrackDecoder {
 	private readNullableString(): string | null {
 		if (!this.readBool()) return null;
 		return this.readString();
+	}
+
+	private validateBuffer(size: number): void {
+		if (this.state.offset + size > this.buffer.byteLength) throw new Error("Buffer overflow");
 	}
 }
