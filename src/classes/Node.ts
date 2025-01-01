@@ -9,6 +9,9 @@ import { RepeatMode, UnresolvedTrack, Track } from "../types/Player";
 import { TrackUtils } from "../utils/utils";
 import { SearchPlatform } from "../utils/sources";
 
+/**
+ * Represents a Node in the Sonatica system.
+ */
 export class Node {
 	private static _sonatica: Sonatica;
 	public isEnabled: boolean = true;
@@ -39,22 +42,38 @@ export class Node {
 	};
 
 	private reconnectTimeout?: NodeJS.Timeout;
-	private reconnectAttempts = 1;
+	private reconnectAttempts: number = 1;
 	private lastestOp: number = 0;
 
+	/**
+	 * Checks if the node is connected.
+	 * @returns {boolean} True if connected, otherwise false.
+	 */
 	public get connected(): boolean {
 		if (!this.ws) return false;
 		return this.ws.readyState === 1;
 	}
 
+	/**
+	 * Gets the address of the node.
+	 * @returns {string} The address of the node.
+	 */
 	public get address(): string {
 		return `${this.options.host}:${this.options.port}`;
 	}
 
+	/**
+	 * Initializes the Node with a Sonatica instance.
+	 * @param {Sonatica} sonatica - The Sonatica instance to initialize with.
+	 */
 	public static init(sonatica: Sonatica): void {
 		this._sonatica = sonatica;
 	}
 
+	/**
+	 * Creates an instance of the Node.
+	 * @param {NodeOptions} options - The options for the Node.
+	 */
 	constructor(public options: NodeOptions) {
 		if (!this.sonatica) this.sonatica = Node._sonatica;
 		if (!this.sonatica) throw new Error("Sonatica is not initialized.");
@@ -82,6 +101,9 @@ export class Node {
 		this.rest = new Rest(this);
 	}
 
+	/**
+	 * Connects the Node to the WebSocket server.
+	 */
 	public async connect() {
 		if (this.connected) return;
 
@@ -103,11 +125,19 @@ export class Node {
 		this.ws.on("error", this.error.bind(this));
 	}
 
+	/**
+	 * Handles the WebSocket connection opening.
+	 */
 	protected open() {
 		if (this.reconnectTimeout) clearTimeout(this.reconnectTimeout);
 		this.sonatica.emit("nodeConnect", this);
 	}
 
+	/**
+	 * Handles the WebSocket connection closing.
+	 * @param {number} code - The close code.
+	 * @param {string} reason - The reason for closing.
+	 */
 	protected close(code: number, reason: string) {
 		this.sonatica.emit("nodeDisconnect", this, { code, reason });
 		if (code !== 1000 || reason !== "destroy") this.reconnect();
@@ -123,11 +153,19 @@ export class Node {
 			});
 	}
 
+	/**
+	 * Handles WebSocket errors.
+	 * @param {Error} error - The error that occurred.
+	 */
 	protected error(error: Error): void {
 		if (!error) return;
 		this.sonatica.emit("nodeError", this, error);
 	}
 
+	/**
+	 * Handles incoming WebSocket messages.
+	 * @param {Buffer | string} d - The data received.
+	 */
 	protected async message(d: Buffer | string) {
 		if (Array.isArray(d)) d = Buffer.concat(d);
 		else if (d instanceof ArrayBuffer) d = Buffer.from(d);
@@ -224,6 +262,10 @@ export class Node {
 		}
 	}
 
+	/**
+	 * Handles different types of events received from the WebSocket.
+	 * @param {EventOp} payload - The event payload.
+	 */
 	protected handleOp(payload: EventOp) {
 		if (!payload.guildId) return;
 		const player = this.sonatica.players.get(payload.guildId);
@@ -254,12 +296,24 @@ export class Node {
 		}
 	}
 
+	/**
+	 * Handles the start of a track.
+	 * @param {Player} player - The player that is playing the track.
+	 * @param {Track} track - The track that started playing.
+	 * @param {TrackStartEvent} payload - The event payload.
+	 */
 	protected trackStart(player: Player, track: Track, payload: TrackStartEvent) {
 		player.playing = true;
 		player.paused = false;
 		this.sonatica.emit("trackStart", player, track, payload);
 	}
 
+	/**
+	 * Handles the end of a track.
+	 * @param {Player} player - The player that was playing the track.
+	 * @param {Track} track - The track that ended.
+	 * @param {TrackEndEvent} payload - The event payload.
+	 */
 	protected trackEnd(player: Player, track: Track, payload: TrackEndEvent) {
 		if (player.state === "MOVING" || player.state === "RESUMING") return;
 
@@ -316,18 +370,41 @@ export class Node {
 		}
 	}
 
+	/**
+	 * Handles a track being stuck.
+	 * @param {Player} player - The player that is playing the track.
+	 * @param {Track} track - The track that is stuck.
+	 * @param {TrackStuckEvent} payload - The event payload.
+	 */
 	protected trackStuck(player: Player, track: Track, payload: TrackStuckEvent): void {
 		this.sonatica.emit("trackStuck", player, track, payload);
 	}
 
+	/**
+	 * Handles a track error.
+	 * @param {Player} player - The player that encountered the error.
+	 * @param {Track | UnresolvedTrack} track - The track that encountered the error.
+	 * @param {TrackExceptionEvent} payload - The event payload.
+	 */
 	protected trackError(player: Player, track: Track | UnresolvedTrack, payload: TrackExceptionEvent): void {
 		this.sonatica.emit("trackError", player, track, payload);
 	}
 
+	/**
+	 * Handles a WebSocket closure.
+	 * @param {Player} player - The player that was affected.
+	 * @param {WebSocketClosedEvent} payload - The event payload.
+	 */
 	protected socketClosed(player: Player, payload: WebSocketClosedEvent): void {
 		this.sonatica.emit("socketClosed", player, payload);
 	}
 
+	/**
+	 * Handles the end of a queue.
+	 * @param {Player} player - The player that was playing.
+	 * @param {Track} track - The last track that was played.
+	 * @param {TrackEndEvent} payload - The event payload.
+	 */
 	protected async queueEnd(player: Player, track: Track, payload: TrackEndEvent): Promise<void> {
 		player.queue.current = null;
 		player.playing = player.isAutoplay;
@@ -337,6 +414,9 @@ export class Node {
 		this.sonatica.emit("queueEnd", player, track, payload);
 	}
 
+	/**
+	 * Attempts to reconnect the Node.
+	 */
 	private reconnect() {
 		this.reconnectTimeout = setTimeout(() => {
 			if (this.reconnectAttempts >= this.options.retryAmount) {
@@ -353,10 +433,17 @@ export class Node {
 		}, this.options.retryDelay);
 	}
 
+	/**
+	 * Enables or disables the Node.
+	 * @param {boolean} enabled - True to enable, false to disable.
+	 */
 	public setEnabled(enabled: boolean) {
 		this.isEnabled = enabled;
 	}
 
+	/**
+	 * Destroys the Node and cleans up resources.
+	 */
 	public destroy() {
 		if (!this.connected) return;
 		const players = this.sonatica.players.filter((p) => p?.node?.options?.identifier === this?.options?.identifier);
@@ -376,6 +463,12 @@ export class Node {
 		this.sonatica.destroyNode(this.options.identifier);
 	}
 
+	/**
+	 * Handles autoplay for the player.
+	 * @param {Player} player - The player that is autoplaying.
+	 * @param {Track | UnresolvedTrack} track - The track that is currently playing.
+	 * @returns {Promise<void>} A promise that resolves when the autoplay is handled.
+	 */
 	private async handleAutoplay(player: Player, track: Track | UnresolvedTrack): Promise<void> {
 		const base = "https://www.youtube.com/watch?v=H58vbez_m4E";
 		const getMixUrl = (identifier: string) => `https://www.youtube.com/watch?v=${identifier}&list=RD${identifier}`;
@@ -391,7 +484,7 @@ export class Node {
 					query: `${previousTrack.title} - ${previousTrack.author}`,
 					source: SearchPlatform["youtube"],
 				},
-				previousTrack.requester,
+				previousTrack.requester
 			);
 
 			mixUrl = getMixUrl(previousTrack.sourceName! === "youtube" ? previousTrack.identifier! : base_response.tracks[0].identifier);

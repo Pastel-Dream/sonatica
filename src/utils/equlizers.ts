@@ -1,5 +1,9 @@
 import { Band } from "../types/Filters";
 
+/**
+ * Equalizer setting for bass boost.
+ * @type {Band[]}
+ */
 export const bassBoostEqualizer: Band[] = [
 	{ band: 0, gain: 0.2 },
 	{ band: 1, gain: 0.15 },
@@ -18,6 +22,10 @@ export const bassBoostEqualizer: Band[] = [
 	{ band: 14, gain: -0.1 },
 ];
 
+/**
+ * Equalizer setting for soft sound.
+ * @type {Band[]}
+ */
 export const softEqualizer: Band[] = [
 	{ band: 0, gain: 0 },
 	{ band: 1, gain: 0 },
@@ -35,6 +43,10 @@ export const softEqualizer: Band[] = [
 	{ band: 13, gain: -0.25 },
 ];
 
+/**
+ * Equalizer setting for TV sound.
+ * @type {Band[]}
+ */
 export const tvEqualizer: Band[] = [
 	{ band: 0, gain: 0 },
 	{ band: 1, gain: 0 },
@@ -52,6 +64,10 @@ export const tvEqualizer: Band[] = [
 	{ band: 13, gain: 0.65 },
 ];
 
+/**
+ * Equalizer setting for treble and bass.
+ * @type {Band[]}
+ */
 export const trebleBassEqualizer: Band[] = [
 	{ band: 0, gain: 0.6 },
 	{ band: 1, gain: 0.67 },
@@ -69,6 +85,10 @@ export const trebleBassEqualizer: Band[] = [
 	{ band: 13, gain: 0 },
 ];
 
+/**
+ * Equalizer setting for vaporwave sound.
+ * @type {Band[]}
+ */
 export const vaporwaveEqualizer: Band[] = [
 	{ band: 0, gain: 0 },
 	{ band: 1, gain: 0 },
