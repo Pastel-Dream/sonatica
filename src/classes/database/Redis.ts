@@ -2,6 +2,7 @@ import { Redis as IORedis } from "ioredis";
 import { Database } from "./Database";
 
 export class Redis implements Database {
+	public static ttl: number = 86400;
 	public redis: IORedis;
 	public id: string;
 	public shards: number;
@@ -13,7 +14,7 @@ export class Redis implements Database {
 	}
 
 	public async set(key: string, data: any) {
-		await this.redis.set(this.replaceKey(key), JSON.stringify(data));
+		await this.redis.set(this.replaceKey(key), JSON.stringify(data), "EX", Redis.ttl);
 	}
 
 	public async get(key: string) {
