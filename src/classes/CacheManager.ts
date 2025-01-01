@@ -43,12 +43,23 @@ export class CacheManager {
 		this.cache.clear();
 	}
 
-	public cleanup(): void {
+	public getStats(): { ttl: number; maxSize: number; size: number } {
+		return {
+			ttl: this.ttl,
+			maxSize: this.maxSize,
+			size: this.cache.size,
+		};
+	}
+
+	public cleanup(): number {
 		const now = Date.now();
+		let cleaned = 0;
 		for (const [key, value] of this.cache.entries()) {
 			if (now - value.timestamp > this.ttl) {
 				this.cache.delete(key);
+				cleaned++;
 			}
 		}
+		return cleaned;
 	}
 }
