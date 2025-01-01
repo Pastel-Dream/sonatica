@@ -79,12 +79,12 @@ export class Storage implements Database {
 	}
 
 	private getFilePath() {
-		return path.join(__dirname, "..", "..", "..", `database-${this.shards}-${this.id}.json`);
+		return path.join(__dirname, "..", "..", "..", "datastore", `database-${this.shards}-${this.id}.json`);
 	}
 
 	fetch() {
 		try {
-			const directory = path.join(__dirname, "..", "..", "..");
+			const directory = path.join(__dirname, "..", "..", "..", "datastore");
 			if (!fs.existsSync(directory)) {
 				fs.mkdirSync(directory, { recursive: true });
 			}
