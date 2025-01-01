@@ -3,7 +3,9 @@ import { EventEmitter } from "events";
 import { SonaticaOptions, SearchQuery, VoicePacket, VoiceServer, VoiceState } from "../types/Sonatica";
 import { Node } from "./Node";
 import { Player } from "./Player";
-import { Database } from "./Database";
+import { Redis } from "./database/Redis";
+import { Storage } from "./database/Storage";
+import { Database } from "./database/Database";
 import { PlayerOptions } from "../types/Player";
 import { NodeOptions } from "../types/Node";
 import { SearchPlatform } from "../utils/sources";
@@ -51,7 +53,10 @@ export class Sonatica extends EventEmitter {
 		if (this.initiated) return;
 		if (typeof clientId !== "undefined") this.options.clientId = clientId;
 		if (typeof this.options.clientId === "undefined") throw new Error("Client ID is required.");
-		if (this.options.autoResume && this.options.redisUrl) this.db = new Database(this.options.redisUrl, this.options.clientId, this.options.shards ?? 0);
+		if (this.options.autoResume) {
+			if (this.options.redisUrl) this.db = new Redis(this.options.redisUrl, this.options.clientId, this.options.shards ?? 0);
+			else this.db = new Storage(this.options.clientId, this.options.shards ?? 0);
+		}
 
 		for (const node of this.nodes.values()) {
 			try {
@@ -123,7 +128,7 @@ export class Sonatica extends EventEmitter {
 							tracks: playlistData!.tracks.map((track) => TrackUtils.build(track, requester)),
 							duration: playlistData!.tracks.reduce((acc, cur) => acc + (cur.info.length || 0), 0),
 							url: playlistData!.pluginInfo.url,
-						}
+					  }
 					: null;
 
 			const result: SearchResult = {
@@ -143,7 +148,7 @@ export class Sonatica extends EventEmitter {
 			tracks.map(async (track) => {
 				const decoder = new TrackDecoder(track);
 				return await decoder.decode();
-			}),
+			})
 		);
 
 		const res = decodeds.map((t) => {

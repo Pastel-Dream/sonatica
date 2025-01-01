@@ -91,7 +91,7 @@ export class Node {
 			"Client-Name": this.sonatica.options.clientName,
 		});
 
-		if (this.sonatica.options.autoResume && this.sonatica.options.redisUrl) {
+		if (this.sonatica.options.autoResume && this.sonatica.db) {
 			const sessionId = await this.sonatica.db.get(`sessions.${this.options.identifier ?? this.options.host.replace(/\./g, "-")}`);
 			headers["Session-Id"] = sessionId;
 		}
@@ -156,7 +156,7 @@ export class Node {
 				{
 					this.sessionId = payload.sessionId;
 
-					if (!this.sonatica.options.autoResume || !this.sonatica.options.redisUrl) return;
+					if (!this.sonatica.options.autoResume || !this.sonatica.db) return;
 					await this.rest.request("PATCH", `/sessions/${this.sessionId}`, { resuming: true, timeout: 360 });
 					const identifier = this.options.identifier ?? this.options.host.replace(/\./g, "-");
 					await this.sonatica.db.set(`sessions.${identifier}`, this.sessionId);

@@ -108,7 +108,7 @@ export class Player {
 		await this.node.rest.request("DELETE", `/sessions/${this.node.sessionId}/players/${this.guild}`);
 		this.sonatica.emit("playerDestroy", this);
 		this.sonatica.players.delete(this.guild);
-		if (this.sonatica.options.redisUrl && this.sonatica.options.autoResume) await this.sonatica.db.delete(`players.${this.guild}`);
+		if (this.sonatica.db && this.sonatica.options.autoResume) await this.sonatica.db.delete(`players.${this.guild}`);
 	}
 
 	public setVoiceChannel(channel: string): this {
@@ -298,7 +298,7 @@ export class Player {
 	}
 
 	public save() {
-		if (!this.sonatica.options.autoResume || !this.sonatica.options.redisUrl) return;
+		if (!this.sonatica.options.autoResume || !this.sonatica.db) return;
 
 		this.sonatica.db.set(`players.${this.guild}`, {
 			guild: this.guild,

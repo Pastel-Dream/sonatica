@@ -1,12 +1,13 @@
-import { Redis } from "ioredis";
+import { Redis as IORedis } from "ioredis";
+import { Database } from "./Database";
 
-export class Database {
-	public redis: Redis;
+export class Redis implements Database {
+	public redis: IORedis;
 	public id: string;
 	public shards: number;
 
 	constructor(redisUrl: string, clientId: string, shards: number) {
-		this.redis = new Redis(redisUrl);
+		this.redis = new IORedis(redisUrl);
 		this.shards = shards;
 		this.id = clientId;
 	}
@@ -20,7 +21,8 @@ export class Database {
 	}
 
 	public async delete(key: string) {
-		return await this.redis.del(this.replaceKey(key));
+		await this.redis.del(this.replaceKey(key));
+		return true;
 	}
 
 	private replaceKey(key: string) {
