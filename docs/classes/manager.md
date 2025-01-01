@@ -25,6 +25,8 @@ new Manager(options: ManagerOptions)
 
 ## Methods
 
+### `send(id: string, payload: Payload): void`
+
 Function to send data to the websocket.
 
 > Returns: `void`
@@ -33,6 +35,16 @@ Function to send data to the websocket.
 | --------- | :----------------------------- |
 | `id`      | `string`                       |
 | `payload` | [Payload](../typedefs/payload) |
+
+### `sorter(nodes: Collection<string, Node>): Collection<string, Node>`
+
+Function to sort nodes.
+
+> Returns: `Collection<string, Node>`
+
+| Parameter | Type                                        |
+| --------- | :------------------------------------------ |
+| `nodes`   | Collection<string, [Node](../classes/node)> |
 
 ## Overview
 
