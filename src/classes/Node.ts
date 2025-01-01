@@ -391,7 +391,7 @@ export class Node {
 					query: `${previousTrack.title} - ${previousTrack.author}`,
 					source: SearchPlatform["youtube"],
 				},
-				previousTrack.requester
+				previousTrack.requester,
 			);
 
 			mixUrl = getMixUrl(previousTrack.sourceName! === "youtube" ? previousTrack.identifier! : base_response.tracks[0].identifier);
