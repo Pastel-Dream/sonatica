@@ -14,7 +14,8 @@ export class Redis implements Database {
 	}
 
 	public async set(key: string, data: any) {
-		await this.redis.set(this.replaceKey(key), JSON.stringify(data), "EX", Redis.ttl);
+		const ttl = key.startsWith("sessions") ? 0 : Redis.ttl;
+		await this.redis.set(this.replaceKey(key), JSON.stringify(data), "EX", ttl);
 	}
 
 	public async get(key: string) {
