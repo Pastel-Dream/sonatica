@@ -55,47 +55,16 @@ export class TrackDecoder {
 			}
 
 			track.encoded = this.encoded;
-			switch (version) {
-				case 1:
-					track.info.title = this.readString();
-					track.info.author = this.readString();
-					track.info.length = this.readInt64();
-					track.info.identifier = this.readString();
-					track.info.isSeekable = true;
-					track.info.isStream = this.readBool();
-					track.info.uri = null;
-					track.info.artworkUrl = null;
-					track.info.isrc = null;
-					track.info.sourceName = this.readString();
-					track.info.position = this.readInt64();
-					break;
-				case 2:
-					track.info.title = this.readString();
-					track.info.author = this.readString();
-					track.info.length = this.readInt64();
-					track.info.identifier = this.readString();
-					track.info.isSeekable = true;
-					track.info.isStream = this.readBool();
-					track.info.uri = this.readNullableString();
-					track.info.artworkUrl = null;
-					track.info.isrc = null;
-					track.info.sourceName = this.readString();
-					track.info.position = this.readInt64();
-					break;
-				case 3:
-					track.info.title = this.readString();
-					track.info.author = this.readString();
-					track.info.length = this.readInt64();
-					track.info.identifier = this.readString();
-					track.info.isSeekable = true;
-					track.info.isStream = this.readBool();
-					track.info.uri = this.readNullableString();
-					track.info.artworkUrl = this.readNullableString();
-					track.info.isrc = this.readNullableString();
-					track.info.sourceName = this.readString();
-					track.info.position = this.readInt64();
-					break;
-			}
+			track.info.title = this.readString();
+			track.info.author = this.readString();
+			track.info.length = this.readInt64();
+			track.info.identifier = this.readString();
+			track.info.isStream = this.readBool();
+			if (version >= 2) track.info.uri = this.readNullableString();
+			if (version >= 3) track.info.artworkUrl = this.readNullableString();
+			if (version >= 3) track.info.isrc = this.readNullableString();
+			track.info.sourceName = this.readString();
+			track.info.position = this.readInt64();
 
 			return { track, version };
 		} catch (e) {
