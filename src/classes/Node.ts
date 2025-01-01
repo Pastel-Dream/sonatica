@@ -201,7 +201,7 @@ export class Node {
 
 					if (this.reconnectAttempts !== 1) {
 						this.sonatica.players
-							.filter((p) => p?.options && this?.options && p.node.options.identifier === this.options.identifier)
+							.filter((p) => p?.node?.options?.identifier === this?.options?.identifier)
 							.forEach(async (p) => {
 								const player = this.sonatica.players.get(p.guild);
 								if (!player) return;
@@ -359,9 +359,9 @@ export class Node {
 
 	public destroy() {
 		if (!this.connected) return;
-		const players = this.sonatica.players.filter((p) => p.node == this);
+		const players = this.sonatica.players.filter((p) => p?.node?.options?.identifier === this?.options?.identifier);
 		if (players.size) {
-			players.map((p) => {
+			players.forEach((p) => {
 				if (this.sonatica.options.autoMove) p.moveNode();
 				else p.destroy();
 			});
