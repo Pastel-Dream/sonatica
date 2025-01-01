@@ -11,6 +11,8 @@ export class TrackDecoder {
 	}
 
 	public async decode(): Promise<{ track: TrackData | null; version: number; error?: Error }> {
+		if (!this.encoded) return { track: null, version: 0, error: new Error("No encoded data provided") };
+
 		try {
 			this.buffer = base64Decode(this.encoded);
 		} catch (e) {
