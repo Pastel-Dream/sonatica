@@ -385,7 +385,11 @@ export class Player {
 	 * @returns The player instance.
 	 */
 	public async pause(paused: boolean) {
+		if (typeof paused !== "boolean") throw new TypeError("Paused must be a boolean.");
+		if (paused === this.paused) return this;
 		await this.node.rest.request("PATCH", `/sessions/${this.node.sessionId}/players/${this.guild}?noReplace=false`, { paused: paused });
+		this.playing = !paused;
+		this.paused = paused;
 		return this;
 	}
 
