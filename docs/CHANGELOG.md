@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Pastel-Dream/sonatica/compare/v1.4.0...v1.4.1) (2025-01-05)
+
+
+### Bug Fixes
+
+* **Player:** improve position fetching logic with fallback options ([538c67e](https://github.com/Pastel-Dream/sonatica/commit/538c67e77666514d18f16351b455db92df7f33a5))
+
 # [1.4.0](https://github.com/Pastel-Dream/sonatica/compare/v1.3.3...v1.4.0) (2025-01-01)
 
 
