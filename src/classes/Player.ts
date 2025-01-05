@@ -269,7 +269,7 @@ export class Player {
 
 		if (currentNode.connected) {
 			const fetchedPlayer: any = await currentNode.rest.request("GET", `/sessions/${currentNode.sessionId}/players/${this.guild}`);
-			position = fetchedPlayer.track.info.position;
+			position = fetchedPlayer?.track?.info?.position || this?.position || 0;
 		}
 
 		await destinationNode.rest.request("PATCH", `/sessions/${destinationNode.sessionId}/players/${this.guild}?noReplace=false`, {
