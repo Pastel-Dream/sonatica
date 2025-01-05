@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/Pastel-Dream/sonatica/compare/v1.4.2...v1.4.3) (2025-01-05)
+
+
+### Bug Fixes
+
+* **Player:** add optional chaining to prevent runtime errors in player state updates ([a03d539](https://github.com/Pastel-Dream/sonatica/commit/a03d539068030a8d04f8f02dd16823d78ef43f79))
+
 ## [1.4.2](https://github.com/Pastel-Dream/sonatica/compare/v1.4.1...v1.4.2) (2025-01-05)
 
 
