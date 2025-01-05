@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/Pastel-Dream/sonatica/compare/v1.4.1...v1.4.2) (2025-01-05)
+
+
+### Bug Fixes
+
+* **Player:** validate paused parameter and update state management in pause method ([de878b7](https://github.com/Pastel-Dream/sonatica/commit/de878b7d1d26de5be8ac654d6e4460e59f43213b))
+
 ## [1.4.1](https://github.com/Pastel-Dream/sonatica/compare/v1.4.0...v1.4.1) (2025-01-05)
 
 
