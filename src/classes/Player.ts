@@ -273,23 +273,23 @@ export class Player {
 		}
 
 		await destinationNode.rest.request("PATCH", `/sessions/${destinationNode.sessionId}/players/${this.guild}?noReplace=false`, {
-			track: { encoded: this.queue.current?.track, userData: this.queue.current?.requester },
+			track: { encoded: this?.queue?.current?.track, userData: this?.queue?.current?.requester },
 			position: position,
-			volume: this.volume,
-			paused: this.paused,
+			volume: this?.volume,
+			paused: this?.paused,
 			filters: {
-				distortion: this.filters.distortion,
-				equalizer: this.filters.equalizer,
-				karaoke: this.filters.karaoke,
-				rotation: this.filters.rotation,
-				timescale: this.filters.timescale,
-				vibrato: this.filters.vibrato,
-				volume: this.filters.volume,
+				distortion: this?.filters?.distortion,
+				equalizer: this?.filters?.equalizer,
+				karaoke: this?.filters?.karaoke,
+				rotation: this?.filters?.rotation,
+				timescale: this?.filters?.timescale,
+				vibrato: this?.filters?.vibrato,
+				volume: this?.filters?.volume,
 			},
 			voice: {
-				token: this.voiceState.event.token,
-				endpoint: this.voiceState.event.endpoint,
-				sessionId: this!.voiceState?.sessionId!,
+				token: this?.voiceState?.event?.token,
+				endpoint: this?.voiceState?.event?.endpoint,
+				sessionId: this?.voiceState?.sessionId,
 			},
 		});
 
