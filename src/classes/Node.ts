@@ -143,7 +143,7 @@ export class Node {
 		if (code !== 1000 || reason !== "destroy") this.reconnect();
 
 		this.sonatica.players
-			.filter((p) => p?.options && this?.options && p.node.options.identifier === this.options.identifier)
+			.filter((p) => p?.node?.options?.identifier === this?.options?.identifier)
 			.forEach((p) => {
 				if (!this.sonatica.options.autoMove) return (p.playing = false);
 				if (this.sonatica.options.autoMove) {
