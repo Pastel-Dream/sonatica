@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/Pastel-Dream/sonatica/compare/v1.4.3...v1.4.4) (2025-01-07)
+
+
+### Bug Fixes
+
+* **Node:** add optional chaining to prevent runtime errors in player filtering logic ([e7309f9](https://github.com/Pastel-Dream/sonatica/commit/e7309f91fbe4397534f00432e3f8fed62d3ef69d))
+
 ## [1.4.3](https://github.com/Pastel-Dream/sonatica/compare/v1.4.2...v1.4.3) (2025-01-05)
 
 
