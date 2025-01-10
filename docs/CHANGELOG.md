@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/Pastel-Dream/sonatica/compare/v1.4.4...v1.4.5) (2025-01-10)
+
+
+### Bug Fixes
+
+* **Sonatica:** update regex for query validation ([1bc3f89](https://github.com/Pastel-Dream/sonatica/commit/1bc3f8997a1c343db35eef56b5e059a1ae7e21b8))
+
 ## [1.4.4](https://github.com/Pastel-Dream/sonatica/compare/v1.4.3...v1.4.4) (2025-01-07)
 
 
