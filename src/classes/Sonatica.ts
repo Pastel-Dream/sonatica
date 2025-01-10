@@ -98,7 +98,7 @@ export class Sonatica extends EventEmitter {
 	public async search(query: SearchQuery, requester?: unknown) {
 		const source: SearchPlatform | string = query.source ?? SearchPlatform[this.options.defaultSearchPlatform];
 		let search = query.query;
-		if (!/^(https?:\/\/)?([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/.test(query.query)) search = `${source}:${query.query}`;
+		if (!/^(https?:\/\/)?([a-zA-Z0-9\-_]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/.test(query.query)) search = `${source}:${query.query}`;
 
 		const cacheKey = `${search}`;
 		const cached = this.cacheManager.get(cacheKey);
