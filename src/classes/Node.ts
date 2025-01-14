@@ -1,8 +1,8 @@
 import { WebSocket } from "ws";
-import { NodeOptions, NodeStats } from "../types/Node";
+import { NodeInfo, NodeOptions, NodeStats } from "../types/Node";
 import { Sonatica } from "./Sonatica";
 import { Rest } from "./Rest";
-import { EventOp, Ops, TrackEndEvent, TrackExceptionEvent, TrackStartEvent, TrackStuckEvent, WebSocketClosedEvent } from "../types/Op";
+import { EventOp, LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, Ops, TrackEndEvent, TrackExceptionEvent, TrackStartEvent, TrackStuckEvent, WebSocketClosedEvent } from "../types/Op";
 import { RestPlayer, PreviousPlayer, TrackData, SearchResult } from "../types/Rest";
 import { Player } from "./Player";
 import { RepeatMode, UnresolvedTrack, Track } from "../types/Player";
@@ -19,6 +19,22 @@ export class Node {
 	public sessionId: string;
 	public sonatica: Sonatica;
 	public ws: WebSocket;
+	public info: NodeInfo = {
+		version: {
+			semver: "",
+			major: 0,
+			minor: 0,
+			patch: 0,
+			preRelease: false,
+		},
+		buildTime: 0,
+		filters: [],
+		git: { branch: "", commit: "", commitTime: 0 },
+		jvm: "0",
+		lavaplayer: "0",
+		plugins: [],
+		sourceManagers: [],
+	};
 	public stats: NodeStats = {
 		players: 0,
 		playingPlayers: 0,
@@ -128,9 +144,11 @@ export class Node {
 	/**
 	 * Handles the WebSocket connection opening.
 	 */
-	protected open() {
+	protected async open() {
 		if (this.reconnectTimeout) clearTimeout(this.reconnectTimeout);
 		this.sonatica.emit("nodeConnect", this);
+
+		this.info = <NodeInfo>await this.rest.request("GET", "/info");
 	}
 
 	/**
@@ -293,6 +311,15 @@ export class Node {
 				player.position = 0;
 				this.trackEnd(player, <Track>track, payload);
 				break;
+			case "LyricsFoundEvent":
+				this.lyricsFound(player, <Track>track, payload);
+				break;
+			case "LyricsNotFoundEvent":
+				this.lyricsNotFound(player, <Track>track, payload);
+				break;
+			case "LyricsLineEvent":
+				this.lyricsLine(player, <Track>track, payload);
+				break;
 		}
 	}
 
@@ -397,6 +424,36 @@ export class Node {
 	 */
 	protected socketClosed(player: Player, payload: WebSocketClosedEvent): void {
 		this.sonatica.emit("socketClosed", player, payload);
+	}
+
+	/**
+	 * Handles a "LyricsFoundEvent" event.
+	 * @param {Player} player - The player that received the event.
+	 * @param {Track} track - The track that received the lyrics.
+	 * @param {LyricsFoundEvent} payload - The event payload.
+	 */
+	protected lyricsFound(player: Player, track: Track, payload: LyricsFoundEvent): void {
+		this.sonatica.emit("lyricsFound", player, track, payload);
+	}
+
+	/**
+	 * Handles a "LyricsNotFoundEvent" event.
+	 * @param {Player} player - The player that received the event.
+	 * @param {Track} track - The track that did not receive the lyrics.
+	 * @param {LyricsNotFoundEvent} payload - The event payload.
+	 */
+	protected lyricsNotFound(player: Player, track: Track, payload: LyricsNotFoundEvent): void {
+		this.sonatica.emit("lyricsNotFound", player, track, payload);
+	}
+
+	/**
+	 * Handles a "LyricsLineEvent" event.
+	 * @param {Player} player - The player that received the event.
+	 * @param {Track} track - The track that received the lyrics line.
+	 * @param {LyricsLineEvent} payload - The event payload.
+	 */
+	protected lyricsLine(player: Player, track: Track, payload: LyricsLineEvent): void {
+		this.sonatica.emit("lyricsLine", player, track, payload);
 	}
 
 	/**

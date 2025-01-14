@@ -69,7 +69,7 @@ export type StatsOp = {
 export type EventOp = {
 	op: "event";
 	guildId: string;
-} & (TrackStartEvent | TrackEndEvent | TrackExceptionEvent | TrackStuckEvent | WebSocketClosedEvent);
+} & (TrackStartEvent | TrackEndEvent | TrackExceptionEvent | TrackStuckEvent | WebSocketClosedEvent | LyricsFoundEvent | LyricsNotFoundEvent | LyricsLineEvent);
 
 /**
  * @interface TrackStartEvent
@@ -129,6 +129,73 @@ export interface WebSocketClosedEvent {
 	code: number;
 	reason: string;
 	byRemote: boolean;
+}
+
+/**
+ * Event triggered when lyrics are found.
+ * @interface LyricsFoundEvent
+ * @property {string} type - The type of the event, should be "LyricsFoundEvent".
+ * @property {LyricsResult} lyrics - The result containing the found lyrics.
+ */
+export interface LyricsFoundEvent {
+	type: "LyricsFoundEvent";
+	lyrics: LyricsResult;
+}
+
+/**
+ * Event triggered when lyrics are not found.
+ * @interface LyricsNotFoundEvent
+ * @property {string} type - The type of the event, should be "LyricsNotFoundEvent".
+ */
+export interface LyricsNotFoundEvent {
+	type: "LyricsNotFoundEvent";
+}
+
+/**
+ * Event triggered for each line of lyrics.
+ * @interface LyricsLineEvent
+ * @property {string} type - The type of the event, should be "LyricsLineEvent".
+ * @property {number} lineIndex - The index of the line in the lyrics.
+ * @property {LyricsLine} line - The line of lyrics.
+ * @property {boolean} skipped - Indicates if the line was skipped.
+ */
+export interface LyricsLineEvent {
+	type: "LyricsLineEvent";
+	lineIndex: number;
+	line: LyricsLine;
+	skipped: boolean;
+}
+
+/**
+ * Represents a single line of lyrics.
+ * @interface LyricsLine
+ * @property {number} timestamp - The timestamp of the line.
+ * @property {number | null} duration - The duration of the line; null if unknown.
+ * @property {string} line - The text of the lyrics line.
+ * @property {object} plugin - The plugin that provided the lyrics line.
+ */
+export interface LyricsLine {
+	timestamp: number;
+	duration: number | null;
+	line: string;
+	plugin: object;
+}
+
+/**
+ * Represents the result of a lyrics search.
+ * @interface LyricsResult
+ * @property {string} sourceName - The name of the source of the lyrics.
+ * @property {string} provider - The provider of the lyrics.
+ * @property {string | null} text - The full text of the lyrics; null if not available.
+ * @property {LyricsLine[]} lines - The individual lines of the lyrics.
+ * @property {object} plugin - The plugin that provided the lyrics.
+ */
+export interface LyricsResult {
+	sourceName: string;
+	provider: string;
+	text: string | null;
+	lines: LyricsLine[];
+	plugin: object;
 }
 
 /**

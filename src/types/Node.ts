@@ -24,6 +24,27 @@ export interface NodeOptions {
 	playback?: boolean;
 }
 
+export interface NodeInfo {
+	version: {
+		semver: string;
+		major: number;
+		minor: number;
+		patch: number;
+		preRelease: boolean;
+	};
+	buildTime: number;
+	git: {
+		branch: string;
+		commit: string;
+		commitTime: number;
+	};
+	jvm: string;
+	lavaplayer: string;
+	sourceManagers: string[];
+	filters: string[];
+	plugins: { name: string; version: string }[];
+}
+
 /**
  * Statistics for a Node.
  */

@@ -350,6 +350,19 @@ export class Player {
 	}
 
 	/**
+	 * Subscribes to the lyrics of the current track.
+	 * @throws {RangeError} If the Lavalyrics plugin is not found.
+	 * @returns A promise that resolves when the subscription is successful.
+	 */
+	public async subscribeLyrics() {
+		// Check if the Lavalyrics plugin is installed and enabled on the node.
+		if (!this.node.info.plugins.find((plugin) => plugin.name === "lavalyrics-plugin")) throw new RangeError("Lavalyrics plugin not found.");
+
+		// Subscribe to the lyrics of the current track.
+		await this.node.rest.request("POST", `/sessions/${this.node.sessionId}/players/${this.guild}/lyrics/subscribe`, {});
+	}
+
+	/**
 	 * Skips to the next track in the queue.
 	 * @returns A promise that resolves when the next track starts playing.
 	 */
