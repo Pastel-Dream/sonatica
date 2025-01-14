@@ -19,7 +19,6 @@ import { TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op
  * @property {SearchPlatform} [defaultSearchPlatform] - The default search platform.
  * @property {boolean} [autoMove] - Whether to enable automatic moving.
  * @property {boolean} [autoResume] - Whether to enable automatic resume.
- * @property {number} [cacheTTL] - The time-to-live for cache in seconds.
  * @property {(nodes: Collection<string, Node>) => Collection<string, Node>} [sorter] - A function to sort nodes.
  * @property {(id: string, payload: Payload) => void} send - A function to send payloads.
  */
@@ -34,7 +33,6 @@ export interface SonaticaOptions {
 	defaultSearchPlatform?: SearchPlatform;
 	autoMove?: boolean;
 	autoResume?: boolean;
-	cacheTTL?: number;
 	sorter?: (nodes: Collection<string, Node>) => Collection<string, Node>;
 	send(id: string, payload: Payload): void;
 }

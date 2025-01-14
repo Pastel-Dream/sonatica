@@ -20,7 +20,6 @@ new Manager(options: ManagerOptions)
 | `cliendName`            | `string`  | The name of the client.                            |
 | `nodes`                 | `array`   | The list of NodeOptions.                           |
 | `shards`                | `number`  | The number of shard count.                         |
-| `cacheTTL`              | `number`  | The cache TTL.                                     |
 | `defaultSearchPlatform` | `string`  | The default search platform.                       |
 
 ## Methods

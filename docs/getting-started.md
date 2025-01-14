@@ -54,7 +54,6 @@ client.manager = new Sonatica({
   autoPlay: true,
   defaultSearchPlatform: SearchPlatform["youtube music"],
   autoMove: true,
-  cacheTTL: 30 * 60 * 1000, // ms | default is 30 minutes.
 
   // redis is required for auto resume.
   autoResume: true,
