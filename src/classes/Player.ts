@@ -294,6 +294,7 @@ export class Player {
 		});
 
 		this.node = destinationNode;
+		this.sonatica.emit("nodeSwitch", this, currentNode, destinationNode);
 		destroyOldNode(currentNode);
 
 		return this;

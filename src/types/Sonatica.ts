@@ -152,6 +152,14 @@ export interface SonaticaEvents {
 	nodeReconnect?: (node?: Node) => void;
 
 	/**
+	 * Emitted when a node switch occurs.
+	 * @param {Player} [player] - The player that switched nodes.
+	 * @param {Node} [oldNode] - The old node.
+	 * @param {Node} [newNode] - The new node.
+	 */
+	nodeSwitch?: (player: Player, oldNode: Node, newNode: Node) => void;
+
+	/**
 	 * Emitted when a node disconnects.
 	 * @param {Node} [node] - The disconnected node.
 	 * @param {{ code?: number; reason?: string }} [reason] - The reason for disconnection.

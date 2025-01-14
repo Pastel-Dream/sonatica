@@ -56,9 +56,10 @@ Function to sort nodes.
 |                       | [destroy](#•-destroy)                   | [nodeDisconnect](#•-nodedisconnect) |
 |                       | [destroyNode](#•-destroynode)           | [nodeError](#•-nodeerror)           |
 |                       | [get](#•-get)                           | [nodeRaw](#•-noderaw)               |
-|                       | [init](#•-init)                         | [playerCreate](#•-playercreate)     |
-|                       | [search](#•-search)                     | [playerDestroy](#•-playerdestroy)   |
-|                       | [updateVoiceState](#•-updatevoicestate) | [queueEnd](#•-queueend)             |
+|                       | [init](#•-init)                         | [nodeSwitch](#•-nodeswitch)         |
+|                       | [search](#•-search)                     | [playerCreate](#•-playercreate)     |
+|                       | [updateVoiceState](#•-updatevoicestate) | [playerDestroy](#•-playerdestroy)   |
+|                       |                                         | [queueEnd](#•-queueend)             |
 |                       |                                         | [playerMove](#•-playermove)         |
 |                       |                                         | [trackStart](#•-trackstart)         |
 |                       |                                         | [trackEnd](#•-trackend)             |
@@ -125,6 +126,16 @@ Function to sort nodes.
 > | Parameter | Type    |
 > | --------- | :------ |
 > | payload   | unknown |
+
+#### • nodeSwitch
+
+> Emitted when a Node is switched.
+>
+> | Parameter | Type                        |
+> | --------- | :-------------------------- |
+> | player    | [Player](../classes/player) |
+> | oldNode   | [Node](../classes/node)     |
+> | newNode   | [Node](../classes/node)     |
 
 #### • playerCreate
 
