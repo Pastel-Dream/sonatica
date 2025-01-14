@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/Pastel-Dream/sonatica/compare/v1.4.5...v1.5.0) (2025-01-14)
+
+
+### Features
+
+* **Sonatica:** add nodeSwitch event ([d9d9c74](https://github.com/Pastel-Dream/sonatica/commit/d9d9c74ba88f3d7549f2e1b371612b5c3d9701e0))
+* **TrackDecoder:** implement custom base64 to ArrayBuffer conversion ([8150ec9](https://github.com/Pastel-Dream/sonatica/commit/8150ec9e3cd7c665daf4e56d1723f6f541500964))
+
 ## [1.4.5](https://github.com/Pastel-Dream/sonatica/compare/v1.4.4...v1.4.5) (2025-01-10)
 
 
