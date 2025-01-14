@@ -27,4 +27,4 @@ export * from "./utils/utils"; // Utility functions
 
 // Exporting sorters
 export { default as leastLoadNodeSorter } from "./sorter/leastLoadNode"; // Sorter for least loaded nodes
-export { default as leastUsedNodesSorter } from "./sorter/leastUsedNodes"; // Sorter for least used nodes
+export { default as leastUsedNodesSorter } from "./sorter/leastUsedNode"; // Sorter for least used nodes
