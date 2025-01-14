@@ -1,2 +1,7 @@
 @dist/
 node_modules/
+
+bun.lockb
+yarn.lock
+pnpm-lock.yml
+package-lock.json
