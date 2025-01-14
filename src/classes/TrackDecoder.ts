@@ -1,5 +1,4 @@
 import { TrackData } from "../types/Rest";
-import { decode as base64Decode } from "base64-arraybuffer";
 
 /**
  * Class for decoding track data from a base64 encoded string.
@@ -25,7 +24,7 @@ export class TrackDecoder {
 		if (!this.encoded) return { track: null, version: 0, error: new Error("No encoded data provided") };
 
 		try {
-			this.buffer = base64Decode(this.encoded);
+			this.buffer = this.base64ToArrayBuffer(this.encoded);
 		} catch (e) {
 			return { track: null, version: 0, error: new Error("Invalid base64: " + e) };
 		}
@@ -81,6 +80,21 @@ export class TrackDecoder {
 		} catch (e) {
 			return { track, version: 0, error: e as Error };
 		}
+	}
+
+	/**
+	 * Converts a base64 string to an ArrayBuffer.
+	 * @param {string} base64 - The base64 string to convert.
+	 * @returns {ArrayBuffer} The resulting ArrayBuffer.
+	 */
+	private base64ToArrayBuffer(base64: string): ArrayBuffer {
+		const binaryString = atob(base64);
+		const len = binaryString.length;
+		const bytes = new Uint8Array(len);
+		for (let i = 0; i < len; i++) {
+			bytes[i] = binaryString.charCodeAt(i);
+		}
+		return bytes.buffer;
 	}
 
 	/**
