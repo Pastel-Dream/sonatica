@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Pastel-Dream/sonatica/compare/v1.5.0...v1.6.0) (2025-01-14)
+
+
+### Features
+
+* **Node, Player, Op, NodeInfo:** add lyrics handling ([8407f36](https://github.com/Pastel-Dream/sonatica/commit/8407f36c61e7780c46b3b4544baa28d718dd60b1))
+
 # [1.5.0](https://github.com/Pastel-Dream/sonatica/compare/v1.4.5...v1.5.0) (2025-01-14)
 
 
