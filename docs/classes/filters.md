@@ -1,5 +1,7 @@
 # Filters
 
+The `Filters` class represents a collection of audio filters that can be applied to audio playback.
+
 ### Constructor
 
 ```ts

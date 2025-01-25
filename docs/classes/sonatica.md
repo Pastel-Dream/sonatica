@@ -1,11 +1,11 @@
-# Manager
+# Sonatica
 
-Constructs a new Manager instance.
+The `Sonatica` class represents the main functionality of the Sonatica
 
 ### Constructor
 
 ```ts
-new Manager(options: ManagerOptions)
+new Sonatica(options: ManagerOptions)
 ```
 
 ## Options
@@ -21,6 +21,13 @@ new Manager(options: ManagerOptions)
 | `nodes`                 | `array`   | The list of NodeOptions.                           |
 | `shards`                | `number`  | The number of shard count.                         |
 | `defaultSearchPlatform` | `string`  | The default search platform.                       |
+
+# Properties
+
+| Property  | Type                           | Description                              |
+| --------- | ------------------------------ | ---------------------------------------- |
+| `nodes`   | `(Collection<string, Node>)`   | The collection of nodes in the system.   |
+| `players` | `(Collection<string, Player>)` | The collection of players in the system. |
 
 ## Methods
 
@@ -334,10 +341,10 @@ Function to sort nodes.
 >
 > Returns: Promise<[SearchResult](../typedefs/searchResult)>
 >
-> | Parameter            | Type    |
-> | -------------------- | :------ |
-> | query                | string  |
-> | `Optional` requester | unknown |
+> | Parameter            | Type                                   |
+> | -------------------- | :------------------------------------- |
+> | query                | [SearchQuery](../typedefs/searchQuery) |
+> | `Optional` requester | unknown                                |
 
 #### • updateVoiceState()
 

@@ -19,7 +19,7 @@ export default defineConfig({
       {
         text: "Classes",
         items: [
-          { text: "Manager", link: "/classes/manager" },
+          { text: "Sonatica", link: "/classes/sonatica" },
           { text: "Player", link: "/classes/player" },
           { text: "Node", link: "/classes/node" },
           { text: "Queue", link: "/classes/queue" },

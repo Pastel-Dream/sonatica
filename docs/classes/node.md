@@ -1,5 +1,7 @@
 # Node
 
+The `Node` class represents a Node in the Sonatica system, responsible for handling audio playback.
+
 ### Constructor
 
 ```js
