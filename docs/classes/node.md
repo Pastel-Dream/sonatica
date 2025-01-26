@@ -26,7 +26,7 @@ new Node(options: NodeOptions)
 
 | Properties                      | Methods                       |
 | ------------------------------- | :---------------------------- |
-| [`manager`](#•-manager)         | [`connect`](#•-connect)       |
+| [`sonatica`](#•-sonatica)       | [`connect`](#•-connect)       |
 | [`options`](#•-options)         | [`destroy`](#•-destroy)       |
 | [`socket`](#•-socket)           | [`setEnabled`](#•-setenabled) |
 | [`stats`](#•-stats)             |                               |
@@ -35,13 +35,13 @@ new Node(options: NodeOptions)
 
 ### Properties
 
-#### • manager
+#### • sonatica
 
 > The main hub for interacting with Lavalink.
 >
-> | Type                          |
-> | ----------------------------- |
-> | [`Manager`](/classes/manager) |
+> | Type                           |
+> | ------------------------------ |
+> | [`Sonatica`](/classes/sonatica) |
 
 #### • options
 

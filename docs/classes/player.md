@@ -26,7 +26,7 @@ new Player(options: PlayerOptions)
 | [dynamicRepeat](#•-dynamicrepeat)         | [connect](#•-connect)                           |
 | [filters](#•-filters)                     | [destroy](#•-destroy)                           |
 | [guild](#•-guild)                         | [disconnect](#•-disconnect)                     |
-| [manager](#•-manager)                     | [get](#•-get)                                   |
+| [sonatica](#•-sonatica)                   | [get](#•-get)                                   |
 | [node](#•-node)                           | [pause](#•-pause)                               |
 | [nowPlayingMessage](#•-nowplayingmessage) | [previous](#•-previous)                         |
 | [options](#•-options)                     | [play](#•-play)                                 |
@@ -71,13 +71,13 @@ new Player(options: PlayerOptions)
 > | ------ |
 > | string |
 
-#### • manager
+#### • sonatica
 
 > The main hub for interacting with Lavalink.
 >
-> | Type                          |
-> | ----------------------------- |
-> | [Manager](../classes/manager) |
+> | Type                           |
+> | ------------------------------ |
+> | [Sonatica](../classes/sonatica) |
 
 #### • node
 
