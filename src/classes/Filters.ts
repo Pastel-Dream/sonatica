@@ -198,6 +198,36 @@ export class Filters {
 		}).setFilterStatus("distort", true);
 	}
 
+
+	/**
+	 * Set filter 
+	 * @param {keyof availableFilters} filter
+	 * @param {boolean} status 
+	 * @returns {this}
+	 */
+	public setFilter(filter: keyof availableFilters, status: boolean): this {
+		if (!status && typeof status !== "boolean") throw new Error("Status must be a boolean");
+		switch (filter) {
+			case "bassboost":
+				return this.setBassBoost(status);
+			case "distort":
+				return this.setDistort(status);
+			case "eightD":
+				return this.setEightD(status);
+			case "nightcore":
+				return this.setNightcore(status);
+			case "slowmo":
+				return this.setSlowmo(status);
+			case "soft":
+				return this.setSoft(status);
+			case "trebleBass":
+				return this.setTrebleBass(status);
+			case "tv":
+				return this.setTV(status);
+			case "vaporwave":
+				return this.setVaporwave(status);
+		}
+	}
 	/**
 	 * Set the karaoke options.
 	 * @param {karaokeOptions} [karaoke] - The karaoke options to set.
