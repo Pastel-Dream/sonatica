@@ -205,28 +205,40 @@ export class Filters {
 	 * @param {boolean} status 
 	 * @returns {this}
 	 */
-	public setFilter(filter: keyof availableFilters, status: boolean): this {
+	public setFilter(filter: keyof availableFilters | string, status: boolean) {
 		if (!status && typeof status !== "boolean") throw new Error("Status must be a boolean");
 		switch (filter) {
 			case "bassboost":
-				return this.setBassBoost(status);
+				this.setBassBoost(status);
+				break;
 			case "distort":
-				return this.setDistort(status);
+				this.setDistort(status);
+				break;
 			case "eightD":
-				return this.setEightD(status);
+				this.setEightD(status);
+				break;
 			case "nightcore":
-				return this.setNightcore(status);
+				this.setNightcore(status);
+				break;
 			case "slowmo":
-				return this.setSlowmo(status);
+				this.setSlowmo(status);
+				break;
 			case "soft":
-				return this.setSoft(status);
+				this.setSoft(status);
+				break;
 			case "trebleBass":
-				return this.setTrebleBass(status);
+				this.setTrebleBass(status);
+				break;
 			case "tv":
-				return this.setTV(status);
+				this.setTV(status);
+				break;
 			case "vaporwave":
-				return this.setVaporwave(status);
+				this.setVaporwave(status);
+				break;
+			default:
+				throw new Error("Invalid filter provided");
 		}
+		return this;
 	}
 	/**
 	 * Set the karaoke options.
