@@ -72,7 +72,6 @@ export class Filters {
 		await this.player.node.rest.request("PATCH", `/sessions/${this.player.node.sessionId}/players/${this.player.guild}?noReplace=false`, {
 			filters: this.getFilters(),
 		});
-
 		return this;
 	}
 
@@ -205,7 +204,7 @@ export class Filters {
 	 * @param {boolean} status 
 	 * @returns {this}
 	 */
-	public setFilter(filter: keyof availableFilters | string, status: boolean) {
+	public async setFilter(filter: keyof availableFilters | string, status: boolean) {
 		if (!status && typeof status !== "boolean") throw new Error("Status must be a boolean");
 		switch (filter) {
 			case "bassboost":
@@ -238,6 +237,7 @@ export class Filters {
 			default:
 				throw new Error("Invalid filter provided");
 		}
+		await this.updateFilters().then(() => this).catch((e) => { throw new Error(e) });
 		return this;
 	}
 	/**
@@ -303,16 +303,20 @@ export class Filters {
 	 * @returns {this}
 	 */
 	public setDistort(status: boolean): this {
-		return this.setDistortion({
-			sinOffset: 0,
-			sinScale: 0.2,
-			cosOffset: 0,
-			cosScale: 0.2,
-			tanOffset: 0,
-			tanScale: 0.2,
-			offset: 0,
-			scale: 1.2,
-		}).setFilterStatus("distort", status);
+		if (status) {
+			return this.setDistortion({
+				sinOffset: 0,
+				sinScale: 0.2,
+				cosOffset: 0,
+				cosScale: 0.2,
+				tanOffset: 0,
+				tanScale: 0.2,
+				offset: 0,
+				scale: 1.2,
+			}).setFilterStatus("distort", status);
+		} else {
+			return this.setDistortion(null).setFilterStatus("distort", status);
+		}
 	}
 
 	/**
@@ -321,7 +325,11 @@ export class Filters {
 	 * @returns {this}
 	 */
 	public setEightD(status: boolean): this {
-		return this.setRotation({ rotationHz: 0.2 }).setFilterStatus("eightD", status);
+		if (status) {
+			return this.setRotation({ rotationHz: 0.2 }).setFilterStatus("eightD", status);
+		} else {
+			return this.setRotation(null).setFilterStatus("eightD", status);
+		}
 	}
 	/**
 	 * Set the nightcore options
@@ -329,11 +337,15 @@ export class Filters {
 	 * @returns {this}
 	*/
 	public setNightcore(status: boolean): this {
-		return this.setTimescale({
-			speed: 1.1,
-			pitch: 1.125,
-			rate: 1.05,
-		}).setFilterStatus("nightcore", status);
+		if (status) {
+			return this.setTimescale({
+				speed: 1.1,
+				pitch: 1.125,
+				rate: 1.05,
+			}).setFilterStatus("nightcore", status);
+		} else {
+			return this.setTimescale(null).setFilterStatus("nightcore", status);
+		}
 	}
 	/**
 	 * Set the slowmo options
@@ -341,11 +353,15 @@ export class Filters {
 	 * @returns {this}
 	*/
 	public setSlowmo(status: boolean): this {
-		return this.setTimescale({
-			speed: 0.7,
-			pitch: 1.0,
-			rate: 0.8,
-		}).setFilterStatus("slowmo", status);
+		if (status) {
+			return this.setTimescale({
+				speed: 0.7,
+				pitch: 1.0,
+				rate: 0.8,
+			}).setFilterStatus("slowmo", status);
+		} else {
+			return this.setTimescale(null).setFilterStatus("slowmo", status);
+		}
 	}
 	/**
 	 * Set the soft options
@@ -378,7 +394,11 @@ export class Filters {
 	 * @returns {this}
 	 */
 	public setVaporwave(status: boolean): this {
-		return this.setEqualizer(equlizers.vaporwaveEqualizer).setTimescale({ pitch: 0.55 }).setFilterStatus("vaporwave", status);
+		if (status) {
+			return this.setEqualizer(equlizers.vaporwaveEqualizer).setTimescale({ pitch: 0.55 }).setFilterStatus("vaporwave", status);
+		} else {
+			return this.setEqualizer([]).setTimescale(null).setFilterStatus("vaporwave", status);
+		}
 	}
 
 	/**
