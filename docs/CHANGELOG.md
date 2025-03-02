@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/Pastel-Dream/sonatica/compare/v1.6.0...v1.7.0) (2025-03-02)
+
+
+### Features
+
+* **Sonatica:** allow custom database ([57de96e](https://github.com/Pastel-Dream/sonatica/commit/57de96e54b2c37a0d53e435152de688159030bb2))
+
 # [1.6.0](https://github.com/Pastel-Dream/sonatica/compare/v1.5.0...v1.6.0) (2025-01-14)
 
 
