@@ -72,7 +72,6 @@ export class Filters {
 		await this.player.node.rest.request("PATCH", `/sessions/${this.player.node.sessionId}/players/${this.player.guild}?noReplace=false`, {
 			filters: this.getFilters(),
 		});
-
 		return this;
 	}
 
@@ -165,7 +164,6 @@ export class Filters {
 	public tv(): this {
 		return this.setEqualizer(equlizers.tvEqualizer).setFilterStatus("tv", true);
 	}
-
 	/**
 	 * Apply the treble bass filter.
 	 * @returns {this}
@@ -199,6 +197,49 @@ export class Filters {
 		}).setFilterStatus("distort", true);
 	}
 
+
+	/**
+	 * Set filter 
+	 * @param {keyof availableFilters} filter
+	 * @param {boolean} status 
+	 * @returns {this}
+	 */
+	public async setFilter(filter: keyof availableFilters | string, status: boolean) {
+		if (!status && typeof status !== "boolean") throw new Error("Status must be a boolean");
+		switch (filter) {
+			case "bassboost":
+				this.setBassBoost(status);
+				break;
+			case "distort":
+				this.setDistort(status);
+				break;
+			case "eightD":
+				this.setEightD(status);
+				break;
+			case "nightcore":
+				this.setNightcore(status);
+				break;
+			case "slowmo":
+				this.setSlowmo(status);
+				break;
+			case "soft":
+				this.setSoft(status);
+				break;
+			case "trebleBass":
+				this.setTrebleBass(status);
+				break;
+			case "tv":
+				this.setTV(status);
+				break;
+			case "vaporwave":
+				this.setVaporwave(status);
+				break;
+			default:
+				throw new Error("Invalid filter provided");
+		}
+		await this.updateFilters().then(() => this).catch((e) => { throw new Error(e) });
+		return this;
+	}
 	/**
 	 * Set the karaoke options.
 	 * @param {karaokeOptions} [karaoke] - The karaoke options to set.
@@ -245,6 +286,119 @@ export class Filters {
 	 */
 	public setDistortion(distortion?: distortionOptions): this {
 		return this.applyFilter({ property: "distortion", value: distortion });
+	}
+
+	/**
+	 * Set the treble bass options
+	 * @param {boolean} status - The status to set.
+	 * @returns {this}
+	*/
+	public setBassBoost(status: boolean): this {
+		return this.setEqualizer(equlizers.bassBoostEqualizer).setFilterStatus("bassboost", status);
+	}
+
+	/**
+	 * Set the distort options
+	 * @param {boolean} status - The status to set.
+	 * @returns {this}
+	 */
+	public setDistort(status: boolean): this {
+		if (status) {
+			return this.setDistortion({
+				sinOffset: 0,
+				sinScale: 0.2,
+				cosOffset: 0,
+				cosScale: 0.2,
+				tanOffset: 0,
+				tanScale: 0.2,
+				offset: 0,
+				scale: 1.2,
+			}).setFilterStatus("distort", status);
+		} else {
+			return this.setDistortion(null).setFilterStatus("distort", status);
+		}
+	}
+
+	/**
+	 * Set the 8D options
+	 * @param {boolean} status - The status to set.
+	 * @returns {this}
+	 */
+	public setEightD(status: boolean): this {
+		if (status) {
+			return this.setRotation({ rotationHz: 0.2 }).setFilterStatus("eightD", status);
+		} else {
+			return this.setRotation(null).setFilterStatus("eightD", status);
+		}
+	}
+	/**
+	 * Set the nightcore options
+	 * @param {boolean} status - The status to set.
+	 * @returns {this}
+	*/
+	public setNightcore(status: boolean): this {
+		if (status) {
+			return this.setTimescale({
+				speed: 1.1,
+				pitch: 1.125,
+				rate: 1.05,
+			}).setFilterStatus("nightcore", status);
+		} else {
+			return this.setTimescale(null).setFilterStatus("nightcore", status);
+		}
+	}
+	/**
+	 * Set the slowmo options
+	 * @param {boolean} status - The status to set.
+	 * @returns {this}
+	*/
+	public setSlowmo(status: boolean): this {
+		if (status) {
+			return this.setTimescale({
+				speed: 0.7,
+				pitch: 1.0,
+				rate: 0.8,
+			}).setFilterStatus("slowmo", status);
+		} else {
+			return this.setTimescale(null).setFilterStatus("slowmo", status);
+		}
+	}
+	/**
+	 * Set the soft options
+	 * @param {boolean} status - The status to set.
+	 * @returns {this}
+	*/
+	public setSoft(status: boolean): this {
+		return this.setEqualizer(equlizers.softEqualizer).setFilterStatus("soft", status);
+	}
+	/**
+	 * Set the treble bass options
+	 * @param {boolean} status - The status to set.
+	 * @returns {this}
+	 */
+	public setTrebleBass(status: boolean): this {
+		return this.setEqualizer(equlizers.trebleBassEqualizer).setFilterStatus("trebleBass", status);
+	}
+	/**
+	 * Set the TV options
+	 * @param {boolean} status - The status to set.
+	 * @returns {this}
+	 */
+	public setTV(status: boolean): this {
+		return this.setEqualizer(equlizers.tvEqualizer).setFilterStatus("tv", status);
+	}
+
+	/**
+	 * Set the vaporwave options
+	 * @param {boolean} status - The status to set.
+	 * @returns {this}
+	 */
+	public setVaporwave(status: boolean): this {
+		if (status) {
+			return this.setEqualizer(equlizers.vaporwaveEqualizer).setTimescale({ pitch: 0.55 }).setFilterStatus("vaporwave", status);
+		} else {
+			return this.setEqualizer([]).setTimescale(null).setFilterStatus("vaporwave", status);
+		}
 	}
 
 	/**
