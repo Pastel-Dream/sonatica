@@ -1,3 +1,11 @@
+# [1.8.0](https://github.com/Pastel-Dream/sonatica/compare/v1.7.0...v1.8.0) (2025-03-30)
+
+
+### Features
+
+* **docs:** add typedefs for Lyrics, RepeatMode, and related events ([1ea23f4](https://github.com/Pastel-Dream/sonatica/commit/1ea23f44cc80d54286150727caa51c22f8509933))
+* **Player, Lyrics:** add Lyrics class and integrate with Player for lyrics management ([735857d](https://github.com/Pastel-Dream/sonatica/commit/735857dfb9f1929301334d0bf45474b09f58a05e))
+
 # [1.7.0](https://github.com/Pastel-Dream/sonatica/compare/v1.6.0...v1.7.0) (2025-03-02)
 
 
