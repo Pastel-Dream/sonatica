@@ -5,6 +5,7 @@ import { Sonatica } from "./Sonatica";
 import { Node } from "./Node";
 import { Queue } from "./Queue";
 import { TrackUtils } from "../utils/utils";
+import { Lyrics } from "./Lyrics";
 
 /**
  * Represents a music player for a specific guild.
@@ -28,6 +29,8 @@ export class Player {
 	public isAutoplay: boolean = false;
 	/** The node associated with the player. */
 	public node: Node;
+	/** The lyrics object associated with the player. */
+	public lyrics: Lyrics;
 	/** The guild ID associated with the player. */
 	public guild: string;
 	/** The voice channel ID the player is connected to. */
@@ -96,6 +99,7 @@ export class Player {
 		this.sonatica.players.set(this.guild, this);
 		this.sonatica.emit("playerCreate", this);
 		this.volume = options.volume ?? 80;
+		this.lyrics = new Lyrics(this);
 		this.filters = new Filters(this);
 	}
 
@@ -347,19 +351,6 @@ export class Player {
 		this.save();
 		this.position = 0;
 		this.playing = true;
-	}
-
-	/**
-	 * Subscribes to the lyrics of the current track.
-	 * @throws {RangeError} If the Lavalyrics plugin is not found.
-	 * @returns A promise that resolves when the subscription is successful.
-	 */
-	public async subscribeLyrics() {
-		// Check if the Lavalyrics plugin is installed and enabled on the node.
-		if (!this.node.info.plugins.find((plugin) => plugin.name === "lavalyrics-plugin")) throw new RangeError("Lavalyrics plugin not found.");
-
-		// Subscribe to the lyrics of the current track.
-		await this.node.rest.request("POST", `/sessions/${this.node.sessionId}/players/${this.guild}/lyrics/subscribe`, {});
 	}
 
 	/**
