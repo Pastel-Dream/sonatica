@@ -33,7 +33,7 @@ new Player(options: PlayerOptions)
 | [paused](#•-paused)             | [search](#•-search)                   |
 | [playing](#•-playing)           | [seek](#•-seek)                       |
 | [position](#•-position)         | [set](#•-set)                         |
-| [queue](#•-queue)               | [setRepeatMode](#•-setRepeatMode)     |
+| [queue](#•-queue)               | [setRepeat](#•-setrepeat)     |
 | [repeatMode](#•-repeatmode)     | [setTextChannel](#•-settextchannel)   |
 | [state](#•-state)               | [setVoiceChannel](#•-setvoicechannel) |
 | [textChannel](#•-textchannel)   | [setVolume](#•-setvolume)             |
