@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/Pastel-Dream/sonatica/compare/v1.8.0...v1.8.1) (2025-03-30)
+
+
+### Bug Fixes
+
+* **docs:** fix function name ([7dfb067](https://github.com/Pastel-Dream/sonatica/commit/7dfb06755430c8a06457b095ea4084fedb7c7298))
+
 # [1.8.0](https://github.com/Pastel-Dream/sonatica/compare/v1.7.0...v1.8.0) (2025-03-30)
 
 
