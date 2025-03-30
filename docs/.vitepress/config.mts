@@ -21,6 +21,7 @@ export default defineConfig({
         items: [
           { text: "Sonatica", link: "/classes/sonatica" },
           { text: "Player", link: "/classes/player" },
+          { text: "Lyrics", link: "/classes/lyrics" },
           { text: "Node", link: "/classes/node" },
           { text: "Queue", link: "/classes/queue" },
           { text: "Filters", link: "/classes/filters" },
@@ -29,9 +30,15 @@ export default defineConfig({
       {
         text: "TypeDefs",
         items: [
+          { text: "LyricsFoundEvent", link: "/typedefs/LyricsFoundEvent" },
+          { text: "LyricsLine", link: "/typedefs/LyricsLine" },
+          { text: "LyricsLineEvent", link: "/typedefs/LyricsLineEvent" },
+          { text: "LyricsNotFoundEvent", link: "/typedefs/LyricsNotFoundEvent" },
           { text: "ManagerEvents", link: "/typedefs/ManagerEvents" },
           { text: "nowPlayingMessage", link: "/typedefs/nowPlayingMessage" },
           { text: "payload", link: "/typedefs/payload" },
+          { text: "RepeatMode", link: "/typedefs/RepeatMode" },
+          { text: "SearchPlatform", link: "/typedefs/SearchPlatform" },
           { text: "playOptions", link: "/typedefs/playOptions" },
           { text: "searchResult", link: "/typedefs/searchResult" },
           { text: "stats", link: "/typedefs/stats" },

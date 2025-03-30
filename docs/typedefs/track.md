@@ -2,21 +2,21 @@
 
 ### Overview
 
-| Properties                | Methods                                   |
-| ------------------------- | :---------------------------------------- |
-| [author](#author)         | [displayThumbnail](#displaythumbnailsize) |
-| [duration](#duration)     |                                           |
-| [identifier](#identifier) |                                           |
-| [isSeekable](#isSeekable) |                                           |
-| [isStream](#isStream)     |                                           |
-| [requester](#requester)   |                                           |
-| [thumbnail](#thumbnail)   |                                           |
-| [title](#title)           |                                           |
-| [track](#track)           |                                           |
-| [uri](#uri)               |                                           |
-| [artworkUrl](#artworkurl) |                                           |
-| [sourceName](#sourcename) |                                           |
-| [customData](#customdata) |                                           |
+| Properties                | Methods |
+| ------------------------- | :------ |
+| [author](#author)         |         |
+| [duration](#duration)     |         |
+| [identifier](#identifier) |         |
+| [isSeekable](#isSeekable) |         |
+| [isStream](#isStream)     |         |
+| [requester](#requester)   |         |
+| [thumbnail](#thumbnail)   |         |
+| [title](#title)           |         |
+| [track](#track)           |         |
+| [uri](#uri)               |         |
+| [artworkUrl](#artworkurl) |         |
+| [sourceName](#sourcename) |         |
+| [customData](#customdata) |         |
 
 ### Properties
 
@@ -123,17 +123,3 @@
 > | Type                    |
 > | ----------------------- |
 > | Record<string, unknown> |
-
-### Methods
-
-#### • displayThumbnail(size)
-
-> Displays the track thumbnail with optional size or null if it's a unsupported source.
->
-> | Parameter       | Type            |
-> | --------------- | --------------- |
-> | `Optional` size | [Sizes](#sizes) |
-
-### Sizes
-
-> **Value:** `0` `1` `2` `3` `default` `mqdefault` `hqdefault` `maxresdefault`

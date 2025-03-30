@@ -21,39 +21,28 @@ new Player(options: PlayerOptions)
 
 ## Overview
 
-| Properties                                | Methods                                         |
-| ----------------------------------------- | :---------------------------------------------- |
-| [dynamicRepeat](#•-dynamicrepeat)         | [connect](#•-connect)                           |
-| [filters](#•-filters)                     | [destroy](#•-destroy)                           |
-| [guild](#•-guild)                         | [disconnect](#•-disconnect)                     |
-| [sonatica](#•-sonatica)                   | [get](#•-get)                                   |
-| [node](#•-node)                           | [pause](#•-pause)                               |
-| [nowPlayingMessage](#•-nowplayingmessage) | [previous](#•-previous)                         |
-| [options](#•-options)                     | [play](#•-play)                                 |
-| [paused](#•-paused)                       | [restart](#•-restart)                           |
-| [playing](#•-playing)                     | [search](#•-search)                             |
-| [position](#•-position)                   | [seek](#•-seek)                                 |
-| [queue](#•-queue)                         | [set](#•-set)                                   |
-| [queueRepeat](#•-queuerepeat)             | [setDynamicRepeat](#•-setdynamicrepeat)         |
-| [state](#•-state)                         | [setNowPlayingMessage](#•-setnowplayingmessage) |
-| [textChannel](#•-textchannel)             | [setQueueRepeat](#•-setqueuerepeat)             |
-| [trackRepeat](#•-trackrepeat)             | [setTextChannel](#•-settextchannel)             |
-| [voiceChannel](#•-voicechannel)           | [setTrackRepeat](#•-settrackrepeat)             |
-| [voiceState](#•-voicestate)               | [setVoiceChannel](#•-setvoicechannel)           |
-| [volume](#•-volume)                       | [setVolume](#•-setvolume)                       |
-| [isAutoplay](#•-isautoplay)               | [setAutoplay](#•-setautoplay)                   |
-|                                           | [moveNode](#•-moveNode)                         |
-|                                           | [stop](#•-stop)                                 |
+| Properties                      | Methods                               |
+| ------------------------------- | ------------------------------------- |
+| [isAutoplay](#•-isautoplay)     | [connect](#•-connect)                 |
+| [filters](#•-filters)           | [destroy](#•-destroy)                 |
+| [guild](#•-guild)               | [disconnect](#•-disconnect)           |
+| [sonatica](#•-sonatica)         | [get](#•-get)                         |
+| [node](#•-node)                 | [pause](#•-pause)                     |
+| [lyrics](#•-lyrics)             | [previous](#•-previous)               |
+| [options](#•-options)           | [skip](#•-skip)                       |
+| [paused](#•-paused)             | [search](#•-search)                   |
+| [playing](#•-playing)           | [seek](#•-seek)                       |
+| [position](#•-position)         | [set](#•-set)                         |
+| [queue](#•-queue)               | [setRepeatMode](#•-setRepeatMode)     |
+| [repeatMode](#•-repeatmode)     | [setTextChannel](#•-settextchannel)   |
+| [state](#•-state)               | [setVoiceChannel](#•-setvoicechannel) |
+| [textChannel](#•-textchannel)   | [setVolume](#•-setvolume)             |
+| [voiceChannel](#•-voicechannel) | [setAutoplay](#•-setautoplay)         |
+| [voiceState](#•-voicestate)     | [moveNode](#•-moveNode)               |
+| [volume](#•-volume)             | [stop](#•-stop)                       |
+|                                 | [play](#•-play)                       |
 
 ### Properties
-
-#### • dynamicRepeat
-
-> Whether the queue will repeat and shuffle every `x` amount of `ms`.
->
-> | Type    | Value |
-> | ------- | :---- |
-> | boolean | false |
 
 #### • filters
 
@@ -75,8 +64,8 @@ new Player(options: PlayerOptions)
 
 > The main hub for interacting with Lavalink.
 >
-> | Type                           |
-> | ------------------------------ |
+> | Type                            |
+> | ------------------------------- |
 > | [Sonatica](../classes/sonatica) |
 
 #### • node
@@ -87,13 +76,13 @@ new Player(options: PlayerOptions)
 > | ----------------------- |
 > | [Node](../classes/node) |
 
-#### • nowPlayingMessage
+#### • lyrics
 
-> The message of the current playing track.
+> The lyrics object associated with the player.
 >
-> | Type                                               |
-> | -------------------------------------------------- |
-> | [NowPlayingMessage](../typedefs/nowPlayingMessage) |
+> | Type                        |
+> | --------------------------- |
+> | [Lyrics](../classes/lyrics) |
 
 #### • options
 
@@ -133,13 +122,13 @@ new Player(options: PlayerOptions)
 > | ------------------------- |
 > | [Queue](../classes/queue) |
 
-#### • queueRepeat
+#### • repeatMode
 
-> Whether the player repeats after the last track.
+> The repeat mode of the player.
 >
-> | Type    | Value |
-> | ------- | ----- |
-> | boolean | false |
+> | Type                                    | Value |
+> | --------------------------------------- | ----- |
+> | [RepeatMode](../typedefs/RepeatMode.md) | 0     |
 
 #### • state
 
@@ -269,34 +258,9 @@ new Player(options: PlayerOptions)
 > | --------- | -------------------------- | -------------------------- |
 > | track     | [Track](../typedefs/track) | Plays the specified track. |
 
-#### • play()
-
-> Returns: `Promise<void>`
->
-> | Parameter | Type                                   | Description                             |
-> | --------- | -------------------------------------- | --------------------------------------- |
-> | options   | [PlayOptions](../typedefs/playOptions) | Plays the next track with some options. |
-
-#### • play()
-
-> Plays the specified track with some options.
->
-> Returns: `Promise<void>`
->
-> | Parameter | Type                                   |
-> | --------- | -------------------------------------- |
-> | track     | [Track](../typedefs/track)             |
-> | options   | [PlayOptions](../typedefs/playOptions) |
-
-#### • restart()
-
-> | Description                         | Returns |
-> | ----------------------------------- | ------- |
-> | Restarts the current playing track. | `void`  |
-
 #### • search()
 
-> Same as `Manager#search()` but a shortcut on the player itself.
+> Same as `Sonatica#search()` but a shortcut on the player itself.
 >
 > Returns: Promise<[SearchResult](../typedefs/searchResult)>
 >
@@ -326,37 +290,15 @@ new Player(options: PlayerOptions)
 > | key       | string  |
 > | value     | unknown |
 
-#### • setDynamicRepeat()
+#### • setRepeat()
 
-> Sets the queue to repeat and shuffles the queue after `x` amount of `ms`.
+> Sets the repeat mode
 >
 > Returns: `this`
 >
-> | Parameter | Type    |
-> | --------- | ------- |
-> | repeat    | boolean |
-> | ms        | number  |
-
-#### • setNowPlayingMessage()
-
-> Sets the message of the currently playing track to delete once the track ends.
->
-> Returns: `this`
->
-> | Parameter | Type    |
-> | --------- | ------- |
-> | repeat    | boolean |
-> | ms        | number  |
-
-#### • setQueueRepeat()
-
-> Sets the queue repeat.
->
-> Returns: `this`
->
-> | Parameter | Type    |
-> | --------- | ------- |
-> | repeat    | boolean |
+> | Parameter | Type                                 |
+> | --------- | ------------------------------------ |
+> | mode      | [RepeatMode](../typedefs/RepeatMode) |
 
 #### • setTextChannel()
 
@@ -367,16 +309,6 @@ new Player(options: PlayerOptions)
 > | Parameter | Type   |
 > | --------- | ------ |
 > | channel   | string |
-
-#### • setTrackRepeat()
-
-> Sets the track to repeat.
->
-> Returns: `this`
->
-> | Parameter | Type    |
-> | --------- | ------- |
-> | repeat    | boolean |
 
 #### • setVoiceChannel()
 
@@ -413,3 +345,9 @@ new Player(options: PlayerOptions)
 > | Description              | Returns |
 > | ------------------------ | ------- |
 > | Stops the current track. | `this`  |
+
+#### • skip()
+
+> | Description              | Returns |
+> | ------------------------ | ------- |
+> | Skips the current track. | `this`  |
