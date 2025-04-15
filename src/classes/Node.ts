@@ -257,18 +257,19 @@ export class Node {
 						if (!resumedPlayer.track) {
 							if (queue.length > 0) {
 								player.skip();
-								player.playing = true;
-								this.sonatica.emit("trackStart", player, player.queue.current, {
-									type: "TrackStartEvent",
-									guildId: player.guild,
-									track: player.queue.current,
-								});
 							} else {
 								player.destroy();
 								this.sonatica.emit("queueEnd", player, player.queue.current, null);
 								return;
 							}
 						}
+
+						player.playing = true;
+						this.sonatica.emit("trackStart", player, player.queue.current, {
+							type: "TrackStartEvent",
+							guildId: player.guild,
+							track: player.queue.current,
+						});
 					}
 
 					if (this.reconnectAttempts !== 1) {
