@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/Pastel-Dream/sonatica/compare/v1.8.2...v1.8.3) (2025-04-15)
+
+
+### Bug Fixes
+
+* **Node:** ensure trackStart event is emitted correctly ([e318060](https://github.com/Pastel-Dream/sonatica/commit/e3180601b9871a9af812d6947f3f042d4be61527))
+
 ## [1.8.2](https://github.com/Pastel-Dream/sonatica/compare/v1.8.1...v1.8.2) (2025-04-15)
 
 
