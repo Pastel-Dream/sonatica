@@ -237,9 +237,10 @@ export class Node {
 						if (!previousPlayer.current) return;
 						player.state = "RESUMING";
 
-						let decoded = <TrackData[]>await this.sonatica.decodeTracks(previousPlayer.queue.map((t) => t).concat(previousPlayer.current));
+						const decoded = <TrackData[]>await this.sonatica.decodeTracks(previousPlayer.queue.map((t) => t).concat(previousPlayer.current));
 						player.queue.add(TrackUtils.build(decoded.find((t) => t.encoded === previousPlayer.current, previousPlayer.requester)));
-						if (previousPlayer.queue.length > 0) player.queue.add(decoded.filter((t) => t.encoded !== previousPlayer.current).map((t) => TrackUtils.build(t, previousPlayer.requester)));
+						const queue = decoded.filter((t) => t.encoded !== previousPlayer.current).map((t) => TrackUtils.build(t, previousPlayer.requester));
+						if (previousPlayer.queue.length > 0) player.queue.add(queue);
 
 						player.setRepeat(previousPlayer.repeatMode);
 						player.filters.distortion = resumedPlayer.filters.distortion;
@@ -252,7 +253,22 @@ export class Node {
 						player.volume = resumedPlayer.volume;
 						player.position = resumedPlayer.state.position;
 						player.connect();
-						await player.play();
+
+						if (!resumedPlayer.track) {
+							if (queue.length > 0) {
+								player.skip();
+								player.playing = true;
+								this.sonatica.emit("trackStart", player, player.queue.current, {
+									type: "TrackStartEvent",
+									guildId: player.guild,
+									track: player.queue.current,
+								});
+							} else {
+								player.destroy();
+								this.sonatica.emit("queueEnd", player, player.queue.current, null);
+								return;
+							}
+						}
 					}
 
 					if (this.reconnectAttempts !== 1) {
