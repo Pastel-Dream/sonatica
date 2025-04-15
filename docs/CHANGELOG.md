@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/Pastel-Dream/sonatica/compare/v1.8.1...v1.8.2) (2025-04-15)
+
+
+### Bug Fixes
+
+* **Node:** improve track resuming logic ([a0aeff4](https://github.com/Pastel-Dream/sonatica/commit/a0aeff412e1c9a7de39741f85c3418588d05e0a4))
+
 ## [1.8.1](https://github.com/Pastel-Dream/sonatica/compare/v1.8.0...v1.8.1) (2025-03-30)
 
 
