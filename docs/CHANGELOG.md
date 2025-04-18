@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/Pastel-Dream/sonatica/compare/v1.9.0...v1.9.1) (2025-04-18)
+
+
+### Bug Fixes
+
+* **types/Sonatica:** fix type in queueEnd event ([95192d6](https://github.com/Pastel-Dream/sonatica/commit/95192d64f5e604c210e13226be8682167278772b))
+
 # [1.9.0](https://github.com/Pastel-Dream/sonatica/compare/v1.8.3...v1.9.0) (2025-04-18)
 
 
