@@ -4,7 +4,7 @@ import { NodeOptions } from "./Node";
 import { Node } from "../classes/Node";
 import { Player } from "../classes/Player";
 import { Track } from "./Player";
-import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, LyricsResult, TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
+import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, LyricsResult, TrackEndEvent, TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
 
 /**
  * Options for configuring Sonatica.
@@ -195,8 +195,10 @@ export interface SonaticaEvents {
 	/**
 	 * Emitted when the queue ends for a player.
 	 * @param {Player} [player] - The player whose queue ended.
+	 * @param {Track} [track] - The last track was played.
+	 * @param {TrackEndEvent} [payload] - The event payload.
 	 */
-	queueEnd: (player: Player) => void;
+	queueEnd: (player: Player, track: Track, payload: TrackEndEvent) => void;
 
 	/**
 	 * Emitted when a player moves to a new position in the queue.
