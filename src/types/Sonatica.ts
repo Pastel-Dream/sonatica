@@ -4,7 +4,7 @@ import { NodeOptions } from "./Node";
 import { Node } from "../classes/Node";
 import { Player } from "../classes/Player";
 import { Track } from "./Player";
-import { TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
+import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, LyricsResult, TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
 
 /**
  * Options for configuring Sonatica.
@@ -131,25 +131,25 @@ export interface SonaticaEvents {
 	 * Emitted when a new node is created.
 	 * @param {Node} [node] - The created node.
 	 */
-	nodeCreate?: (node?: Node) => void;
+	nodeCreate: (node: Node) => void;
 
 	/**
 	 * Emitted when a node is destroyed.
 	 * @param {Node} [node] - The destroyed node.
 	 */
-	nodeDestroy?: (node?: Node) => void;
+	nodeDestroy: (node: Node) => void;
 
 	/**
 	 * Emitted when a node connects.
 	 * @param {Node} [node] - The connected node.
 	 */
-	nodeConnect?: (node?: Node) => void;
+	nodeConnect: (node: Node) => void;
 
 	/**
 	 * Emitted when a node reconnects.
 	 * @param {Node} [node] - The reconnected node.
 	 */
-	nodeReconnect?: (node?: Node) => void;
+	nodeReconnect: (node: Node) => void;
 
 	/**
 	 * Emitted when a node switch occurs.
@@ -157,73 +157,73 @@ export interface SonaticaEvents {
 	 * @param {Node} [oldNode] - The old node.
 	 * @param {Node} [newNode] - The new node.
 	 */
-	nodeSwitch?: (player: Player, oldNode: Node, newNode: Node) => void;
+	nodeSwitch: (player: Player, oldNode: Node, newNode: Node) => void;
 
 	/**
 	 * Emitted when a node disconnects.
 	 * @param {Node} [node] - The disconnected node.
-	 * @param {{ code?: number; reason?: string }} [reason] - The reason for disconnection.
+	 * @param {{ code: number; reason: string }} [reason] - The reason for disconnection.
 	 */
-	nodeDisconnect?: (node?: Node, reason?: { code?: number; reason?: string }) => void;
+	nodeDisconnect: (node: Node, reason: { code: number; reason: string }) => void;
 
 	/**
 	 * Emitted when a node encounters an error.
 	 * @param {Node} [node] - The node that encountered the error.
 	 * @param {Error} [error] - The error that occurred.
 	 */
-	nodeError?: (node?: Node, error?: Error) => void;
+	nodeError: (node: Node, error: Error) => void;
 
 	/**
 	 * Emitted when raw data is received from a node.
 	 * @param {Node} [node] - The node that sent the data.
 	 * @param {string} [data] - The raw data received.
 	 */
-	nodeRaw?: (node?: Node, data?: string) => void;
+	nodeRaw: (node: Node, data: string) => void;
 
 	/**
 	 * Emitted when a new player is created.
 	 * @param {Player} [player] - The created player.
 	 */
-	playerCreate?: (player?: Player) => void;
+	playerCreate: (player: Player) => void;
 
 	/**
 	 * Emitted when a player is destroyed.
 	 * @param {Player} [player] - The destroyed player.
 	 */
-	playerDestroy?: (player?: Player) => void;
+	playerDestroy: (player: Player) => void;
 
 	/**
 	 * Emitted when the queue ends for a player.
 	 * @param {Player} [player] - The player whose queue ended.
 	 */
-	queueEnd?: (player?: Player) => void;
+	queueEnd: (player: Player) => void;
 
 	/**
 	 * Emitted when a player moves to a new position in the queue.
 	 * @param {Player} [player] - The player that moved.
 	 * @param {number} [newPosition] - The new position in the queue.
 	 */
-	playerMove?: (player?: Player, newPosition?: number) => void;
+	playerMove: (player: Player, newPosition: number) => void;
 
 	/**
 	 * Emitted when a player disconnects.
 	 * @param {Player} [player] - The disconnected player.
 	 */
-	playerDisconnect?: (player?: Player) => void;
+	playerDisconnect: (player: Player) => void;
 
 	/**
 	 * Emitted when a track starts playing.
 	 * @param {Player} [player] - The player that started the track.
 	 * @param {Track} [track] - The track that started playing.
 	 */
-	trackStart?: (player?: Player, track?: Track) => void;
+	trackStart: (player: Player, track: Track) => void;
 
 	/**
 	 * Emitted when a track ends.
 	 * @param {Player} [player] - The player that finished the track.
 	 * @param {Track} [track] - The track that ended.
 	 */
-	trackEnd?: (player?: Player, track?: Track) => void;
+	trackEnd: (player: Player, track: Track) => void;
 
 	/**
 	 * Emitted when a track gets stuck.
@@ -231,7 +231,7 @@ export interface SonaticaEvents {
 	 * @param {Track} [track] - The track that got stuck.
 	 * @param {TrackStuckEvent} [payload] - Additional information about the stuck event.
 	 */
-	trackStuck?: (player?: Player, track?: Track, payload?: TrackStuckEvent) => void;
+	trackStuck: (player: Player, track: Track, payload: TrackStuckEvent) => void;
 
 	/**
 	 * Emitted when a track encounters an error.
@@ -239,12 +239,36 @@ export interface SonaticaEvents {
 	 * @param {Track} [track] - The track that encountered the error.
 	 * @param {TrackExceptionEvent} [payload] - Additional information about the error.
 	 */
-	trackError?: (player?: Player, track?: Track, payload?: TrackExceptionEvent) => void;
+	trackError: (player: Player, track: Track, payload: TrackExceptionEvent) => void;
 
 	/**
 	 * Emitted when the socket is closed.
 	 * @param {Player} [player] - The player associated with the closed socket.
 	 * @param {WebSocketClosedEvent} [payload] - Additional information about the closed socket event.
 	 */
-	socketClosed?: (player?: Player, payload?: WebSocketClosedEvent) => void;
+	socketClosed: (player: Player, payload: WebSocketClosedEvent) => void;
+
+	/**
+	 * Emitted when lyrics are successfully found for a track.
+	 * @param {Player} player - The player associated with the track.
+	 * @param {Track} track - The track for which lyrics were found.
+	 * @param {LyricsFoundEvent} payload - The event payload containing the lyrics data.
+	 */
+	lyricsFound: (player: Player, track: Track, payload: LyricsFoundEvent) => void;
+
+	/**
+	 * Emitted when lyrics could not be found for a track.
+	 * @param {Player} player - The player associated with the track.
+	 * @param {Track} track - The track for which lyrics were not found.
+	 * @param {LyricsNotFoundEvent} payload - The event payload providing context for the failure.
+	 */
+	lyricsNotFound: (player: Player, track: Track, payload: LyricsNotFoundEvent) => void;
+
+	/**
+	 * Emitted when a new line of lyrics is being displayed or streamed.
+	 * @param {Player} player - The player currently playing the track.
+	 * @param {Track} track - The track associated with the lyrics line.
+	 * @param {LyricsLineEvent} payload - The event payload containing the current line of lyrics.
+	 */
+	lyricsLine: (player: Player, track: Track, payload: LyricsLineEvent) => void;
 }
