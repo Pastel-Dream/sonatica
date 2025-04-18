@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/Pastel-Dream/sonatica/compare/v1.8.3...v1.9.0) (2025-04-18)
+
+
+### Features
+
+* **types/sonatica:** lyrics-related events ([dc53cec](https://github.com/Pastel-Dream/sonatica/commit/dc53cec34082ff80d630b0fac4452e5d64eef397))
+
 ## [1.8.3](https://github.com/Pastel-Dream/sonatica/compare/v1.8.2...v1.8.3) (2025-04-15)
 
 
