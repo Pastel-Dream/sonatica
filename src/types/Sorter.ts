@@ -1,4 +1,3 @@
-import { Collection } from "@discordjs/collection";
 import { Node } from "../classes/Node";
 
 /**
@@ -6,9 +5,9 @@ import { Node } from "../classes/Node";
  * 
  * @interface Sorter
  * @method
- * @param {Collection<string, Node>} nodes - A collection of nodes to be sorted.
- * @returns {Collection<string, Node>} A new collection of sorted nodes.
+ * @param {Map<string, Node>} nodes - A map of nodes to be sorted.
+ * @returns {Map<string, Node>} A new map of sorted nodes.
  */
 export interface Sorter {
-	(nodes: Collection<string, Node>): Collection<string, Node>;
+	(nodes: Map<string, Node>): Map<string, Node>;
 }

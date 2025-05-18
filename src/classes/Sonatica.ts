@@ -1,4 +1,3 @@
-import { Collection } from "@discordjs/collection";
 import { EventEmitter } from "events";
 import { SonaticaOptions, SearchQuery, VoicePacket, VoiceServer, VoiceState } from "../types/Sonatica";
 import { Node } from "./Node";
@@ -19,10 +18,10 @@ import leastLoadNode from "../sorter/leastLoadNode";
  * @extends EventEmitter
  */
 export class Sonatica extends EventEmitter {
-	/** @type {Collection<string, Node>} */
-	public readonly nodes: Collection<string, Node> = new Collection();
-	/** @type {Collection<string, Player>} */
-	public readonly players: Collection<string, Player> = new Collection();
+	/** @type {Map<string, Node>} */
+	public readonly nodes: Map<string, Node> = new Map();
+	/** @type {Map<string, Player>} */
+	public readonly players: Map<string, Player> = new Map();
 	/** @type {Database} */
 	public db: Database = null;
 	/** @type {SonaticaOptions} */
@@ -100,10 +99,10 @@ export class Sonatica extends EventEmitter {
 		let search = query.query;
 		if (!/^(https?:\/\/)?([a-zA-Z0-9\-_]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/.test(query.query)) search = `${source}:${query.query}`;
 
-		const node = this.options
-			.sorter(this.nodes)
-			.filter((node) => node.options.search)
-			.first();
+		const nodeEntry = Array.from(this.options.sorter(this.nodes).entries()).filter(([, node]) => node.options.search)[0];
+		const node = nodeEntry ? nodeEntry[1] : undefined;
+
+		if (!node) throw new RangeError("No nodes with search enabled.");
 
 		try {
 			const res = <SearchResponse>await node.rest.request("GET", `/loadtracks?identifier=${encodeURIComponent(search)}`);

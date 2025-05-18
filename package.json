@@ -3,7 +3,10 @@
   "version": "1.9.1",
   "description": "A powerful lavalink wrapper",
   "main": "@dist/index.js",
-  "files": ["@dist", "README.md"],
+  "files": [
+    "@dist",
+    "README.md"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
@@ -31,7 +34,6 @@
     "ioredis": "^5.4.2"
   },
   "devDependencies": {
-    "@discordjs/collection": "^2.1.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/git": "^10.0.1",
