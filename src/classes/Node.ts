@@ -160,14 +160,21 @@ export class Node {
 		this.sonatica.emit("nodeDisconnect", this, { code, reason });
 		if (code !== 1000 || reason !== "destroy") this.reconnect();
 
-		this.sonatica.players
+		Array.from(this.sonatica.players.values())
 			.filter((p) => p?.node?.options?.identifier === this?.options?.identifier)
 			.forEach((p) => {
-				if (!this.sonatica.options.autoMove) return (p.playing = false);
-				if (this.sonatica.options.autoMove) {
-					if (this.sonatica.nodes.filter((n) => n.connected).size === 0) return (p.playing = false);
-					p.moveNode();
+				if (!this.sonatica.options.autoMove) {
+					p.playing = false;
+					return;
 				}
+
+				const connectedNodes = Array.from(this.sonatica.nodes.values()).filter((n) => n.connected);
+				if (connectedNodes.length === 0) {
+					p.playing = false;
+					return;
+				}
+
+				p.moveNode();
 			});
 	}
 
@@ -273,7 +280,7 @@ export class Node {
 					}
 
 					if (this.reconnectAttempts !== 1) {
-						this.sonatica.players
+						Array.from(this.sonatica.players.values())
 							.filter((p) => p?.node?.options?.identifier === this?.options?.identifier)
 							.forEach(async (p) => {
 								const player = this.sonatica.players.get(p.guild);
@@ -283,9 +290,10 @@ export class Node {
 									voice: {
 										token: player.voiceState.event.token,
 										endpoint: player.voiceState.event.endpoint,
-										sessionId: player!.voiceState?.sessionId!,
+										sessionId: player.voiceState?.sessionId!,
 									},
 								});
+
 								await player.play();
 							});
 					}
@@ -520,11 +528,14 @@ export class Node {
 	 */
 	public destroy() {
 		if (!this.connected) return;
-		const players = this.sonatica.players.filter((p) => p?.node?.options?.identifier === this?.options?.identifier);
-		if (players.size) {
+		const players = Array.from(this.sonatica.players.values()).filter((p) => p?.node?.options?.identifier === this?.options?.identifier);
+		if (players.length) {
 			players.forEach((p) => {
-				if (this.sonatica.options.autoMove) p.moveNode();
-				else p.destroy();
+				if (this.sonatica.options.autoMove) {
+					p.moveNode();
+				} else {
+					p.destroy();
+				}
 			});
 		}
 
