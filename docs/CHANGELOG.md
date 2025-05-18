@@ -1,3 +1,10 @@
+# [1.10.0-next.2](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.1...v1.10.0-next.2) (2025-05-18)
+
+
+### Features
+
+* **Sonatica, Node, Player:** add tiny-typed-emitter and update event emissions in Node and Player classes ([9321f87](https://github.com/Pastel-Dream/sonatica/commit/9321f876753f368c28b74b40b5e059f040d0b6ab))
+
 # [1.10.0-next.1](https://github.com/Pastel-Dream/sonatica/compare/v1.9.2-next.1...v1.10.0-next.1) (2025-05-18)
 
 
