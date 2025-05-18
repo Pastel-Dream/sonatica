@@ -26,8 +26,8 @@ new Sonatica(options: ManagerOptions)
 
 | Property  | Type                           | Description                              |
 | --------- | ------------------------------ | ---------------------------------------- |
-| `nodes`   | `(Collection<string, Node>)`   | The collection of nodes in the system.   |
-| `players` | `(Collection<string, Player>)` | The collection of players in the system. |
+| `nodes`   | `(Map<string, Node>)`   | The map of nodes in the system.   |
+| `players` | `(Map<string, Player>)` | The map of players in the system. |
 
 ## Methods
 
@@ -42,15 +42,15 @@ Function to send data to the websocket.
 | `id`      | `string`                       |
 | `payload` | [Payload](../typedefs/payload) |
 
-### `sorter(nodes: Collection<string, Node>): Collection<string, Node>`
+### `sorter(nodes: Map<string, Node>): Map<string, Node>`
 
 Function to sort nodes.
 
-> Returns: `Collection<string, Node>`
+> Returns: `Map<string, Node>`
 
 | Parameter | Type                                        |
 | --------- | :------------------------------------------ |
-| `nodes`   | Collection<string, [Node](../classes/node)> |
+| `nodes`   | Map<string, [Node](../classes/node)> |
 
 ## Overview
 
@@ -235,7 +235,7 @@ Function to sort nodes.
 >
 > | Type                                        | Value                          |
 > | ------------------------------------------- | :----------------------------- |
-> | Collection<string, [Node](../classes/node)> | new Collection<string, Node>() |
+> | Map<string, [Node](../classes/node)> | new Map<string, Node>() |
 
 #### • options
 
@@ -251,7 +251,7 @@ Function to sort nodes.
 >
 > | Type                                            | Value                            |
 > | ----------------------------------------------- | :------------------------------- |
-> | Collection<string, [Player](../classes/player)> | new Collection<string, Player>() |
+> | Map<string, [Player](../classes/player)> | new Map<string, Player>() |
 
 ### Methods
 

@@ -1,4 +1,3 @@
-import { Collection } from "@discordjs/collection";
 import { SearchPlatform } from "../utils/sources";
 import { NodeOptions } from "./Node";
 import { Node } from "../classes/Node";
@@ -19,7 +18,7 @@ import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, LyricsResult, T
  * @property {SearchPlatform} [defaultSearchPlatform] - The default search platform.
  * @property {boolean} [autoMove] - Whether to enable automatic moving.
  * @property {boolean} [autoResume] - Whether to enable automatic resume.
- * @property {(nodes: Collection<string, Node>) => Collection<string, Node>} [sorter] - A function to sort nodes.
+ * @property {(nodes: Map<string, Node>) => Map<string, Node>} [sorter] - A function to sort nodes.
  * @property {(id: string, payload: Payload) => void} send - A function to send payloads.
  */
 export interface SonaticaOptions {
@@ -33,7 +32,7 @@ export interface SonaticaOptions {
 	defaultSearchPlatform?: SearchPlatform;
 	autoMove?: boolean;
 	autoResume?: boolean;
-	sorter?: (nodes: Collection<string, Node>) => Collection<string, Node>;
+	sorter?: (nodes: Map<string, Node>) => Map<string, Node>;
 	send(id: string, payload: Payload): void;
 }
 
