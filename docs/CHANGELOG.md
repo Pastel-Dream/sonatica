@@ -1,3 +1,11 @@
+## [1.9.2-next.1](https://github.com/Pastel-Dream/sonatica/compare/v1.9.1...v1.9.2-next.1) (2025-05-18)
+
+
+### Bug Fixes
+
+* **Node, Player:** Property 'filter' does not exist ([ee5916b](https://github.com/Pastel-Dream/sonatica/commit/ee5916bfc6e7c09a165b72afb60fce1f471470b0))
+* **Sonatica:** replace Collection with Map ([bc685d2](https://github.com/Pastel-Dream/sonatica/commit/bc685d27a4b6d9be6ec92e4ee17f5c38552d2ef0))
+
 ## [1.9.1](https://github.com/Pastel-Dream/sonatica/compare/v1.9.0...v1.9.1) (2025-04-18)
 
 
