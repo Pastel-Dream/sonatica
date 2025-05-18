@@ -90,12 +90,7 @@ export class Player {
 		if (options.voiceChannel) this.voiceChannel = options.voiceChannel;
 		if (options.textChannel) this.textChannel = options.textChannel;
 		const node = this.sonatica.nodes.get(options.node);
-		this.node =
-			node ||
-			this.sonatica.options
-				.sorter(this.sonatica.nodes)
-				.filter((node) => node.options.playback)
-				.first();
+		this.node = node || Array.from(this.sonatica.options.sorter(this.sonatica.nodes).values()).find((node) => node.options.playback);
 		this.sonatica.players.set(this.guild, this);
 		this.sonatica.emit("playerCreate", this);
 		this.volume = options.volume ?? 80;
@@ -250,11 +245,13 @@ export class Player {
 	 * @throws {RangeError} If no nodes are available.
 	 */
 	public async moveNode(node?: string) {
-		if (!node)
-			node = this.sonatica.options
-				.sorter(this.sonatica.nodes)
-				.filter((node) => node.options.playback)
-				.first()?.options.identifier;
+		if (!node) {
+			const sortedNodes = this.sonatica.options.sorter(this.sonatica.nodes);
+			const foundNode = Array.from(sortedNodes.values()).find((node) => node.options.playback);
+
+			node = foundNode?.options.identifier;
+		}
+
 		if (!node || !this.sonatica.nodes.get(node)) throw new RangeError("No nodes are available.");
 
 		if (this.node.options.identifier === node) return this;
