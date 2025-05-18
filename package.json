@@ -31,7 +31,8 @@
   "dependencies": {
     "axios": "^1.7.9",
     "events": "^3.3.0",
-    "ioredis": "^5.4.2"
+    "ioredis": "^5.4.2",
+    "tiny-typed-emitter": "^2.1.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
