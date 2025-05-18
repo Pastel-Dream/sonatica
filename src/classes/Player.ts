@@ -333,7 +333,7 @@ export class Player {
 			try {
 				this.queue.current = await TrackUtils.getClosestTrack(this.queue.current as UnresolvedTrack);
 			} catch (error) {
-				this.sonatica.emit("trackError", this, this.queue.current, error);
+				this.sonatica.emit("trackError", this, <Track>this.queue.current, error);
 				if (this.queue[0]) return this.play(this.queue[0]);
 				return;
 			}

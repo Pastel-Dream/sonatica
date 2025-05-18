@@ -199,7 +199,7 @@ export class Node {
 
 		if (!payload.op) return;
 
-		this.sonatica.emit("nodeRaw", payload);
+		this.sonatica.emit("nodeRaw", this, payload);
 		this.lastestOp = Date.now();
 
 		switch (payload.op) {
@@ -268,17 +268,13 @@ export class Node {
 								player.skip();
 							} else {
 								player.destroy();
-								this.sonatica.emit("queueEnd", player, player.queue.current, null);
+								this.sonatica.emit("queueEnd", player, <Track>player.queue.current, null);
 								return;
 							}
 						}
 
 						player.playing = true;
-						this.sonatica.emit("trackStart", player, player.queue.current, {
-							type: "TrackStartEvent",
-							guildId: player.guild,
-							track: player.queue.current,
-						});
+						this.sonatica.emit("trackStart", player, <Track>player.queue.current);
 					}
 
 					if (this.reconnectAttempts !== 1) {
@@ -359,7 +355,7 @@ export class Node {
 	protected trackStart(player: Player, track: Track, payload: TrackStartEvent) {
 		player.playing = true;
 		player.paused = false;
-		this.sonatica.emit("trackStart", player, track, payload);
+		this.sonatica.emit("trackStart", player, track);
 	}
 
 	/**
@@ -383,14 +379,14 @@ export class Node {
 					queue.current = queue.shift();
 					if (!queue.current) return this.queueEnd(player, track, payload);
 
-					this.sonatica.emit("trackEnd", player, track, payload);
+					this.sonatica.emit("trackEnd", player, track);
 					if (autoPlay) player.play();
 				}
 				break;
 
 			case "replaced":
 				{
-					this.sonatica.emit("trackEnd", player, track, payload);
+					this.sonatica.emit("trackEnd", player, track);
 					queue.previous = queue.current;
 				}
 				break;
@@ -407,14 +403,14 @@ export class Node {
 						queue.previous = queue.current;
 						queue.current = queue.shift();
 
-						this.sonatica.emit("trackEnd", player, track, payload);
+						this.sonatica.emit("trackEnd", player, track);
 						if (reason === "stopped" && !(queue.current = queue.shift())) return this.queueEnd(player, track, payload);
 
 						if (autoPlay) player.play();
 					} else if (queue.length) {
 						queue.previous = queue.current;
 						queue.current = queue.shift();
-						this.sonatica.emit("trackEnd", player, track, payload);
+						this.sonatica.emit("trackEnd", player, track);
 						if (autoPlay) player.play();
 					} else {
 						this.queueEnd(player, track, payload);
@@ -441,7 +437,7 @@ export class Node {
 	 * @param {TrackExceptionEvent} payload - The event payload.
 	 */
 	protected trackError(player: Player, track: Track | UnresolvedTrack, payload: TrackExceptionEvent): void {
-		this.sonatica.emit("trackError", player, track, payload);
+		this.sonatica.emit("trackError", player, <Track>track, payload);
 	}
 
 	/**

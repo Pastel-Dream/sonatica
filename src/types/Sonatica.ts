@@ -3,7 +3,7 @@ import { NodeOptions } from "./Node";
 import { Node } from "../classes/Node";
 import { Player } from "../classes/Player";
 import { Track } from "./Player";
-import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, PlayerUpdateOp, TrackEndEvent, TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
+import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, Ops, PlayerUpdateOp, TrackEndEvent, TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
 
 /**
  * Options for configuring Sonatica.
@@ -175,9 +175,9 @@ export interface SonaticaEvents {
 	/**
 	 * Emitted when raw data is received from a node.
 	 * @param {Node} [node] - The node that sent the data.
-	 * @param {string} [data] - The raw data received.
+	 * @param {Ops} [data] - The raw data received.
 	 */
-	nodeRaw: (node: Node, data: string) => void;
+	nodeRaw: (node: Node, data: Ops) => void;
 
 	/**
 	 * Emitted when a new player is created.
@@ -209,15 +209,17 @@ export interface SonaticaEvents {
 	/**
 	 * Emitted when a player moves to a new position in the queue.
 	 * @param {Player} [player] - The player that moved.
-	 * @param {number} [newPosition] - The new position in the queue.
+	 * @param {string} [oldId] - Old voice channel id
+	 * @param {string} [newId] - Old voice channel id
 	 */
-	playerMove: (player: Player, newPosition: number) => void;
+	playerMove: (player: Player, oldId: string, newId: string) => void;
 
 	/**
 	 * Emitted when a player disconnects.
 	 * @param {Player} [player] - The disconnected player.
+	 * @param {string} [channelId] - The voice channel the player was in.
 	 */
-	playerDisconnect: (player: Player) => void;
+	playerDisconnect: (player: Player, channelId: string) => void;
 
 	/**
 	 * Emitted when a track starts playing.

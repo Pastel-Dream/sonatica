@@ -1,5 +1,5 @@
-import { EventEmitter } from "events";
-import { SonaticaOptions, SearchQuery, VoicePacket, VoiceServer, VoiceState } from "../types/Sonatica";
+import { TypedEmitter } from "tiny-typed-emitter";
+import { SonaticaOptions, SearchQuery, VoicePacket, VoiceServer, VoiceState, SonaticaEvents } from "../types/Sonatica";
 import { Node } from "./Node";
 import { Player } from "./Player";
 import { Redis } from "./database/Redis";
@@ -17,7 +17,7 @@ import leastLoadNode from "../sorter/leastLoadNode";
  * Class representing the Sonatica music player.
  * @extends EventEmitter
  */
-export class Sonatica extends EventEmitter {
+export class Sonatica extends TypedEmitter<SonaticaEvents> {
 	/** @type {Map<string, Node>} */
 	public readonly nodes: Map<string, Node> = new Map();
 	/** @type {Map<string, Player>} */
