@@ -213,6 +213,8 @@ export class Node {
 				{
 					const player = this.sonatica.players.get(payload.guildId);
 					if (player) player.position = payload.state.position || 0;
+
+					this.sonatica.emit("playerUpdate", player, payload);
 				}
 				break;
 			case "ready":

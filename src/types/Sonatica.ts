@@ -3,7 +3,7 @@ import { NodeOptions } from "./Node";
 import { Node } from "../classes/Node";
 import { Player } from "../classes/Player";
 import { Track } from "./Player";
-import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, LyricsResult, TrackEndEvent, TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
+import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, PlayerUpdateOp, TrackEndEvent, TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
 
 /**
  * Options for configuring Sonatica.
@@ -190,6 +190,13 @@ export interface SonaticaEvents {
 	 * @param {Player} [player] - The destroyed player.
 	 */
 	playerDestroy: (player: Player) => void;
+
+	/**
+	 * Emitted when a player state update
+	 * @param {Player} [player] - The updated player.
+	 * @param {PlayerUpdateOp} [payload] - Payload.
+	 */
+	playerUpdate: (player: Player, payload: PlayerUpdateOp) => void;
 
 	/**
 	 * Emitted when the queue ends for a player.
