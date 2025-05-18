@@ -1,3 +1,10 @@
+# [1.10.0-next.1](https://github.com/Pastel-Dream/sonatica/compare/v1.9.2-next.1...v1.10.0-next.1) (2025-05-18)
+
+
+### Features
+
+* **Sonatica:** emit playerUpdate event on player state update ([34f84b3](https://github.com/Pastel-Dream/sonatica/commit/34f84b3e585e8895e5da2c85701cdcd47979b635))
+
 ## [1.9.2-next.1](https://github.com/Pastel-Dream/sonatica/compare/v1.9.1...v1.9.2-next.1) (2025-05-18)
 
 
