@@ -160,6 +160,14 @@ Function to sort nodes.
 > | --------- | :-------------------------- |
 > | player    | [Player](../classes/player) |
 
+### • playerUpdate
+
+> Emitted when a player state update.
+>
+> | Parameter | Type                        |
+> | --------- | :-------------------------- |
+> | player    | [Player](../classes/player) |
+
 #### • queueEnd
 
 > Emitted when a player queue ends.
