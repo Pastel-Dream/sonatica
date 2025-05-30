@@ -194,3 +194,4 @@ Check out the [example](https://github.com/Pastel-Dream/sonatica-example)
 | Murphy  | Pipichka    |
 | SaLee   | SomboyTiger |
 | Yuzu    | Slamy       |
+| Chompu  | SomboyTiger |
