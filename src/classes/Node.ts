@@ -19,6 +19,7 @@ export class Node {
 	public sessionId: string;
 	public sonatica: Sonatica;
 	public ws: WebSocket;
+	public ping: number = -1;
 	public info: NodeInfo = {
 		version: {
 			semver: "",
@@ -60,6 +61,9 @@ export class Node {
 	private reconnectTimeout?: NodeJS.Timeout;
 	private reconnectAttempts: number = 1;
 	private lastestOp: number = 0;
+	private missedPings = 0;
+	private maxMissedPings = 3;
+	private pingInterval?: NodeJS.Timeout;
 
 	/**
 	 * Checks if the node is connected.
@@ -146,9 +150,11 @@ export class Node {
 	 */
 	protected async open() {
 		if (this.reconnectTimeout) clearTimeout(this.reconnectTimeout);
+		this.missedPings = 0;
 		this.sonatica.emit("nodeConnect", this);
 
 		this.info = <NodeInfo>await this.rest.request("GET", "/info");
+		this.startPingInterval();
 	}
 
 	/**
@@ -544,6 +550,34 @@ export class Node {
 		clearTimeout(this.reconnectTimeout);
 		this.sonatica.emit("nodeDestroy", this);
 		this.sonatica.destroyNode(this.options.identifier);
+	}
+
+	private startPingInterval() {
+		this.pingInterval = setInterval(async () => {
+			const start = Date.now();
+			try {
+				await this.rest.request("GET", "/version", undefined);
+				this.ping = Date.now() - start;
+				this.missedPings = 0;
+				this.sonatica.emit("nodePing", this, this.ping);
+			} catch {
+				this.missedPings++;
+				this.ping = -1;
+				this.sonatica.emit("nodePingFailed", this, this.missedPings);
+
+				if (this.missedPings >= this.maxMissedPings) {
+					console.warn(`[Sonatica] Node ${this.options.identifier} missed ${this.missedPings} pings, reconnecting...`);
+					this.stopPingInterval();
+					this.ws?.close(4000, "missed pings");
+					this.reconnect();
+				}
+			}
+		}, 15_000);
+	}
+
+	private stopPingInterval() {
+		if (this.pingInterval) clearInterval(this.pingInterval);
+		this.pingInterval = undefined;
 	}
 
 	/**

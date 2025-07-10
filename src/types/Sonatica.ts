@@ -281,4 +281,18 @@ export interface SonaticaEvents {
 	 * @param {LyricsLineEvent} payload - The event payload containing the current line of lyrics.
 	 */
 	lyricsLine: (player: Player, track: Track, payload: LyricsLineEvent) => void;
+
+	/**
+	 * Emitted when a node pings.
+	 * @param {Node} node - The node that pinged.
+	 * @param {number} ping - The ping value.
+	 */
+	nodePing: (node: Node, ping: number) => void;
+
+	/**
+	 * Emitted when a node fails to ping.
+	 * @param {Node} node - The node that failed to ping.
+	 * @param {number} missedPings - The number of missed pings.
+	 */
+	nodePingFailed: (node: Node, missedPings: number) => void;
 }
