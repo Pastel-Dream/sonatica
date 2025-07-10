@@ -556,7 +556,7 @@ export class Node {
 		this.pingInterval = setInterval(async () => {
 			const start = Date.now();
 			try {
-				await this.rest.request("GET", "/version", undefined);
+				await this.rest.request("GET", "/info", undefined);
 				this.ping = Date.now() - start;
 				this.missedPings = 0;
 				this.sonatica.emit("nodePing", this, this.ping);
