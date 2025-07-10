@@ -39,8 +39,8 @@ new Node(options: NodeOptions)
 
 > The main hub for interacting with Lavalink.
 >
-> | Type                           |
-> | ------------------------------ |
+> | Type                            |
+> | ------------------------------- |
 > | [`Sonatica`](/classes/sonatica) |
 
 #### • options
@@ -87,6 +87,14 @@ new Node(options: NodeOptions)
 > | Type      |
 > | --------- |
 > | `boolean` |
+
+#### • ping
+
+> Ping of node.
+>
+> | Type     |
+> | -------- |
+> | `number` |
 
 ### Methods
 
