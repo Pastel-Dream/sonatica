@@ -1,3 +1,10 @@
+# [1.10.0-next.5](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.4...v1.10.0-next.5) (2025-07-10)
+
+
+### Bug Fixes
+
+* **Lyrics:** fix unsubscribee endpoint ([52cd542](https://github.com/Pastel-Dream/sonatica/commit/52cd5426a389ce15fae3a308f8a29f2a87aaa924))
+
 # [1.10.0-next.4](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.3...v1.10.0-next.4) (2025-07-10)
 
 
