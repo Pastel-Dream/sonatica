@@ -1,3 +1,11 @@
+# [1.10.0-next.4](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.3...v1.10.0-next.4) (2025-07-10)
+
+
+### Features
+
+* **Node, Sonatica:** ping mechanism ([0697410](https://github.com/Pastel-Dream/sonatica/commit/0697410883adc8bef5fe4336dc6e7ad76b7509b2))
+* **Node, Sonatica:** ping mechanism ([4b4fc37](https://github.com/Pastel-Dream/sonatica/commit/4b4fc37c78c544dd3aae0de8ca854a99eb656472))
+
 # [1.10.0-next.3](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.2...v1.10.0-next.3) (2025-07-10)
 
 
