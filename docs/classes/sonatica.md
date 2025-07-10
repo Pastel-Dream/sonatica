@@ -24,8 +24,8 @@ new Sonatica(options: ManagerOptions)
 
 # Properties
 
-| Property  | Type                           | Description                              |
-| --------- | ------------------------------ | ---------------------------------------- |
+| Property  | Type                    | Description                       |
+| --------- | ----------------------- | --------------------------------- |
 | `nodes`   | `(Map<string, Node>)`   | The map of nodes in the system.   |
 | `players` | `(Map<string, Player>)` | The map of players in the system. |
 
@@ -48,8 +48,8 @@ Function to sort nodes.
 
 > Returns: `Map<string, Node>`
 
-| Parameter | Type                                        |
-| --------- | :------------------------------------------ |
+| Parameter | Type                                 |
+| --------- | :----------------------------------- |
 | `nodes`   | Map<string, [Node](../classes/node)> |
 
 ## Overview
@@ -73,6 +73,11 @@ Function to sort nodes.
 |                       |                                         | [trackStuck](#•-trackstuck)         |
 |                       |                                         | [trackError](#•-trackerror)         |
 |                       |                                         | [socketClosed](#•-socketclosed)     |
+|                       |                                         | [lyricsFound](#•-lyricsfound)       |
+|                       |                                         | [lyricsNotFound](#•-lyricsnotfound) |
+|                       |                                         | [lyricsLine](#•-lyricsline)         |
+|                       |                                         | [nodePing](#•-nodeping)             |
+|                       |                                         | [nodePingFailed](#•-nodepingfailed) |
 
 ### Events
 
@@ -235,14 +240,62 @@ Function to sort nodes.
 > | player    | [Player](../classes/player)                              |
 > | payload   | [WebSocketClosedEvent](../typedefs/webSocketClosedEvent) |
 
+#### • lyricsFound
+
+> Emitted when lyrics are successfully found for a track.
+>
+> | Parameter | Type                                    |
+> | --------- | :-------------------------------------- |
+> | player    | [Player](../classes/player)             |
+> | track     | [Track](../typedefs/track)               |
+> | payload   | [payload](../typedefs/LyricsFoundEvent) |
+
+#### • lyricsNotFound
+
+> Emitted when lyrics could not be found for a track.
+>
+> | Parameter | Type                                       |
+> | --------- | :----------------------------------------- |
+> | player    | [Player](../classes/player)                |
+> | track     | [Track](../typedefs/track)                  |
+> | payload   | [payload](../typedefs/LyricsNotFoundEvent) |
+
+#### • lyricsLine
+
+> Emitted when a node fails to ping.
+>
+> | Parameter | Type                                   |
+> | --------- | :------------------------------------- |
+> | player    | [Player](../classes/player)            |
+> | track     | [Track](../typedefs/track)              |
+> | payload   | [payload](../typedefs/LyricsLineEvent) |
+
+#### • nodePing
+
+> Emitted when a node pings.
+>
+> | Parameter | Type                    |
+> | --------- | :---------------------- |
+> | node      | [Node](../classes/node) |
+> | ping      | `number`                |
+
+#### • nodePingFailed
+
+> Emitted when a node fails to ping.
+>
+> | Parameter   | Type                    |
+> | ----------- | :---------------------- |
+> | node        | [Node](../classes/node) |
+> | missedPings | `number`                |
+
 ### Properties
 
 #### • nodes
 
 > The map of nodes.
 >
-> | Type                                        | Value                          |
-> | ------------------------------------------- | :----------------------------- |
+> | Type                                 | Value                   |
+> | ------------------------------------ | :---------------------- |
 > | Map<string, [Node](../classes/node)> | new Map<string, Node>() |
 
 #### • options
@@ -257,8 +310,8 @@ Function to sort nodes.
 
 > The map of players.
 >
-> | Type                                            | Value                            |
-> | ----------------------------------------------- | :------------------------------- |
+> | Type                                     | Value                     |
+> | ---------------------------------------- | :------------------------ |
 > | Map<string, [Player](../classes/player)> | new Map<string, Player>() |
 
 ### Methods
