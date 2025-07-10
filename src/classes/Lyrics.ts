@@ -49,7 +49,7 @@ export class Lyrics {
 	public async unsubscribe(): Promise<unknown> {
 		this.hasLavaLyricsPlugin();
 
-		return await this.node.rest.request("GET", `/sessions/${this.node.sessionId}/players/${this.player.guild}/lyrics/unsubscribe`);
+		return await this.node.rest.request("DELETE", `/sessions/${this.node.sessionId}/players/${this.player.guild}/lyrics/subscribe`);
 	}
 
 	/**
