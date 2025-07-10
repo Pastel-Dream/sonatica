@@ -1,3 +1,10 @@
+# [1.10.0-next.6](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.5...v1.10.0-next.6) (2025-07-10)
+
+
+### Bug Fixes
+
+* **Node:** fix endpoint ([1972188](https://github.com/Pastel-Dream/sonatica/commit/1972188670a0d50e9a0e5c552325f3e249a6411b))
+
 # [1.10.0-next.5](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.4...v1.10.0-next.5) (2025-07-10)
 
 
