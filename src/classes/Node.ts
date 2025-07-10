@@ -566,7 +566,6 @@ export class Node {
 				this.sonatica.emit("nodePingFailed", this, this.missedPings);
 
 				if (this.missedPings >= this.maxMissedPings) {
-					console.warn(`[Sonatica] Node ${this.options.identifier} missed ${this.missedPings} pings, reconnecting...`);
 					this.stopPingInterval();
 					this.ws?.close(4000, "missed pings");
 					this.reconnect();
