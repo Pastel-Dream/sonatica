@@ -553,38 +553,32 @@ export class Node {
 	 * @returns {Promise<void>} A promise that resolves when the autoplay is handled.
 	 */
 	private async handleAutoplay(player: Player, track: Track | UnresolvedTrack): Promise<void> {
-		const base = "https://www.youtube.com/watch?v=H58vbez_m4E";
-		const getMixUrl = (identifier: string) => `https://www.youtube.com/watch?v=${identifier}&list=RD${identifier}`;
-		const findMix = async (): Promise<SearchResult> => {
-			let mixUrl: string;
-			let response: SearchResult;
-			let base_response: SearchResult;
+		const fallbackVideo = "H58vbez_m4E";
+		const getMixUrl = (id: string) => `https://www.youtube.com/watch?v=${id}&list=RD${id}`;
 
-			const previousTrack = player.queue.previous || track;
+		const previousTrack = player.queue.previous || track;
+		let identifier = previousTrack.sourceName === "youtube" ? previousTrack.identifier : null;
 
-			base_response = await player.search(
-				{
-					query: `${previousTrack.title} - ${previousTrack.author}`,
-					source: SearchPlatform["youtube"],
-				},
-				previousTrack.requester
-			);
+		if (!identifier) {
+			const baseSearch = await player.search({ query: `${previousTrack.title} - ${previousTrack.author}`, source: SearchPlatform["youtube"] }, previousTrack.requester);
+			identifier = baseSearch.tracks[0]?.identifier;
+		}
 
-			mixUrl = getMixUrl(previousTrack.sourceName! === "youtube" ? previousTrack.identifier! : base_response.tracks[0].identifier);
+		if (!identifier) identifier = fallbackVideo;
 
-			response = await player.search({ query: mixUrl }, previousTrack.requester);
+		const mixUrl = getMixUrl(identifier);
+		let mixResult = await player.search({ query: mixUrl }, previousTrack.requester);
 
-			if (response.loadType === "error" || response.loadType === "empty") {
-				base_response = await player.search({ query: base }, previousTrack.requester);
-				mixUrl = getMixUrl(base_response.tracks[0].identifier);
-				response = await player.search({ query: mixUrl }, previousTrack.requester);
-			}
+		if (mixResult.loadType === "error" || mixResult.loadType === "empty") {
+			const fallbackMixUrl = getMixUrl(fallbackVideo);
+			mixResult = await player.search({ query: fallbackMixUrl }, previousTrack.requester);
+		}
 
-			return response;
-		};
+		const tracks = mixResult?.playlist?.tracks?.filter((t) => t.uri !== track.uri);
+		if (!tracks?.length) return;
 
-		const response = await findMix();
-		player.queue.add(response.playlist!.tracks.filter((t) => t.uri !== track.uri)[Math.floor(Math.random() * response.playlist!.tracks.length - 1)]);
+		const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+		player.queue.add(randomTrack);
 		player.play();
 	}
 }
