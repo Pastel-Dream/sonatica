@@ -1,3 +1,10 @@
+# [1.10.0-next.3](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.2...v1.10.0-next.3) (2025-07-10)
+
+
+### Features
+
+* **Node:** autoplay handling with fallback video ([ba1f580](https://github.com/Pastel-Dream/sonatica/commit/ba1f5805870f005ba12850374ef9abf9bab32e82))
+
 # [1.10.0-next.2](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.1...v1.10.0-next.2) (2025-05-18)
 
 
