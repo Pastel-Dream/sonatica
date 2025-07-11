@@ -163,6 +163,7 @@ export class Node {
 	 * @param {string} reason - The reason for closing.
 	 */
 	protected close(code: number, reason: string) {
+		this.stopPingInterval();
 		this.sonatica.emit("nodeDisconnect", this, { code, reason });
 		if (code !== 1000 || reason !== "destroy") this.reconnect();
 
