@@ -64,7 +64,7 @@ export class EventOpHandler {
 	private trackStart(player: Player, track: Track, payload: TrackStartEvent): void {
 		player.playing = true;
 		player.paused = false;
-		this.sonatica.emit("trackStart", player, track);
+		this.sonatica.emit("trackStart", player, track, payload);
 	}
 
 	/**
@@ -88,14 +88,14 @@ export class EventOpHandler {
 					queue.current = queue.shift();
 					if (!queue.current) return this.queueEnd(player, track, payload);
 
-					this.sonatica.emit("trackEnd", player, track);
+					this.sonatica.emit("trackEnd", player, track, payload);
 					if (autoPlay) player.play();
 				}
 				break;
 
 			case "replaced":
 				{
-					this.sonatica.emit("trackEnd", player, track);
+					this.sonatica.emit("trackEnd", player, track, payload);
 					queue.previous = queue.current;
 				}
 				break;
@@ -112,14 +112,14 @@ export class EventOpHandler {
 						queue.previous = queue.current;
 						queue.current = queue.shift();
 
-						this.sonatica.emit("trackEnd", player, track);
+						this.sonatica.emit("trackEnd", player, track, payload);
 						if (reason === "stopped" && !(queue.current = queue.shift())) return this.queueEnd(player, track, payload);
 
 						if (autoPlay) player.play();
 					} else if (queue.length) {
 						queue.previous = queue.current;
 						queue.current = queue.shift();
-						this.sonatica.emit("trackEnd", player, track);
+						this.sonatica.emit("trackEnd", player, track, payload);
 						if (autoPlay) player.play();
 					} else {
 						this.queueEnd(player, track, payload);
