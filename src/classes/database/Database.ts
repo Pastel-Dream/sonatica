@@ -1,3 +1,5 @@
+import { Awaitable } from "../../types/Utils";
+
 /**
  * Interface representing a simple database.
  */
@@ -24,8 +26,3 @@ export interface Database {
 	 */
 	delete(key: string): Awaitable<boolean>;
 }
-
-/**
- * A type that can be either a Promise or a direct value.
- */
-export type Awaitable<T> = Promise<T> | T;
