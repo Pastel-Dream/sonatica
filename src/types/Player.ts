@@ -1,5 +1,3 @@
-export type State = "CONNECTED" | "CONNECTING" | "DISCONNECTED" | "DISCONNECTING" | "DESTROYING" | "MOVING" | "RESUMING";
-
 /**
  * @interface PlayerOptions
  * @property {string} guild - The ID of the guild.
@@ -78,4 +76,25 @@ export enum RepeatMode {
 	NONE = 0,
 	TRACK = 1,
 	QUEUE = 2,
+}
+
+/**
+ * @enum {string}
+ * Represents the state of the player.
+ * @property {string} CONNECTED - The player is connected.
+ * @property {string} CONNECTING - The player is connecting.
+ * @property {string} DISCONNECTED - The player is disconnected.
+ * @property {string} DISCONNECTING - The player is disconnecting.
+ * @property {string} DESTROYING - The player is destroying.
+ * @property {string} MOVING - The player is moving.
+ * @property {string} RESUMING - The player is resuming.
+ */
+export enum State {
+	CONNECTED = "CONNECTED",
+	CONNECTING = "CONNECTING",
+	DISCONNECTED = "DISCONNECTED",
+	DISCONNECTING = "DISCONNECTING",
+	DESTROYING = "DESTROYING",
+	MOVING = "MOVING",
+	RESUMING = "RESUMING",
 }

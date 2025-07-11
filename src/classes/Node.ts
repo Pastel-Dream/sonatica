@@ -2,9 +2,9 @@ import { WebSocket } from "ws";
 import { NodeInfo, NodeOptions, NodeStats } from "../types/Node";
 import { Sonatica } from "./Sonatica";
 import { Rest } from "./Rest";
-import { EventOp, Ops } from "../types/Op";
+import { Ops } from "../types/Op";
 import { RestPlayer, PreviousPlayer, TrackData } from "../types/Rest";
-import { Track } from "../types/Player";
+import { State, Track } from "../types/Player";
 import { TrackUtils } from "../utils/utils";
 import { EventOpHandler } from "./EventOpHandler";
 
@@ -250,7 +250,7 @@ export class Node {
 						});
 
 						if (!previousPlayer.current) return;
-						player.state = "RESUMING";
+						player.state = State.RESUMING;
 
 						const decoded = <TrackData[]>await this.sonatica.decodeTracks(previousPlayer.queue.map((t) => t).concat(previousPlayer.current));
 						player.queue.add(TrackUtils.build(decoded.find((t) => t.encoded === previousPlayer.current, previousPlayer.requester)));
