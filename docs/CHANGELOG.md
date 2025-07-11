@@ -1,3 +1,11 @@
+# [1.10.0-next.8](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.7...v1.10.0-next.8) (2025-07-11)
+
+
+### Features
+
+* **Node:** event op handler ([05261a9](https://github.com/Pastel-Dream/sonatica/commit/05261a99025b2340f0c77899f94c6679e748190c))
+* **Node:** include payload in trackStart and trackEnd events ([cbf3800](https://github.com/Pastel-Dream/sonatica/commit/cbf38002197baba3efdcf4b9f0f265623a477113))
+
 # [1.10.0-next.7](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.6...v1.10.0-next.7) (2025-07-11)
 
 
