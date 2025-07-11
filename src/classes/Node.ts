@@ -280,7 +280,7 @@ export class Node {
 						}
 
 						player.playing = true;
-						this.sonatica.emit("trackStart", player, <Track>player.queue.current);
+						this.sonatica.emit("trackStart", player, <Track>player.queue.current, null);
 					}
 
 					if (this.reconnectAttempts !== 1) {

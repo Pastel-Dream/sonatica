@@ -3,7 +3,7 @@ import { NodeOptions } from "./Node";
 import { Node } from "../classes/Node";
 import { Player } from "../classes/Player";
 import { Track } from "./Player";
-import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, Ops, PlayerUpdateOp, TrackEndEvent, TrackExceptionEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
+import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, Ops, PlayerUpdateOp, TrackEndEvent, TrackExceptionEvent, TrackStartEvent, TrackStuckEvent, WebSocketClosedEvent } from "./Op";
 
 /**
  * Options for configuring Sonatica.
@@ -225,15 +225,17 @@ export interface SonaticaEvents {
 	 * Emitted when a track starts playing.
 	 * @param {Player} [player] - The player that started the track.
 	 * @param {Track} [track] - The track that started playing.
+	 * @param {TrackStartEvent} [payload] - Additional information about the start event.
 	 */
-	trackStart: (player: Player, track: Track) => void;
+	trackStart: (player: Player, track: Track, payload: TrackStartEvent) => void;
 
 	/**
 	 * Emitted when a track ends.
 	 * @param {Player} [player] - The player that finished the track.
 	 * @param {Track} [track] - The track that ended.
+	 * @param {TrackEndEvent} [payload] - Additional information about the end event.
 	 */
-	trackEnd: (player: Player, track: Track) => void;
+	trackEnd: (player: Player, track: Track, payload: TrackEndEvent) => void;
 
 	/**
 	 * Emitted when a track gets stuck.
