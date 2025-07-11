@@ -1,3 +1,10 @@
+# [1.10.0-next.7](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.6...v1.10.0-next.7) (2025-07-11)
+
+
+### Bug Fixes
+
+* **Node:** stop ping interval on WebSocket close ([337512a](https://github.com/Pastel-Dream/sonatica/commit/337512a55d0bb5a9660452dd15a19bc3071c0921))
+
 # [1.10.0-next.6](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.5...v1.10.0-next.6) (2025-07-10)
 
 
