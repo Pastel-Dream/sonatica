@@ -38,7 +38,7 @@ export class Player {
 	/** The text channel ID associated with the player. */
 	public textChannel: string | null = null;
 	/** The current state of the player. */
-	public state: State = "DISCONNECTED";
+	public state: State = State.DISCONNECTED;
 	/** The audio bands for equalization. */
 	public bands = new Array<number>(15).fill(0.0);
 	/** The voice state of the player. */
@@ -115,7 +115,7 @@ export class Player {
 	 */
 	public connect() {
 		if (!this.voiceChannel) throw new RangeError("No voice channel has been set.");
-		this.state = "CONNECTING";
+		this.state = State.CONNECTING;
 		this.sonatica.options.send(this.guild, {
 			op: 4,
 			d: {
@@ -125,7 +125,7 @@ export class Player {
 				self_deaf: this.options.selfDeafen || false,
 			},
 		});
-		this.state = "CONNECTED";
+		this.state = State.CONNECTED;
 		return this;
 	}
 
@@ -135,7 +135,7 @@ export class Player {
 	 */
 	public disconnect(): this {
 		if (this.voiceChannel === null) return this;
-		this.state = "DISCONNECTING";
+		this.state = State.DISCONNECTING;
 
 		this.sonatica.options.send(this.guild, {
 			op: 4,
@@ -148,7 +148,7 @@ export class Player {
 		});
 
 		this.voiceChannel = null;
-		this.state = "DISCONNECTED";
+		this.state = State.DISCONNECTED;
 		return this;
 	}
 
@@ -157,7 +157,7 @@ export class Player {
 	 * @param disconnect - Whether to disconnect the player before destroying.
 	 */
 	public async destroy(disconnect: boolean = true): Promise<void> {
-		this.state = "DESTROYING";
+		this.state = State.DESTROYING;
 
 		if (disconnect) this.disconnect();
 
@@ -256,12 +256,12 @@ export class Player {
 
 		if (this.node.options.identifier === node) return this;
 		const destroyOldNode = async (node: Node) => {
-			this.state = "MOVING";
+			this.state = State.MOVING;
 
 			if (this.sonatica.nodes.get(node.options.identifier) && this.sonatica.nodes.get(node.options.identifier).connected)
 				await node.rest.request("DELETE", `/sessions/${node.sessionId}/players/${this.guild}`);
 
-			setTimeout(() => (this.state = "CONNECTED"), 5000);
+			setTimeout(() => (this.state = State.CONNECTED), 5000);
 		};
 
 		const currentNode = this.node;
