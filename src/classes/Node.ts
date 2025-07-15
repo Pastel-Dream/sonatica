@@ -59,6 +59,7 @@ export class Node {
 
 	private reconnectTimeout?: NodeJS.Timeout;
 	private reconnectAttempts: number = 1;
+	private lastOp: number = 0;
 	private missedPings = 0;
 	private maxMissedPings = 3;
 	private pingInterval?: NodeJS.Timeout;
@@ -203,10 +204,10 @@ export class Node {
 		else if (d instanceof ArrayBuffer) d = Buffer.from(d);
 
 		const payload = JSON.parse(d.toString()) as Ops;
-
 		if (!payload.op) return;
 
 		this.sonatica.emit("nodeRaw", this, payload);
+		this.lastOp = Date.now();
 
 		switch (payload.op) {
 			case "stats":
@@ -364,6 +365,14 @@ export class Node {
 	private startPingInterval() {
 		this.pingInterval = setInterval(async () => {
 			const start = Date.now();
+
+			if (this.lastOp + 60_000 < start) {
+				this.stopPingInterval();
+				this.ws?.close(4000, "missed op");
+				this.reconnect();
+				return;
+			}
+
 			try {
 				await this.rest.request("GET", "/info", undefined);
 				this.ping = Date.now() - start;
@@ -380,7 +389,7 @@ export class Node {
 					this.reconnect();
 				}
 			}
-		}, 15_000);
+		}, 60_000);
 	}
 
 	private stopPingInterval() {
