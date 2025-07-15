@@ -366,7 +366,7 @@ export class Node {
 		this.pingInterval = setInterval(async () => {
 			const start = Date.now();
 
-			if (this.lastOp + 60_000 < start) {
+			if (this.lastOp + 120_000 < start) {
 				this.stopPingInterval();
 				this.ws?.close(4000, "missed op");
 				this.reconnect();
