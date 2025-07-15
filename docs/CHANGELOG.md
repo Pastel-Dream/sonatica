@@ -1,3 +1,10 @@
+# [1.10.0-next.9](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.8...v1.10.0-next.9) (2025-07-15)
+
+
+### Features
+
+* **Node:** track last operation timestamp ([b827c7c](https://github.com/Pastel-Dream/sonatica/commit/b827c7c0a65e6074ff832a9fc0f425eb7180b195))
+
 # [1.10.0-next.8](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.7...v1.10.0-next.8) (2025-07-11)
 
 
