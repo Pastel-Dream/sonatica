@@ -1,3 +1,10 @@
+# [1.10.0-next.10](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.9...v1.10.0-next.10) (2025-07-15)
+
+
+### Bug Fixes
+
+* **Node:** extend missed operation timeout ([aed2c46](https://github.com/Pastel-Dream/sonatica/commit/aed2c46c1e28d5e5645730da4980ae25bb27a30d))
+
 # [1.10.0-next.9](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.8...v1.10.0-next.9) (2025-07-15)
 
 
