@@ -1,3 +1,10 @@
+# [1.10.0-next.11](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.10...v1.10.0-next.11) (2025-07-16)
+
+
+### Bug Fixes
+
+* **Node:** stop ping interval on node destruction ([4bc6aba](https://github.com/Pastel-Dream/sonatica/commit/4bc6aba45acd02e0ebfcfb24aeb9616ed178cc9c))
+
 # [1.10.0-next.10](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.9...v1.10.0-next.10) (2025-07-15)
 
 
