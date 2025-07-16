@@ -357,6 +357,7 @@ export class Node {
 		this.ws?.removeAllListeners();
 		this.ws = null;
 		this.reconnectAttempts = 1;
+		this.stopPingInterval();
 		clearTimeout(this.reconnectTimeout);
 		this.sonatica.emit("nodeDestroy", this);
 		this.sonatica.destroyNode(this.options.identifier);
