@@ -1,3 +1,10 @@
+# [1.10.0-next.12](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.11...v1.10.0-next.12) (2025-07-17)
+
+
+### Bug Fixes
+
+* **Node:** prevent unnecessary destruction when not connected ([864b123](https://github.com/Pastel-Dream/sonatica/commit/864b123615d2ec885f6f5eeaaac4b3ff67b67835))
+
 # [1.10.0-next.11](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0-next.10...v1.10.0-next.11) (2025-07-16)
 
 
