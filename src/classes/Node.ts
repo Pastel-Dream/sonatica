@@ -341,7 +341,6 @@ export class Node {
 	 * Destroys the Node and cleans up resources.
 	 */
 	public destroy() {
-		if (!this.connected) return;
 		const players = Array.from(this.sonatica.players.values()).filter((p) => p?.node?.options?.identifier === this?.options?.identifier);
 		if (players.length) {
 			players.forEach((p) => {
