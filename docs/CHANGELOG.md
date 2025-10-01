@@ -1,3 +1,29 @@
+# [1.11.0-next.1](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0...v1.11.0-next.1) (2025-10-01)
+
+
+### Bug Fixes
+
+* **Lyrics:** fix unsubscribee endpoint ([e44499f](https://github.com/Pastel-Dream/sonatica/commit/e44499f7c3137ef988eaae8a1d39017eccd3e378))
+* **Node, Player:** Property 'filter' does not exist ([aeb5e91](https://github.com/Pastel-Dream/sonatica/commit/aeb5e9115591957025e84465059078320a262331))
+* **Node:** extend missed operation timeout ([9a6d172](https://github.com/Pastel-Dream/sonatica/commit/9a6d1726cdf9969db2adefadfee278feafc363f5))
+* **Node:** fix endpoint ([9dc9790](https://github.com/Pastel-Dream/sonatica/commit/9dc979023721d092e92f43f65ca4eec193ee8069))
+* **Node:** prevent unnecessary destruction when not connected ([5f2bbe5](https://github.com/Pastel-Dream/sonatica/commit/5f2bbe5364c77f5c7128f92359d13142b2787b51))
+* **Node:** stop ping interval on node destruction ([b22da0f](https://github.com/Pastel-Dream/sonatica/commit/b22da0fd248bb35439c37d011f20437327576263))
+* **Node:** stop ping interval on WebSocket close ([c1f0cbe](https://github.com/Pastel-Dream/sonatica/commit/c1f0cbe395ea3b479bd0633dfa094519aec8c834))
+* **Sonatica:** replace Collection with Map ([4e209a8](https://github.com/Pastel-Dream/sonatica/commit/4e209a8c6f4a2d4cda7aa28f51c1e735d8b98da9))
+
+
+### Features
+
+* **Node, Sonatica:** ping mechanism ([de7f1b0](https://github.com/Pastel-Dream/sonatica/commit/de7f1b0cf7fa2f645796f62fd68e2ad49d6ec506))
+* **Node, Sonatica:** ping mechanism ([ae33f80](https://github.com/Pastel-Dream/sonatica/commit/ae33f809ffead79297ff7f2513f23aaa2f388d9c))
+* **Node:** autoplay handling with fallback video ([df00908](https://github.com/Pastel-Dream/sonatica/commit/df0090887ec126c1b946e68e275623f62efef51a))
+* **Node:** event op handler ([38bf639](https://github.com/Pastel-Dream/sonatica/commit/38bf6393778d0d79c9aae2d415bbfb08876b2dcc))
+* **Node:** include payload in trackStart and trackEnd events ([6b4faf2](https://github.com/Pastel-Dream/sonatica/commit/6b4faf292cd1c249e0ff4d6b9d8d999d357d4f97))
+* **Node:** track last operation timestamp ([043529e](https://github.com/Pastel-Dream/sonatica/commit/043529e36cb0f5e1498f5cc8c537d8cd5765147b))
+* **Sonatica, Node, Player:** add tiny-typed-emitter and update event emissions in Node and Player classes ([7b38244](https://github.com/Pastel-Dream/sonatica/commit/7b382443b26dcb02ec88a452ac19d25489a1d75e))
+* **Sonatica:** emit playerUpdate event on player state update ([96b4d0c](https://github.com/Pastel-Dream/sonatica/commit/96b4d0cfae7c62ec0323ba6664bbe38badf9b977))
+
 # [1.10.0](https://github.com/Pastel-Dream/sonatica/compare/v1.9.1...v1.10.0) (2025-10-01)
 
 
