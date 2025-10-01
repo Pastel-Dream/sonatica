@@ -98,9 +98,30 @@ export class Player {
 				.first();
 		this.sonatica.players.set(this.guild, this);
 		this.sonatica.emit("playerCreate", this);
-		this.volume = options.volume ?? 80;
+		this.volume = options.volume ?? 100;
 		this.lyrics = new Lyrics(this);
 		this.filters = new Filters(this);
+	}
+
+	/**
+	 * Builds the filters payload only when any filter is active.
+	 * Returns undefined when all filters are at defaults.
+	 */
+	private buildFiltersPayload(): Record<string, any> | undefined {
+		if (!this.filters) return undefined;
+		const { distortion, equalizer, karaoke, rotation, timescale, vibrato, volume } = this.filters.getFilters();
+
+		const hasAny =
+			(Boolean(distortion && Object.keys(distortion).length)) ||
+			(Boolean(equalizer && equalizer.length)) ||
+			(Boolean(karaoke && Object.keys(karaoke).length)) ||
+			(Boolean(rotation && Object.keys(rotation).length)) ||
+			(Boolean(timescale && Object.keys(timescale).length)) ||
+			(Boolean(vibrato && Object.keys(vibrato).length)) ||
+			(typeof volume === "number" && volume !== 1.0);
+
+		if (!hasAny) return undefined;
+		return { distortion, equalizer, karaoke, rotation, timescale, vibrato, volume };
 	}
 
 	/**
@@ -276,20 +297,13 @@ export class Player {
 			position = fetchedPlayer?.track?.info?.position || this?.position || 0;
 		}
 
+		const _filtersForMove = this.buildFiltersPayload();
 		await destinationNode.rest.request("PATCH", `/sessions/${destinationNode.sessionId}/players/${this.guild}?noReplace=false`, {
 			track: { encoded: this?.queue?.current?.track, userData: this?.queue?.current?.requester },
 			position: position,
 			volume: this?.volume,
 			paused: this?.paused,
-			filters: {
-				distortion: this?.filters?.distortion,
-				equalizer: this?.filters?.equalizer,
-				karaoke: this?.filters?.karaoke,
-				rotation: this?.filters?.rotation,
-				timescale: this?.filters?.timescale,
-				vibrato: this?.filters?.vibrato,
-				volume: this?.filters?.volume,
-			},
+			...(_filtersForMove ? { filters: _filtersForMove } : {}),
 			voice: {
 				token: this?.voiceState?.event?.token,
 				endpoint: this?.voiceState?.event?.endpoint,
@@ -328,6 +342,7 @@ export class Player {
 			}
 		}
 
+		const _filtersForPlay = this.buildFiltersPayload();
 		await this.node.rest.request("PATCH", `/sessions/${this.node.sessionId}/players/${this.guild}?noReplace=false`, {
 			track: {
 				encoded: this.queue.current.track,
@@ -336,15 +351,7 @@ export class Player {
 			position: this.position,
 			endTime: null,
 			volume: this.volume,
-			filters: {
-				distortion: this.filters.distortion,
-				equalizer: this.filters.equalizer,
-				karaoke: this.filters.karaoke,
-				rotation: this.filters.rotation,
-				timescale: this.filters.timescale,
-				vibrato: this.filters.vibrato,
-				volume: this.filters.volume,
-			},
+			...(_filtersForPlay ? { filters: _filtersForPlay } : {}),
 			paused: this.paused,
 		});
 
