@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/Pastel-Dream/sonatica/compare/v1.9.1...v1.10.0) (2025-10-01)
+
+
+### Features
+
+* **Player:** omit filters when unset; default volume to 100 ([4f077f3](https://github.com/Pastel-Dream/sonatica/commit/4f077f328609b839e90ab6fcbc9489276440145e))
+
 ## [1.9.1](https://github.com/Pastel-Dream/sonatica/compare/v1.9.0...v1.9.1) (2025-04-18)
 
 
