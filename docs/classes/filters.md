@@ -63,11 +63,10 @@ new Filters(player: Player)
 
 ### VibratoOptions
 
-> | Properties | Type     | Description                         |
-> | ---------- | :------- | ----------------------------------- |
-> | speed      | `number` | The speed factor for the timescale. |
-> | pitch      | `number` | The pitch factor for the timescale. |
-> | rate       | `number` | The rate factor for the timescale.  |
+> | Properties | Type     | Description                      |
+> | ---------- | :------- | -------------------------------- |
+> | frequency  | `number` | The frequency of the vibrato.    |
+> | depth      | `number` | The depth of the vibrato effect. |
 
 ### RotationOptions
 
@@ -99,6 +98,6 @@ new Filters(player: Player)
 > | `nightcore`  |
 > | `slowmo`     |
 > | `soft`       |
-> | `treblebass` |
+> | `trebleBass` |
 > | `tv`         |
 > | `vaporwave`  |

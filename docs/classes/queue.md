@@ -40,9 +40,9 @@
 
 > The past track.
 >
-> | Type   |
-> | ------ |
-> | number |
+> | Type                                                                                 |
+> | ------------------------------------------------------------------------------------ |
+> | [Track](../typedefs/track) or [UnresolvedTrack](../typedefs/unresolvedTrack) or null |
 
 #### • totalSize
 
@@ -60,10 +60,10 @@
 >
 > Returns: `void`
 >
-> | Parameter         | type                       |
-> | ----------------- | -------------------------- |
-> | track             | [Track](../typedefs/track) |
-> | `Optional` offset | number                     |
+> | Parameter         | type                                                                                                               |
+> | ----------------- | ------------------------------------------------------------------------------------------------------------------ |
+> | track             | [Track](../typedefs/track) \| [UnresolvedTrack](../typedefs/unresolvedTrack) \| (`Track` \| `UnresolvedTrack`)`[]` |
+> | `Optional` offset | number                                                                                                             |
 
 #### • clear()
 
@@ -75,7 +75,7 @@
 
 > Removes a track from the queue. Defaults to the first track, returning the removed track, **excluding** the `current` track.
 >
-> Returns: [`Track[]`](../typedefs/track)
+> Returns: ([`Track`](../typedefs/track) \| [`UnresolvedTrack`](../typedefs/unresolvedTrack))`[]`
 >
 > | Parameter           | type   |
 > | ------------------- | ------ |
@@ -85,7 +85,7 @@
 
 > Removes an amount of tracks using a exclusive start and end exclusive index, returning the removed tracks, **excluding** the `current` track.
 >
-> Returns: [`Track`](../typedefs/track) | [`UnresolvedTrack[]`](../typedefs/unresolvedTrack)
+> Returns: ([`Track`](../typedefs/track) \| [`UnresolvedTrack`](../typedefs/unresolvedTrack))`[]`
 >
 > | Parameter | type   |
 > | --------- | ------ |

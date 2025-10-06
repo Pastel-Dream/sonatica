@@ -2,7 +2,6 @@ import { TypedEmitter } from "tiny-typed-emitter";
 import { SonaticaOptions, SearchQuery, VoicePacket, VoiceServer, VoiceState, SonaticaEvents } from "../types/Sonatica";
 import { Node } from "./Node";
 import { Player } from "./Player";
-import { Redis } from "./database/Redis";
 import { Storage } from "./database/Storage";
 import { Database } from "./database/Database";
 import { PlayerOptions } from "../types/Player";
@@ -67,12 +66,9 @@ export class Sonatica extends TypedEmitter<SonaticaEvents> {
 		if (typeof clientId !== "undefined") this.options.clientId = clientId;
 		if (typeof this.options.clientId === "undefined") throw new Error("Client ID is required.");
 		if (this.options.autoResume) {
-			if (customDb) {
-				this.db = customDb;
-			} else {
-				if (this.options.redisUrl) this.db = new Redis(this.options.redisUrl, this.options.clientId, this.options.shards ?? 0);
-				else this.db = new Storage(this.options.clientId, this.options.shards ?? 0);
-			}
+			if (customDb) this.db = customDb;
+			else if (this.options.storage) this.db = this.options.storage;
+			else this.db = new Storage(this.options.clientId, this.options.shards ?? 0);
 		}
 
 		for (const node of this.nodes.values()) {

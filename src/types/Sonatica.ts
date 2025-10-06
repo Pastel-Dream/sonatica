@@ -1,4 +1,5 @@
 import { SearchPlatform } from "../utils/sources";
+import { Database } from "../classes/database/Database";
 import { NodeOptions } from "./Node";
 import { Node } from "../classes/Node";
 import { Player } from "../classes/Player";
@@ -12,7 +13,7 @@ import { LyricsFoundEvent, LyricsLineEvent, LyricsNotFoundEvent, Ops, PlayerUpda
  * @property {string} [clientId] - The ID of the client.
  * @property {string} [clientName] - The name of the client.
  * @property {number} [shards] - The number of shards.
- * @property {string} [redisUrl] - The URL for Redis.
+ * @property {Database} [storage] - Custom storage implementation (defaults to file-based Storage).
  * @property {boolean} [autoPlay] - Whether to enable autoplay.
  * @property {string[]} [trackPartial] - An array of partial track identifiers.
  * @property {SearchPlatform} [defaultSearchPlatform] - The default search platform.
@@ -26,7 +27,7 @@ export interface SonaticaOptions {
 	clientId?: string;
 	clientName?: string;
 	shards?: number;
-	redisUrl?: string;
+	storage?: Database;
 	autoPlay?: boolean;
 	trackPartial?: string[];
 	defaultSearchPlatform?: SearchPlatform;

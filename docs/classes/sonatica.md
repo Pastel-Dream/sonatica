@@ -5,22 +5,24 @@ The `Sonatica` class represents the main functionality of the Sonatica
 ### Constructor
 
 ```ts
-new Sonatica(options: ManagerOptions)
+new Sonatica(options: SonaticaOptions)
 ```
 
 ## Options
 
-| Options                 | Type      | Description                                        |
-| ----------------------- | :-------- | -------------------------------------------------- |
-| `autoPlay`              | `boolean` | Indicates if songs should automatically play.      |
-| `autoResume`            | `boolean` | Automatically resume players.                      |
-| `autoMove`              | `boolean` | Move players to other node if node going down.     |
-| `cliendId`              | `string`  | The ID of the client.                              |
-| `redisUrl`              | `string`  | The URL of the redis server. used for auto resume. |
-| `cliendName`            | `string`  | The name of the client.                            |
-| `nodes`                 | `array`   | The list of NodeOptions.                           |
-| `shards`                | `number`  | The number of shard count.                         |
-| `defaultSearchPlatform` | `string`  | The default search platform.                       |
+| Options                 | Type                                                            | Description                                                      |
+| ----------------------- | :-------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `autoPlay`              | `boolean`                                                       | Indicates if songs should automatically play.                    |
+| `autoResume`            | `boolean`                                                       | Automatically resume players.                                    |
+| `autoMove`              | `boolean`                                                       | Move players to other node if node going down.                   |
+| `clientId`              | `string`                                                        | The ID of the client.                                            |
+| `clientName`            | `string`                                                        | The name of the client.                                          |
+| `nodes`                 | `array`                                                         | The list of NodeOptions.                                         |
+| `shards`                | `number`                                                        | The number of shard count.                                       |
+| `defaultSearchPlatform` | `string`                                                        | The default search platform.                                     |
+| `storage`               | `Database`                                                      | Custom storage implementation for auto‑resume.                   |
+| `sorter`                | `(nodes: Collection<string, Node>) => Collection<string, Node>` | Function to sort nodes; defaults to least loaded connected node. |
+| `send`                  | `(id: string, payload: Payload) => void`                        | Function used to send Discord voice payloads.                    |
 
 # Properties
 
@@ -247,7 +249,7 @@ Function to sort nodes.
 > | Parameter | Type                                    |
 > | --------- | :-------------------------------------- |
 > | player    | [Player](../classes/player)             |
-> | track     | [Track](../typedefs/track)               |
+> | track     | [Track](../typedefs/track)              |
 > | payload   | [payload](../typedefs/LyricsFoundEvent) |
 
 #### • lyricsNotFound
@@ -257,7 +259,7 @@ Function to sort nodes.
 > | Parameter | Type                                       |
 > | --------- | :----------------------------------------- |
 > | player    | [Player](../classes/player)                |
-> | track     | [Track](../typedefs/track)                  |
+> | track     | [Track](../typedefs/track)                 |
 > | payload   | [payload](../typedefs/LyricsNotFoundEvent) |
 
 #### • lyricsLine
@@ -267,7 +269,7 @@ Function to sort nodes.
 > | Parameter | Type                                   |
 > | --------- | :------------------------------------- |
 > | player    | [Player](../classes/player)            |
-> | track     | [Track](../typedefs/track)              |
+> | track     | [Track](../typedefs/track)             |
 > | payload   | [payload](../typedefs/LyricsLineEvent) |
 
 #### • nodePing
@@ -392,9 +394,10 @@ Function to sort nodes.
 >
 > Returns: `this`
 >
-> | Parameter | Type   |
-> | --------- | :----- |
-> | clientId  | string |
+> | Parameter          | Type       |
+> | ------------------ | ---------- |
+> | clientId           | string     |
+> | `Optional` storage | `Database` |
 
 #### • search()
 
@@ -414,5 +417,5 @@ Function to sort nodes.
 > Returns: `void`
 >
 > | Parameter | Type                                   |
-> | --------- | :------------------------------------- |
-> | data      | [VoicePacket](../typedefs/voicePacket) |
+> | --------- | :------------------------------------- | ------------------------------------ | -------------------------------------- |
+> | data      | [VoicePacket](../typedefs/voicePacket) | [VoiceState](../typedefs/voiceState) | [VoiceServer](../typedefs/voiceServer) |

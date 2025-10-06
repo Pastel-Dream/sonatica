@@ -55,9 +55,9 @@ client.manager = new Sonatica({
   defaultSearchPlatform: SearchPlatform["youtube music"],
   autoMove: true,
 
-  // redis is required for auto resume.
+  // Enable auto resume and optionally provide your own storage.
   autoResume: true,
-  redisUrl: "",
+  // storage: new Storage(client.user.id, client.shard?.count ?? 1),
 
   // The nodes to connect to, optional if using default lavalink options
   nodes: nodes,

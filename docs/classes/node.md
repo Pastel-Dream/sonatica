@@ -28,10 +28,14 @@ new Node(options: NodeOptions)
 | ------------------------------- | :---------------------------- |
 | [`sonatica`](#•-sonatica)       | [`connect`](#•-connect)       |
 | [`options`](#•-options)         | [`destroy`](#•-destroy)       |
-| [`socket`](#•-socket)           | [`setEnabled`](#•-setenabled) |
+| [`ws`](#•-ws)                   | [`setEnabled`](#•-setenabled) |
 | [`stats`](#•-stats)             |                               |
 | [`connected`](#•-get-connected) |                               |
 | [`isEnabled`](#•-isenabled)     |                               |
+| [`address`](#•-address)         |                               |
+| [`rest`](#•-rest)               |                               |
+| [`info`](#•-info)               |                               |
+| [`sessionId`](#•-sessionid)     |                               |
 
 ### Properties
 
@@ -51,13 +55,13 @@ new Node(options: NodeOptions)
 > | ----------------------------- |
 > | [`NodeOptions`](#constructor) |
 
-#### • socket
+#### • ws
 
-> The socket for the node.
+> The WebSocket for the node.
 >
-> | Type              | Value  |
-> | ----------------- | ------ |
-> | WebSocket or null | `null` |
+> | Type        | Value  |
+> | ----------- | ------ |
+> | `WebSocket` | `null` |
 
 #### • stats
 
@@ -71,6 +75,38 @@ new Node(options: NodeOptions)
 > | players        | `number`                                     | The amount of players on the node.         |
 > | playingPlayers | `number`                                     | The amount of playing players on the node. |
 > | uptime         | `number`                                     | The uptime for the node.                   |
+
+#### • address
+
+> The host:port address for this node.
+>
+> | Type   |
+> | ------ |
+> | string |
+
+#### • rest
+
+> REST helper for HTTP requests.
+>
+> | Type   |
+> | ------ |
+> | `Rest` |
+
+#### • info
+
+> Information returned from `/info`.
+>
+> | Type       |
+> | ---------- |
+> | `NodeInfo` |
+
+#### • sessionId
+
+> Current Lavalink session id.
+>
+> | Type   |
+> | ------ |
+> | string |
 
 #### • `get` connected
 

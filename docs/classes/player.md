@@ -33,7 +33,7 @@ new Player(options: PlayerOptions)
 | [paused](#•-paused)             | [search](#•-search)                   |
 | [playing](#•-playing)           | [seek](#•-seek)                       |
 | [position](#•-position)         | [set](#•-set)                         |
-| [queue](#•-queue)               | [setRepeat](#•-setrepeat)     |
+| [queue](#•-queue)               | [setRepeat](#•-setrepeat)             |
 | [repeatMode](#•-repeatmode)     | [setTextChannel](#•-settextchannel)   |
 | [state](#•-state)               | [setVoiceChannel](#•-setvoicechannel) |
 | [textChannel](#•-textchannel)   | [setVolume](#•-setvolume)             |
@@ -41,6 +41,7 @@ new Player(options: PlayerOptions)
 | [voiceState](#•-voicestate)     | [moveNode](#•-moveNode)               |
 | [volume](#•-volume)             | [stop](#•-stop)                       |
 |                                 | [play](#•-play)                       |
+|                                 | [save](#•-save)                       |
 
 ### Properties
 
@@ -106,13 +107,13 @@ new Player(options: PlayerOptions)
 > | ------- | ----- |
 > | boolean | false |
 
-#### • postition
+#### • position
 
 > The current track time.
 >
-> | Type    | Value |
-> | ------- | ----- |
-> | boolean | false |
+> | Type   | Value |
+> | ------ | ----- |
+> | number | `0`   |
 
 #### • queue
 
@@ -145,14 +146,6 @@ new Player(options: PlayerOptions)
 > | Type   | Value |
 > | ------ | ----- |
 > | string | null  |
-
-#### • trackRepeat
-
-> Whether the player repeats the track.
->
-> | Type    | Value |
-> | ------- | ----- |
-> | boolean | false |
 
 #### • voiceChannel
 
@@ -196,9 +189,9 @@ new Player(options: PlayerOptions)
 
 #### • destroy()
 
-> | Description          | Returns |
-> | -------------------- | ------- |
-> | Destroys the player. | `void`  |
+> | Description          | Returns         |
+> | -------------------- | --------------- |
+> | Destroys the player. | `Promise<void>` |
 
 #### • disconnect()
 
@@ -210,7 +203,7 @@ new Player(options: PlayerOptions)
 
 > Moves the player to a different node.
 >
-> Returns: `this`
+> Returns: `Promise<this>`
 >
 > | Parameter | Type   |
 > | --------- | ------ |
@@ -232,7 +225,7 @@ new Player(options: PlayerOptions)
 
 > Pauses the current track.
 >
-> Returns: `this`
+> Returns: `Promise<this>`
 >
 > | Parameter | Type    |
 > | --------- | ------- |
@@ -240,9 +233,9 @@ new Player(options: PlayerOptions)
 
 #### • previous()
 
-> | Description                   | Returns |
-> | ----------------------------- | ------- |
-> | Go back to the previous song. | `this`  |
+> | Description                   | Returns         |
+> | ----------------------------- | --------------- |
+> | Go back to the previous song. | `Promise<this>` |
 
 #### • play()
 
@@ -264,16 +257,16 @@ new Player(options: PlayerOptions)
 >
 > Returns: Promise<[SearchResult](../typedefs/searchResult)>
 >
-> | Parameter | Type    |
-> | --------- | ------- |
-> | query     | string  |
-> | requester | unknown |
+> | Parameter | Type                                   |
+> | --------- | -------------------------------------- |
+> | query     | [SearchQuery](../typedefs/searchQuery) |
+> | requester | unknown                                |
 
 #### • seek()
 
 > Seeks to the position in the current track.
 >
-> Returns: `this`
+> Returns: `Promise<this>`
 >
 > | Parameter | Type   |
 > | --------- | ------ |
@@ -324,7 +317,7 @@ new Player(options: PlayerOptions)
 
 > Sets the player volume.
 >
-> Returns: `this`
+> Returns: `Promise<this>`
 >
 > | Parameter | Type   |
 > | --------- | ------ |
@@ -342,12 +335,34 @@ new Player(options: PlayerOptions)
 
 #### • stop()
 
-> | Description              | Returns |
-> | ------------------------ | ------- |
-> | Stops the current track. | `this`  |
+> | Description              | Returns         |
+> | ------------------------ | --------------- |
+> | Stops the current track. | `Promise<this>` |
 
 #### • skip()
 
-> | Description              | Returns |
-> | ------------------------ | ------- |
-> | Skips the current track. | `this`  |
+> | Description              | Returns         |
+> | ------------------------ | --------------- |
+> | Skips the current track. | `Promise<void>` |
+
+#### • save()
+
+> Persists the player's state for auto‑resume.
+>
+> Returns: `void`
+
+#### • bands
+
+> Equalizer bands used by the player.
+>
+> | Type       |
+> | ---------- |
+> | `number[]` |
+
+#### • data
+
+> Arbitrary key/value store associated with the player.
+>
+> | Type     |
+> | -------- |
+> | `object` |
