@@ -363,13 +363,13 @@ export class Node {
 	}
 
 	private startPingInterval() {
+		this.stopPingInterval();
 		this.pingInterval = setInterval(async () => {
 			const start = Date.now();
 
 			if (this.lastOp + 120_000 < start) {
 				this.stopPingInterval();
 				this.ws?.close(4000, "missed op");
-				this.reconnect();
 				return;
 			}
 
@@ -386,7 +386,6 @@ export class Node {
 				if (this.missedPings >= this.maxMissedPings) {
 					this.stopPingInterval();
 					this.ws?.close(4000, "missed pings");
-					this.reconnect();
 				}
 			}
 		}, 60_000);
