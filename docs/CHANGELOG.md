@@ -1,3 +1,10 @@
+# [1.11.0-next.2](https://github.com/Pastel-Dream/sonatica/compare/v1.11.0-next.1...v1.11.0-next.2) (2026-01-29)
+
+
+### Bug Fixes
+
+* **Node:** prevent duplicate ping intervals on reconnect ([6591ea5](https://github.com/Pastel-Dream/sonatica/commit/6591ea5f444293a0f79c3a9cbf99bd8678ffc47d))
+
 # [1.11.0-next.1](https://github.com/Pastel-Dream/sonatica/compare/v1.10.0...v1.11.0-next.1) (2025-10-01)
 
 
