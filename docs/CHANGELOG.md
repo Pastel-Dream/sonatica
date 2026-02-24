@@ -1,3 +1,10 @@
+# [1.11.0-next.4](https://github.com/Pastel-Dream/sonatica/compare/v1.11.0-next.3...v1.11.0-next.4) (2026-02-24)
+
+
+### Bug Fixes
+
+* **Node, Player:** include channelId in payload ([c5c34c9](https://github.com/Pastel-Dream/sonatica/commit/c5c34c98ff2f38f7f345faab48242685b964f904))
+
 # [1.11.0-next.3](https://github.com/Pastel-Dream/sonatica/compare/v1.11.0-next.2...v1.11.0-next.3) (2026-02-24)
 
 
