@@ -1,3 +1,10 @@
+# [1.11.0-next.3](https://github.com/Pastel-Dream/sonatica/compare/v1.11.0-next.2...v1.11.0-next.3) (2026-02-24)
+
+
+### Features
+
+* **Sonatica:** include channelId in voice payload ([cce5d66](https://github.com/Pastel-Dream/sonatica/commit/cce5d66c6f7f01da41e702eef72fddc69aaeb1d4))
+
 # [1.11.0-next.2](https://github.com/Pastel-Dream/sonatica/compare/v1.11.0-next.1...v1.11.0-next.2) (2026-01-29)
 
 
