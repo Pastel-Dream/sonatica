@@ -132,7 +132,7 @@ export class Sonatica extends TypedEmitter<SonaticaEvents> {
 							tracks: playlistData!.tracks.map((track) => TrackUtils.build(track, requester)),
 							duration: playlistData!.tracks.reduce((acc, cur) => acc + (cur.info.length || 0), 0),
 							url: playlistData!.pluginInfo.url,
-					  }
+						}
 					: null;
 
 			const result: SearchResult = {
@@ -157,7 +157,7 @@ export class Sonatica extends TypedEmitter<SonaticaEvents> {
 			tracks.map(async (track) => {
 				const decoder = new TrackDecoder(track);
 				return await decoder.decode();
-			})
+			}),
 		);
 
 		const res = decodeds.map((t) => {
@@ -246,6 +246,7 @@ export class Sonatica extends TypedEmitter<SonaticaEvents> {
 					token: voiceState.token,
 					endpoint: voiceState.endpoint,
 					sessionId: player.voiceState.sessionId,
+					channelId: player.voiceChannel,
 				},
 			});
 		} else {
