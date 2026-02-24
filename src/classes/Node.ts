@@ -296,6 +296,7 @@ export class Node {
 										token: player.voiceState.event.token,
 										endpoint: player.voiceState.event.endpoint,
 										sessionId: player.voiceState?.sessionId!,
+										channelId: player.voiceChannel,
 									},
 								});
 
